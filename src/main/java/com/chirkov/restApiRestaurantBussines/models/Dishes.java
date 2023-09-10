@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -21,10 +22,10 @@ public class Dishes {
     private String name;
 
     @Column(name = "price")
-    private Float price;
+    private float price;
 
     @Column(name = "weight")
-    private Float weight;
+    private float weight;
 
     @Column(name = "calories")
     private int calories;
@@ -45,6 +46,9 @@ public class Dishes {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<FoodReview> foodReviewList;
 
+
+    @ManyToMany(mappedBy = "listDishes")
+    private List<OrderElements> orderElementsIntegerMap;
     public Dishes() {
     }
 }
