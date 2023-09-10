@@ -6,7 +6,6 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
@@ -47,9 +46,13 @@ public class Dishes {
     private List<FoodReview> foodReviewList;
 
 
-    @ManyToMany(mappedBy = "listDishes")
+    @OneToMany(mappedBy = "dishes")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<OrderElements> orderElementsIntegerMap;
+
+
     public Dishes() {
     }
+
 }
 

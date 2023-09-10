@@ -56,7 +56,7 @@ VALUES ('2023-08-09 20:19:57.017955', 4, 4, 'Delicious dishes');
 INSERT INTO FoodReview(dateCreate, person_id, grade, comment)
 VALUES ('2023-07-09 03:19:57.017956', 4, 1, 'Ass');
 INSERT INTO FoodReview(dateCreate, person_id, grade, comment)
-VALUES ('2023-07-09 03:19:57.017956', 3, 1, 'Ass');
+VALUES ('2023-07-09 03:19:57.017956', 3, 1, 'Ass and fail');
 INSERT INTO FoodReview(dateCreate, person_id, grade, comment)
 VALUES ('2023-07-09 03:19:57.017956', 2, 5, 'Good');
 INSERT INTO FoodReview(dateCreate, person_id, grade, comment)

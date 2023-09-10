@@ -2,31 +2,28 @@ package com.chirkov.restApiRestaurantBussines.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
-@Table(name = "role")
+@Table(name = "reverse_table")
 @Getter
 @Setter
-public class Role {
-
+public class ReserveTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "internal")
     @NotNull
-    private String name;
-    @OneToMany(mappedBy = "role")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<Person> personList;
+    private int internalDesignation;
 
-    public Role() {    }
+    @NotNull
+    @Column(name = "state")
+    private StateFromTable state;
 
-
+    public ReserveTable() {
+    }
 }
