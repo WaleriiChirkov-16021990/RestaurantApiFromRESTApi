@@ -3,11 +3,14 @@ package com.chirkov.restApiRestaurantBussines.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "Person")
@@ -41,12 +44,17 @@ public class Person {
 
     @Column(name = "email")
     @NotNull(message = "Email is not null")
+    @Email(message = "Email should be valid")
     private String email;
 
     @Column(name = "password")
     @NotNull(message = "Password is not null")
     @Size(min = 6, message = "Password contains min 6 symbol")
     private String password;
+
+    @OneToMany(mappedBy = "author")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<FoodReview> reviewList;
 
     public Person() {
     }
