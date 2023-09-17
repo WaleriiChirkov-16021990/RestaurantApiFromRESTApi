@@ -68,6 +68,18 @@ public class Person {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<RestaurantReviews> restaurantReviews;
 
+    @OneToMany(mappedBy = "owner")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<TableReservation> reservationList;
+
+    @OneToMany(mappedBy = "authorThisRecodrs")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<TableReservation> createdReserveRecords;
+
+    @OneToMany(mappedBy = "authorOfUpdate")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<TableReservation> updatedReserveRecords;
+
     public Person() {
     }
 
