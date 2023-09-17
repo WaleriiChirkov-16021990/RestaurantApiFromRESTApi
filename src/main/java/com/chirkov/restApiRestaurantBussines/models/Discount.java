@@ -16,12 +16,16 @@ public class Discount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "discount_id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "discount_name")
     @NotNull
     private String name;
+
+    @Column(name = "discount_sale")
+    @NotNull
+    private int sale;
 
     @OneToMany(mappedBy = "discount")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})

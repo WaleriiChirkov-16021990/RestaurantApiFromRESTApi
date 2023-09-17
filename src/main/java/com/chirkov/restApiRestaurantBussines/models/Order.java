@@ -15,7 +15,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "order_id")
     private int id;
 
     @OneToOne(mappedBy = "order")
@@ -23,14 +23,14 @@ public class Order {
     private OrderElements orderElements;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner", referencedColumnName = "id")
+    @JoinColumn(name = "order_owner", referencedColumnName = "person_id")
     private Person owner;
 
     @NotNull
-    @Column(name = "price")
+    @Column(name = "order_price")
     private float price;
 
     @NotNull
-    @Column(name = "status")
+    @Column(name = "order_status")
     private StatusFromOrder statusFromOrder;
 }

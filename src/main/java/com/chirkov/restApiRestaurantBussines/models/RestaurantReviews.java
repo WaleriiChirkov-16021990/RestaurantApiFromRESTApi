@@ -14,26 +14,26 @@ import java.util.List;
 public class RestaurantReviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "restaurant_reviews_id")
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner", referencedColumnName = "id")
+    @JoinColumn(name = "restaurant_reviews_owner", referencedColumnName = "person_id")
     @NotNull
     private Person owner;
 
-    @Column(name = "gradle")
+    @Column(name = "restaurant_reviews_gradle")
     @NotNull
     private int gradle;
 
-    @Column(name = "comment")
+    @Column(name = "restaurant_reviews_comment")
     private String comment;
 
-    @Column(name = "create_at")
+    @Column(name = "restaurant_reviews_create_at")
     @NotNull
     private LocalDateTime createAt;
 
-    @Column(name = "update_at")
+    @Column(name = "restaurant_reviews_update_at")
     @NotNull
     private LocalDateTime updateAt;
 

@@ -20,18 +20,18 @@ public class OrderElements {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "order_element_id")
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "orderElements", referencedColumnName = "id")
+    @JoinColumn(name = "order_element_orderElements", referencedColumnName = "order_id")
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dishes", referencedColumnName = "id")
+    @JoinColumn(name = "order_element_dishes", referencedColumnName = "dishes_id")
     private Dishes dishes;
 
-    @Column(name = "count")
+    @Column(name = "order_element_count")
     @Range(min = 1, max = 1000, message = "Count should between 1 - 1000")
     private int count;
 

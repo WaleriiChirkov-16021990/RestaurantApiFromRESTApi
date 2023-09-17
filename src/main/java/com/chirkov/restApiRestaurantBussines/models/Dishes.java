@@ -14,31 +14,31 @@ import java.util.List;
 public class Dishes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "dishes_id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "dishes_name")
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "dishes_price")
     private float price;
 
-    @Column(name = "weight")
+    @Column(name = "dishes_weight")
     private float weight;
 
-    @Column(name = "calories")
+    @Column(name = "dishes_calories")
     private int calories;
 
-    @Column(name = "proteins")
+    @Column(name = "dishes_proteins")
     private int proteins;
 
-    @Column(name = "fats")
+    @Column(name = "dishes_fats")
     private int fats;
 
-    @Column(name = "carbohydrates")
+    @Column(name = "dishes_carbohydrates")
     private int carbohydrates;
 
-    @Column(name = "image_url")
+    @Column(name = "dishes_image_url")
     private String imageURL;
 
     @OneToMany(mappedBy = "dishes")
@@ -49,6 +49,14 @@ public class Dishes {
     @OneToMany(mappedBy = "dishes")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<OrderElements> orderElementsIntegerMap;
+
+    @ManyToMany
+    @JoinTable (
+            name ="Dishes_Compositions_of_dishes",
+            joinColumns = @JoinColumn(name = "dishes_id"),
+            inverseJoinColumns = @JoinColumn(name = "compositions_of_dishes_id")
+    )
+    private List<CompositionsOfDishes> compositionsOfDishesList;
 
 
     public Dishes() {

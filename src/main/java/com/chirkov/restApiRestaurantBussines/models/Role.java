@@ -16,12 +16,13 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "role_id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "role_name")
     @NotNull
     private String name;
+
     @OneToMany(mappedBy = "role")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Person> personList;
