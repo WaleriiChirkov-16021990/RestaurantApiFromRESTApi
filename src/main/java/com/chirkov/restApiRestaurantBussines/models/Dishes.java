@@ -51,8 +51,8 @@ public class Dishes {
     private List<OrderElements> orderElementsIntegerMap;
 
     @ManyToMany
-    @JoinTable (
-            name ="Dishes_Compositions_of_dishes",
+    @JoinTable(
+            name = "Dishes_Compositions_of_dishes",
             joinColumns = @JoinColumn(name = "dishes_id"),
             inverseJoinColumns = @JoinColumn(name = "compositions_of_dishes_id")
     )

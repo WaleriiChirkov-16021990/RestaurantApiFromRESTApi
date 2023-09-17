@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Entity
 @Table(name = "restaurant_reviews")
 @Getter

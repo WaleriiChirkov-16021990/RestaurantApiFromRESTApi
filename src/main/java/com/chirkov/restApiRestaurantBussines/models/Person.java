@@ -10,7 +10,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Person")
@@ -80,6 +82,15 @@ public class Person {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<TableReservation> updatedReserveRecords;
 
+    @Column(name = "person_created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "person_updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "person_updated_who")
+    private String updatedWho;
+
     public Person() {
     }
 
@@ -103,5 +114,17 @@ public class Person {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person person)) return false;
+        return getId() == person.getId() && getYearOfBirth() == person.getYearOfBirth() && Objects.equals(getName(), person.getName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getPhoneNumber(), person.getPhoneNumber()) && Objects.equals(getEmail(), person.getEmail()) && Objects.equals(getPassword(), person.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getLastName(), getYearOfBirth(), getPhoneNumber(), getEmail(), getPassword());
     }
 }

@@ -25,7 +25,7 @@ public class Ingredients {
 
     @Column(name = "ingredient_remnant_number")
     @NotNull
-    @Range(min = 0, message = "Remnant should be zero or bigger" )
+    @Range(min = 0, message = "Remnant should be zero or bigger")
     private int remnant;
 
     @Column(name = "ingredient_description")

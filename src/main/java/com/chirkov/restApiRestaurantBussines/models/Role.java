@@ -23,11 +23,16 @@ public class Role {
     @NotNull
     private String name;
 
+    @Column(name = "role_value")
+    @NotNull
+    private RoleEnum roleValue;
+
     @OneToMany(mappedBy = "role")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Person> personList;
 
-    public Role() {    }
+    public Role() {
+    }
 
 
 }

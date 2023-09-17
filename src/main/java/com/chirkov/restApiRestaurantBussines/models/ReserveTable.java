@@ -33,9 +33,10 @@ public class ReserveTable {
     @Range(min = 0, max = 100, message = "Number of seats should between 0 to 100")
     private int numberOfSeats;
 
-    @OneToMany (mappedBy = "table")
+    @OneToMany(mappedBy = "table")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<TableReservation> reservationList;
+
     public ReserveTable() {
     }
 }
