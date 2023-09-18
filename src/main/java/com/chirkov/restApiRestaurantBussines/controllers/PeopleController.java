@@ -5,6 +5,7 @@ import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.units.PersonErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.PersonNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.PersonNotDelete;
 import com.chirkov.restApiRestaurantBussines.units.PersonNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -88,6 +90,30 @@ public class PeopleController {
                 System.currentTimeMillis()
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); //status = 400
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
+        if (peopleService.findOne(id) == null) {
+            AtomicReference<StringBuilder> error = new AtomicReference<>(new StringBuilder());
+            error.get().append("This user not found");
+            throw new PersonNotDelete(error.toString());
+        }
+        peopleService.delete(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/edit")
+    public ResponseEntity<HttpStatus> edit(@PathVariable("id") int id, Model model) {
+        model.addAttribute("person", peopleService.findOne(id));
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<HttpStatus> update(@PathVariable("id") int id, @ModelAttribute Person person) {
+        peopleService.update(id, person);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 
