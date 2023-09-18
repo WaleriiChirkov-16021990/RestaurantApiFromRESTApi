@@ -49,44 +49,48 @@ public class Person {
     @Email(message = "Email should be valid")
     private String email;
 
+    @Column(name = "person_username")
+    @NotNull
+    private String username;
+
     @Column(name = "person_password")
     @NotNull(message = "Password is not null")
     @Size(min = 6, message = "Password contains min 6 symbol")
     private String password;
-
-    @OneToMany(mappedBy = "author")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<FoodReview> reviewList;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_role", referencedColumnName = "role_id")
-    private Role role;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")
-    private Discount discount;
-
-    @OneToMany(mappedBy = "owner")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<RestaurantReviews> restaurantReviews;
-
-    @OneToMany(mappedBy = "owner")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<TableReservation> reservationList;
-
-    @OneToMany(mappedBy = "authorThisRecodrs")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<TableReservation> createdReserveRecords;
-
-    @OneToMany(mappedBy = "authorOfUpdate")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<TableReservation> updatedReserveRecords;
+//
+//    @OneToMany(mappedBy = "author")
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+//    private List<FoodReview> reviewList;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "person_role", referencedColumnName = "role_id")
+//    private Role role;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")
+//    private Discount discount;
+//
+//    @OneToMany(mappedBy = "owner")
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+//    private List<RestaurantReviews> restaurantReviews;
+//
+//    @OneToMany(mappedBy = "owner")
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+//    private List<TableReservation> reservationList;
+//
+//    @OneToMany(mappedBy = "authorThisRecodrs")
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+//    private List<TableReservation> createdReserveRecords;
+//
+//    @OneToMany(mappedBy = "authorOfUpdate")
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+//    private List<TableReservation> updatedReserveRecords;
 
     @Column(name = "person_created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "person_updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime  updatedAt;
 
     @Column(name = "person_updated_who")
     private String updatedWho;
@@ -94,12 +98,13 @@ public class Person {
     public Person() {
     }
 
-    public Person(String name, String lastName, int yearOfBirth, String phoneNumber, String email, String password) {
+    public Person(String name, String lastName, int yearOfBirth, String phoneNumber, String email, String username, String password) {
         this.name = name;
         this.lastName = lastName;
         this.yearOfBirth = yearOfBirth;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.username = username;
         this.password = password;
     }
 
@@ -112,6 +117,7 @@ public class Person {
                 ", yearOfBirth=" + yearOfBirth +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -120,11 +126,18 @@ public class Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Person person)) return false;
-        return getId() == person.getId() && getYearOfBirth() == person.getYearOfBirth() && Objects.equals(getName(), person.getName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getPhoneNumber(), person.getPhoneNumber()) && Objects.equals(getEmail(), person.getEmail()) && Objects.equals(getPassword(), person.getPassword());
+        return getId() == person.getId()
+                && getYearOfBirth() == person.getYearOfBirth()
+                && Objects.equals(getName(), person.getName())
+                && Objects.equals(getLastName(), person.getLastName())
+                && Objects.equals(getPhoneNumber(), person.getPhoneNumber())
+                && Objects.equals(getEmail(), person.getEmail())
+                && Objects.equals(getUsername(), person.getUsername())
+                && Objects.equals(getPassword(), person.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getLastName(), getYearOfBirth(), getPhoneNumber(), getEmail(), getPassword());
+        return Objects.hash(getId(), getName(), getLastName(), getYearOfBirth(), getPhoneNumber(), getEmail(), getUsername(), getPassword());
     }
 }

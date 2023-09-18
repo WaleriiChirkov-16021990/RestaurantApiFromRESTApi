@@ -1,7 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.services;
 
 import com.chirkov.restApiRestaurantBussines.models.Person;
-import com.chirkov.restApiRestaurantBussines.models.RoleEnum;
+//import com.chirkov.restApiRestaurantBussines.models.RoleEnum;
 import com.chirkov.restApiRestaurantBussines.repositories.PeopleRepository;
 import com.chirkov.restApiRestaurantBussines.units.PersonNotFoundException;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,13 +40,22 @@ public class PeopleService {
     }
 
     private void enrichPerson(Person person) {
-        person.getRole().setRoleValue(RoleEnum.USER);
+//        person.getRole().setRoleValue(RoleEnum.USER);
+        person.setCreatedAt(LocalDateTime.now());
+        person.setUpdatedAt(LocalDateTime.now());
+        person.setUpdatedWho("John Doe");
     }
 
     @Transactional
     public void update(int id, Person updatePerson) {
         updatePerson.setId(id);
+        enrichUpdatePerson(updatePerson);
         peopleRepository.save(updatePerson);
+    }
+
+    private void enrichUpdatePerson(Person updatePerson) {
+        updatePerson.setUpdatedAt(LocalDateTime.now());
+        updatePerson.setUpdatedWho("Andrey Pyatin");
     }
 
     @Transactional
