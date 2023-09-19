@@ -32,6 +32,8 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
         if (peopleService.findPersonByEmail(person.getEmail()).isPresent()) {
             errors.rejectValue("email", "This email is already taken");
+        } else if (peopleService.findPersonByPhoneNumber(person.getPhoneNumber()).isPresent()) {
+            errors.rejectValue("phoneNumber", "This phoneNumber is already taken");
         }
     }
 }

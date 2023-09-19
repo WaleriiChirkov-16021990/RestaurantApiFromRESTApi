@@ -17,6 +17,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class PeopleController {
     }
 
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonDto personDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             AtomicReference<StringBuilder> errorMessage = new AtomicReference<>(new StringBuilder());

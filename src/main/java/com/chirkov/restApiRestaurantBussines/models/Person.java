@@ -6,10 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -29,13 +26,13 @@ public class Person {
     @Column(name = "person_name")
     private String name;
 
-    @NotNull(message = "Surname is not null")
+    @NotNull(message = "Surname is not empty")
     @Size(min = 2, max = 100, message = "Name length is between 2 and 100 symbol")
     @Column(name = "person_lastname")
     private String lastName;
 
     @Min(value = 1900, message = "Year of birth > 1900")
-    @NotNull(message = "Year of birth is not null")
+    @NotNull(message = "Year of birth is not empty")
     @Column(name = "person_year_of_birth")
     private int yearOfBirth;
 
@@ -50,11 +47,11 @@ public class Person {
     private String email;
 
     @Column(name = "person_username")
-    @NotNull
+    @NotNull(message = "Username should be not empty")
     private String username;
 
     @Column(name = "person_password")
-    @NotNull(message = "Password is not null")
+    @NotNull(message = "Password is not empty")
     @Size(min = 6, message = "Password contains min 6 symbol")
     private String password;
 //

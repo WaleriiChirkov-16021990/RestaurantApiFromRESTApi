@@ -12,11 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.SplittableRandom;
 
 @Service
 @Transactional(readOnly = true)
 @Getter
 public class PeopleService {
+
     private final PeopleRepository peopleRepository;
 
     @Autowired
@@ -70,6 +72,10 @@ public class PeopleService {
 
     public Optional<Person> findPersonByEmail(String email) {
         return peopleRepository.findPersonByEmail(email);
+    }
+
+    public Optional<Person> findPersonByPhoneNumber(String phoneNumber) {
+        return peopleRepository.findPersonByPhoneNumber(phoneNumber);
     }
 
 
