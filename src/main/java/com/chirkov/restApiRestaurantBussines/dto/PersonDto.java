@@ -37,6 +37,10 @@ public class PersonDto {
     @Email(message = "Email should be valid")
     private String email;
 
+    @Column(name = "person_username")
+    @NotNull(message = "Username is not null")
+    private String username;
+
     @Column(name = "person_password")
     @NotNull(message = "Password is not null")
     @Size(min = 6, message = "Password contains min 6 symbol")
