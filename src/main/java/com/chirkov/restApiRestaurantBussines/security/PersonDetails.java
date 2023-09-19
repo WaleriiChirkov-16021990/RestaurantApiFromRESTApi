@@ -1,11 +1,13 @@
 package com.chirkov.restApiRestaurantBussines.security;
 
 import com.chirkov.restApiRestaurantBussines.models.Person;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@Getter
 public class PersonDetails implements UserDetails {
     private final Person person;
 
@@ -47,4 +49,5 @@ public class PersonDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
