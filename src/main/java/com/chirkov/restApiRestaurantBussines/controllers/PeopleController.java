@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -30,11 +28,13 @@ public class PeopleController {
 
     private final ModelMapper modelMapper;
     private final PeopleService peopleService;
+    private final PersonDtoValidator personDtoValidator;
 
     @Autowired
-    public PeopleController(ModelMapper modelMapper, PeopleService peopleService) {
+    public PeopleController(ModelMapper modelMapper, PeopleService peopleService, PersonDtoValidator personDtoValidator) {
         this.modelMapper = modelMapper;
         this.peopleService = peopleService;
+        this.personDtoValidator = personDtoValidator;
     }
 
     @GetMapping
@@ -62,6 +62,7 @@ public class PeopleController {
 
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonDto personDto, BindingResult bindingResult) {
+        personDtoValidator.validate(personDto, bindingResult);
         if (bindingResult.hasErrors()) {
             AtomicReference<StringBuilder> errorMessage = new AtomicReference<>(new StringBuilder());
             List<FieldError> fieldErrorList = bindingResult.getFieldErrors();

@@ -6,24 +6,26 @@ import com.chirkov.restApiRestaurantBussines.repositories.PeopleRepository;
 import com.chirkov.restApiRestaurantBussines.units.PersonNotFoundException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.SplittableRandom;
 
 @Service
 @Transactional(readOnly = true)
-@Getter
 public class PeopleService {
 
     private final PeopleRepository peopleRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository) {
+    public PeopleService(PeopleRepository peopleRepository, PasswordEncoder bCryptPasswordEncoder) {
         this.peopleRepository = peopleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<Person> findAll() {
@@ -38,6 +40,7 @@ public class PeopleService {
     @Transactional
     public void save(Person person) {
         enrichPerson(person);
+        person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
         peopleRepository.save(person);
     }
 
