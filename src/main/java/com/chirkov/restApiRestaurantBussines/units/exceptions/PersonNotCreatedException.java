@@ -1,4 +1,4 @@
-package com.chirkov.restApiRestaurantBussines.units;
+package com.chirkov.restApiRestaurantBussines.units.exceptions;
 
 public class PersonNotCreatedException extends RuntimeException {
     /**

@@ -1,4 +1,4 @@
-package com.chirkov.restApiRestaurantBussines.units;
+package com.chirkov.restApiRestaurantBussines.units.validators;
 
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
@@ -31,9 +31,9 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
         if (peopleService.findPersonByEmail(person.getEmail()).isPresent()) {
-            errors.rejectValue("email", "This email is already taken");
+            errors.rejectValue("email", "166660","This email is already taken");
         } else if (peopleService.findPersonByPhoneNumber(person.getPhoneNumber()).isPresent()) {
-            errors.rejectValue("phoneNumber", "This phoneNumber is already taken");
+            errors.rejectValue("phoneNumber", "166661","This phoneNumber is already taken");
         }
     }
 }

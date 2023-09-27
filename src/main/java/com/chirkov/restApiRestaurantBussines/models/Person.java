@@ -59,9 +59,9 @@ public class Person {
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 //    private List<FoodReview> reviewList;
 //
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "person_role", referencedColumnName = "role_id")
-//    private Role role;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_role", referencedColumnName = "role_id")
+    private Role role;
 //
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")

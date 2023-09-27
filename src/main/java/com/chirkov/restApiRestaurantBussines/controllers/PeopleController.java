@@ -3,7 +3,10 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 import com.chirkov.restApiRestaurantBussines.dto.PersonDto;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
-import com.chirkov.restApiRestaurantBussines.units.*;
+import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.errorResponses.PersonErrorResponse;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
+import com.chirkov.restApiRestaurantBussines.units.validators.PersonDtoValidator;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
@@ -54,7 +57,9 @@ public class PeopleController {
     @ExceptionHandler
     private ResponseEntity<PersonErrorResponse> handlerException(PersonNotFoundException exception) {
         PersonErrorResponse errorResponse = new PersonErrorResponse(
-                "Person with this id wasn't found", System.currentTimeMillis()
+                "Person with this id wasn't found",
+                System.currentTimeMillis(),
+                exception.getClass().getSimpleName()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND); // status 404
     }
@@ -64,15 +69,9 @@ public class PeopleController {
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonDto personDto, BindingResult bindingResult) {
         personDtoValidator.validate(personDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            AtomicReference<StringBuilder> errorMessage = new AtomicReference<>(new StringBuilder());
-            List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
-
-            for (FieldError error :
-                    fieldErrorList) {
-                errorMessage.get().append(error.getField()).append(" - ")
-                        .append(error.getDefaultMessage()).append(";");
-            }
-            throw new PersonNotCreatedException(errorMessage.toString());
+            throw new PersonNotCreatedException(
+                    AddErrorMessageFromMyException
+                            .getErrorMessage(bindingResult));
         }
         peopleService.save(convertToPerson(personDto));
         return ResponseEntity.ok(HttpStatus.OK);
@@ -86,7 +85,8 @@ public class PeopleController {
     private ResponseEntity<PersonErrorResponse> handlerException(PersonNotCreatedException exception) {
         PersonErrorResponse response = new PersonErrorResponse(
                 exception.getMessage(),
-                System.currentTimeMillis()
+                System.currentTimeMillis(),
+                exception.getClass().getSimpleName()
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); //status = 400
     }
@@ -107,7 +107,8 @@ public class PeopleController {
     public ResponseEntity<PersonErrorResponse> handlerException(PersonNotDelete notDelete) {
         PersonErrorResponse response = new PersonErrorResponse(
                 notDelete.getMessage(),
-                System.currentTimeMillis()
+                System.currentTimeMillis(),
+                notDelete.getClass().getSimpleName()
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -121,15 +122,9 @@ public class PeopleController {
     @PatchMapping("/{id}")
     public ResponseEntity<HttpStatus> update(@PathVariable("id") int id, @RequestBody @Valid PersonDto person, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            AtomicReference<StringBuilder> errors = new AtomicReference<>(new StringBuilder());
-            List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
-
-            for (FieldError error :
-                    fieldErrorList) {
-                errors.get().append(error.getField()).append(" - ")
-                        .append(error.getDefaultMessage()).append(";");
-            }
-            throw new PersonNotUpdatedException(errors.toString());
+            throw new PersonNotUpdatedException(
+                    AddErrorMessageFromMyException
+                            .getErrorMessage(bindingResult));
         }
         peopleService.update(id, convertToPerson(person));
         return ResponseEntity.ok(HttpStatus.OK);
@@ -139,7 +134,8 @@ public class PeopleController {
     public ResponseEntity<PersonErrorResponse> handlerException(PersonNotUpdatedException exception) {
         PersonErrorResponse response = new PersonErrorResponse(
                 exception.getMessage(),
-                System.currentTimeMillis()
+                System.currentTimeMillis(),
+                exception.getClass().getSimpleName()
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

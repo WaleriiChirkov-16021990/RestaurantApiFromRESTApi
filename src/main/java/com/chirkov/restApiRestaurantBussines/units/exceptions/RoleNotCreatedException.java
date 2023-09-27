@@ -1,12 +1,12 @@
-package com.chirkov.restApiRestaurantBussines.units;
+package com.chirkov.restApiRestaurantBussines.units.exceptions;
 
-public class PersonNotUpdatedException extends RuntimeException{
+public class RoleNotCreatedException extends RuntimeException{
     /**
      * Constructs a new runtime exception with {@code null} as its
      * detail message.  The cause is not initialized, and may subsequently be
      * initialized by a call to {@link #initCause}.
      */
-    public PersonNotUpdatedException() {
+    public RoleNotCreatedException() {
     }
 
     /**
@@ -17,7 +17,7 @@ public class PersonNotUpdatedException extends RuntimeException{
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public PersonNotUpdatedException(String message) {
+    public RoleNotCreatedException(String message) {
         super(message);
     }
 
@@ -35,7 +35,7 @@ public class PersonNotUpdatedException extends RuntimeException{
      *                unknown.)
      * @since 1.4
      */
-    public PersonNotUpdatedException(String message, Throwable cause) {
+    public RoleNotCreatedException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -52,7 +52,7 @@ public class PersonNotUpdatedException extends RuntimeException{
      *              unknown.)
      * @since 1.4
      */
-    public PersonNotUpdatedException(Throwable cause) {
+    public RoleNotCreatedException(Throwable cause) {
         super(cause);
     }
 
@@ -70,7 +70,7 @@ public class PersonNotUpdatedException extends RuntimeException{
      *                           be writable
      * @since 1.7
      */
-    public PersonNotUpdatedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public RoleNotCreatedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
