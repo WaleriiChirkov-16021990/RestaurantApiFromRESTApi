@@ -135,4 +135,4 @@ VALUES ('Kazimir', 'Malevitch', 1935, '89000000001', 'malevitch@mail.ru', 'kazim
 -- VALUES ('2023-07-09 03:19:57.017956', 1, 5, 'Good food');
 
 # =======================
-
+sale laptop
