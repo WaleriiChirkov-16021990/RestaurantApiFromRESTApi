@@ -51,7 +51,7 @@ public class PeopleService {
 
     private void enrichPerson(Person person) throws RoleNotFoundException {
 //        person.setRole(this.roleService.getRoleByName("youngUser"));
-        person.setRole(this.roleService.getRoleById(1)); // TODO: check table in database
+        person.setRole(this.roleService.getRoleById(1));
         person.setCreatedAt(LocalDateTime.now());
         person.setUpdatedAt(LocalDateTime.now());
         person.setUpdatedWho("John Doe");

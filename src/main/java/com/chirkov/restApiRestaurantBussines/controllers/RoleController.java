@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/role")
@@ -27,6 +28,12 @@ public class RoleController {
         this.roleService = roleService;
         this.roleValidator = roleValidator;
     }
+
+    @GetMapping("/all")
+    public List<Role> findAll() {
+        return roleService.findAll();
+    }
+
     @GetMapping("/{id}")
     public Role getRoleById(@PathVariable("id") int id) throws RoleNotFoundException {
         return roleService.getRoleById(id);
@@ -38,13 +45,13 @@ public class RoleController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<RoleErrorResponse> handlerException(RoleNotFoundException exception) {
+    private ResponseEntity<RoleErrorResponse> handlerException(RoleNotFoundException exception) {
         RoleErrorResponse response = new RoleErrorResponse(
                 exception.getMessage(),
                 System.currentTimeMillis(),
                 exception.getClass().getSimpleName()
         );
-        return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/add")
@@ -60,13 +67,13 @@ public class RoleController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<RoleErrorResponse> handlerException(RoleNotCreatedException exception){
+    private ResponseEntity<RoleErrorResponse> handlerException(RoleNotCreatedException exception) {
         RoleErrorResponse roleErrorResponse = new RoleErrorResponse(
                 exception.getMessage(),
                 System.currentTimeMillis(),
                 exception.getClass().getSimpleName()
         );
-        return new ResponseEntity<>(roleErrorResponse,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(roleErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
 

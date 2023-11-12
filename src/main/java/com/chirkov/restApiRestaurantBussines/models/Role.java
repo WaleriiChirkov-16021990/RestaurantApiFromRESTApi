@@ -7,6 +7,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Role")
@@ -49,5 +50,17 @@ public class Role {
                 ", name='" + name + '\'' +
                 ", roleValue=" + roleValue +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role role)) return false;
+        return Objects.equals(getName(), role.getName()) && getRoleValue() == role.getRoleValue();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRoleValue());
     }
 }

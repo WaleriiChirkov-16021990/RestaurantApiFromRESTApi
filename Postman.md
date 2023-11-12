@@ -15,3 +15,9 @@ Role
 "name":"User",
 "roleValue":"ROLE_USER"
 }
+
+Discount
+{
+"name": "twenty",
+"sale":"TWENTY"
+}

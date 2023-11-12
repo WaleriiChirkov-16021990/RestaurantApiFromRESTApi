@@ -35,14 +35,15 @@ public class RoleService {
         return this.roleRepository.findRoleByName(name);
     }
     public Optional<Role> getRoleByRoleValue(String roleValue) throws RoleNotFoundException {
-        Optional<Role> role = null;
+        Optional<Role> role;
         for (RoleEnum roleEnum :
              RoleEnum.values()) {
             if (roleEnum.toString().equals(roleValue)) {
                  role = this.roleRepository.findRoleByRoleValue(roleEnum);
+                return role;
             }
         }
-        return role;
+        throw new RoleNotFoundException("Role not found: " + roleValue);
     }
 
     @Transactional

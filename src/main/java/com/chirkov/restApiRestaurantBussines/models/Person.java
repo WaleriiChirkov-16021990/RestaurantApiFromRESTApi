@@ -62,10 +62,10 @@ public class Person {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_role", referencedColumnName = "role_id")
     private Role role;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")
-//    private Discount discount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")
+    private Discount discount;
 //
 //    @OneToMany(mappedBy = "owner")
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
