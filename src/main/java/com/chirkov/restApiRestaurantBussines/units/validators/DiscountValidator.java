@@ -10,8 +10,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-@Getter
-@Setter
 public class DiscountValidator implements Validator {
     private final DiscountService discountService;
 

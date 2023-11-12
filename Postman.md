@@ -17,6 +17,8 @@ Role
 }
 
 Discount
+localhost:8080/discount/add
+POST request
 {
 "name": "twenty",
 "sale":"TWENTY"
