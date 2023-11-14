@@ -21,12 +21,14 @@ public class PeopleService {
     private final PeopleRepository peopleRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final RoleService roleService;
+    private final DiscountService discountService;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository, PasswordEncoder bCryptPasswordEncoder, RoleService roleService) {
+    public PeopleService(PeopleRepository peopleRepository, PasswordEncoder bCryptPasswordEncoder, RoleService roleService, DiscountService discountService) {
         this.peopleRepository = peopleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.roleService = roleService;
+        this.discountService = discountService;
     }
 
     public List<Person> findAll() {
@@ -51,7 +53,9 @@ public class PeopleService {
 
     private void enrichPerson(Person person) throws RoleNotFoundException {
 //        person.setRole(this.roleService.getRoleByName("youngUser"));
+
         person.setRole(this.roleService.getRoleById(1));
+        person.setDiscount(this.discountService.findById(1));
         person.setCreatedAt(LocalDateTime.now());
         person.setUpdatedAt(LocalDateTime.now());
         person.setUpdatedWho("John Doe");

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "restaurant_reviews")
+@Table(name = "Restaurant_reviews")
 @Getter
 @Setter
 public class RestaurantReviews {

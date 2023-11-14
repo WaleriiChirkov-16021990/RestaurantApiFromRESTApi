@@ -29,7 +29,7 @@ public class Discount {
     @NotNull
     private DiscountEnum sale;
 
-    @OneToMany(mappedBy = "discount")
+    @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Person> personList;
 

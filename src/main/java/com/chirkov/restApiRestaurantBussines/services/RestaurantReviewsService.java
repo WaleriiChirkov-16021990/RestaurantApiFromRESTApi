@@ -7,18 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 public class RestaurantReviewsService {
-
     private final RestaurantReviewsRepository repository;
+    private final PeopleService peopleService;
+
 
     @Autowired
-    public RestaurantReviewsService(RestaurantReviewsRepository repository) {
+    public RestaurantReviewsService(RestaurantReviewsRepository repository, PeopleService peopleService) {
         this.repository = repository;
+        this.peopleService = peopleService;
     }
 
     public Optional<RestaurantReviews> findById(int id) {
@@ -35,6 +38,13 @@ public class RestaurantReviewsService {
 
     @Transactional
     public void save(RestaurantReviews review) {
+        enrichReview(review);
         this.repository.save(review);
+    }
+
+    private void enrichReview(RestaurantReviews review) {
+//        review.setOwner(this.peopleService.findOne(1));
+        review.setCreateAt(LocalDateTime.now());
+        review.setUpdateAt(LocalDateTime.now());
     }
 }

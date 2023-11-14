@@ -1,5 +1,6 @@
 # Post query localhost:8080/
 Person
+localhost:8080/people/add
 {
 "name": "Mari",
 "lastName": "Minna",
@@ -7,7 +8,9 @@ Person
 "phoneNumber": "89002225569",
 "email": "mannaa@gmail.com",
 "username": "manna",
-"password":"mannamanna"
+"password":"mannamanna",
+"discount":5,
+"role":1
 }
 
 Role
@@ -23,3 +26,5 @@ POST request
 "name": "twenty",
 "sale":"TWENTY"
 }
+
+RestaurantReviews

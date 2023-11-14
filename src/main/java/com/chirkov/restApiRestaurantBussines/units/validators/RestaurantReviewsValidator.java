@@ -1,5 +1,4 @@
 package com.chirkov.restApiRestaurantBussines.units.validators;
-
 import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
 import com.chirkov.restApiRestaurantBussines.services.RestaurantReviewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class RestaurantReviewsValidator implements Validator {
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        return RestaurantReviews.class.isAssignableFrom(clazz);
+        return RestaurantReviews.class.equals(clazz);
     }
 
     /**
