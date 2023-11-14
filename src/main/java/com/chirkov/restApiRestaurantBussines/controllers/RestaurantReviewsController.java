@@ -69,7 +69,7 @@ public class RestaurantReviewsController {
                 exception.getClass().getSimpleName(),
                 System.currentTimeMillis()
         );
-        return new  ResponseEntity<>(errorResponse,HttpStatus.NO_CONTENT);
+        return new  ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 }
 

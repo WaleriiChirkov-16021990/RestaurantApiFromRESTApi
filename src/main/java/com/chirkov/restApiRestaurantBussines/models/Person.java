@@ -67,9 +67,9 @@ public class Person {
     @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")
     private Discount discount;
 
-//    @OneToMany(mappedBy = "owner")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<RestaurantReviews> restaurantReviews;
+    @OneToMany(mappedBy = "owner")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<RestaurantReviews> restaurantReviews;
 //
 //    @OneToMany(mappedBy = "owner")
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})

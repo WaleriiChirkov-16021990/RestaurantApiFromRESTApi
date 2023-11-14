@@ -9,9 +9,9 @@ localhost:8080/people/add
 "email": "mannaa@gmail.com",
 "username": "manna",
 "password":"mannamanna",
+}
 "discount":5,
 "role":1
-}
 
 Role
 {
@@ -28,3 +28,7 @@ POST request
 }
 
 RestaurantReviews
+{
+"gradle":5,
+"comment":"whot the shit.."
+}

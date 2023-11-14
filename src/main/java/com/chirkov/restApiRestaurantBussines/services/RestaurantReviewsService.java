@@ -38,12 +38,16 @@ public class RestaurantReviewsService {
 
     @Transactional
     public void save(RestaurantReviews review) {
-        enrichReview(review);
-        this.repository.save(review);
+        try {
+            enrichReview(review);
+            this.repository.save(review);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void enrichReview(RestaurantReviews review) {
-//        review.setOwner(this.peopleService.findOne(1));
+        review.setOwner(this.peopleService.findOne(3));
         review.setCreateAt(LocalDateTime.now());
         review.setUpdateAt(LocalDateTime.now());
     }
