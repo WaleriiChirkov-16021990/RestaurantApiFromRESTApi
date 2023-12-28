@@ -53,9 +53,12 @@ public class PeopleService {
 
     private void enrichPerson(Person person) throws RoleNotFoundException {
 //        person.setRole(this.roleService.getRoleByName("youngUser"));
-
+        // TODO Auto select role from person
         person.setRole(this.roleService.getRoleById(1));
+//        person.setRole(this.roleService.getRoleById(person.getRole().getId()));
         person.setDiscount(this.discountService.findById(1));
+        // TODO Auto select discount from new person
+//        person.setDiscount(this.discountService.findById(person.getDiscount().getId()));
         person.setCreatedAt(LocalDateTime.now());
         person.setUpdatedAt(LocalDateTime.now());
         person.setUpdatedWho("John Doe");

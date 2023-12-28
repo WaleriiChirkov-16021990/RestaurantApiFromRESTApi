@@ -47,7 +47,7 @@ public class RestaurantReviewsService {
     }
 
     private void enrichReview(RestaurantReviews review) {
-        review.setOwner(this.peopleService.findOne(3));
+//        review.setOwner(this.peopleService.findOne(review.getGradle()));
         review.setCreateAt(LocalDateTime.now());
         review.setUpdateAt(LocalDateTime.now());
     }

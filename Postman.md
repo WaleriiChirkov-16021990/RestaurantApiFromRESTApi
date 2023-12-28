@@ -28,7 +28,9 @@ POST request
 }
 
 RestaurantReviews
+localhost:8080/restReviews/add
 {
+"owner":3,
 "gradle":5,
-"comment":"whot the shit.."
+"comment":"this final restaurant review"
 }

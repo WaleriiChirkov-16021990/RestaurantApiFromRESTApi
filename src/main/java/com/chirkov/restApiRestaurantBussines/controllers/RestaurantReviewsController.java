@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
+import com.chirkov.restApiRestaurantBussines.dto.RestaurantReviewsDto;
 import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.RestaurantReviewsService;
@@ -23,11 +24,13 @@ import java.util.Optional;
 public class RestaurantReviewsController {
     private final RestaurantReviewsService service;
     private final RestaurantReviewsValidator validator;
+    private final PeopleService peopleService;
 
     @Autowired
-    public RestaurantReviewsController(RestaurantReviewsService service, RestaurantReviewsValidator validator) {
+    public RestaurantReviewsController(RestaurantReviewsService service, RestaurantReviewsValidator validator, PeopleService peopleService) {
         this.service = service;
         this.validator = validator;
+        this.peopleService = peopleService;
     }
 
     @GetMapping("/all")
@@ -51,7 +54,8 @@ public class RestaurantReviewsController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> addRestaurantReview(@RequestBody @Valid RestaurantReviews review, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> addRestaurantReview(@RequestBody @Valid RestaurantReviewsDto reviewDto, BindingResult bindingResult) {
+        RestaurantReviews review = reviewDto.mapReview(this.peopleService);
         this.validator.validate(review,bindingResult);
         if (bindingResult.hasErrors()) {
             throw new RestaurantReviewsNotCreateException(
