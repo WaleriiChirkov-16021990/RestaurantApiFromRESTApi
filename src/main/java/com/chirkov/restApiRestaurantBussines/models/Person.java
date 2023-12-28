@@ -74,7 +74,7 @@ public class Person {
 //    @OneToMany(mappedBy = "owner")
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 //    private List<TableReservation> reservationList;
-//
+
 //    @OneToMany(mappedBy = "authorThisRecodrs")
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 //    private List<TableReservation> createdReserveRecords;

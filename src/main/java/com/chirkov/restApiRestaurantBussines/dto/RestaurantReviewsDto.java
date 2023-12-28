@@ -4,6 +4,7 @@ import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotNull;
@@ -16,11 +17,11 @@ import java.util.Objects;
 public class RestaurantReviewsDto {
 
     @NotNull
-//    @Pattern(regexp = "^\\d$",message = "Id of person")
+    @Pattern(regexp = "^\\d",message = "Id of person is numeric and  required")
     private int owner;
 
-//    @Pattern(regexp = "^\\d+$",message = "Rating for this restaurant")
-//    @Size(min = 0,max =5,message = "Rating for this restaurant with a between 1 and 5 rating")
+    @Pattern(regexp = "^\\d",message = "Rating for this restaurant is numeric")
+    @Range(min = 1,max =5,message = "Rating for this restaurant with a between 1 and 5 rating")
     private int gradle;
 
     @NotNull
