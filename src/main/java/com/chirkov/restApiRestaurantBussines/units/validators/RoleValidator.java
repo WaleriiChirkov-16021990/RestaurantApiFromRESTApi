@@ -40,7 +40,8 @@ public class RoleValidator implements Validator {
         Role role = (Role) target;
         if (this.roleService.getRoleByName(role.getName()).isPresent()) {
             errors.rejectValue("name","166662", "Role does already exists");
-        } else if (this.roleService.getRoleByRoleValue(String.valueOf(role.getRoleValue())).isPresent()) {
+        }
+        if (this.roleService.getRoleByRoleValue(String.valueOf(role.getRoleValue())).isPresent()) {
             errors.rejectValue("roleValue", "166663","Role value does already exists");
         }
     }

@@ -5,6 +5,7 @@ import com.chirkov.restApiRestaurantBussines.models.StateFromTable;
 import com.chirkov.restApiRestaurantBussines.models.StateFromTableEnum;
 import com.chirkov.restApiRestaurantBussines.repositories.StateFromTablesRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.StateFromTableNotFoundException;
+import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class StateFromTablesService {
 
     public StateFromTable getStateById(int id) {
         Optional<StateFromTable> state = this.repository.findById(id);
-        return state.orElseThrow(StateFromTableNotFoundException::new);
+        return state.orElseThrow(() -> new StateFromTableNotFoundException("Not found state by Id = " + id));
     }
 
     public Optional<StateFromTable> getStateByName(String name) {

@@ -4,7 +4,6 @@ import com.chirkov.restApiRestaurantBussines.models.Role;
 import com.chirkov.restApiRestaurantBussines.services.RoleService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.RoleErrorResponse;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.validators.RoleValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +34,12 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public Role getRoleById(@PathVariable("id") int id) throws RoleNotFoundException {
+    public Role getRoleByName(@PathVariable("id") int id) throws RoleNotFoundException {
         return roleService.getRoleById(id);
     }
 
     @GetMapping("/name/{name}")
-    public Role getRoleById(@PathVariable("name") String name) throws RoleNotFoundException {
+    public Role getRoleByName(@PathVariable("name") String name) throws RoleNotFoundException {
         return roleService.getRoleByName(name).orElseThrow(RoleNotFoundException::new);
     }
 
@@ -55,8 +54,8 @@ public class RoleController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> addRole(@RequestBody @Valid Role role, BindingResult bindingResult) {
-        roleValidator.validate(role, bindingResult);
+    public ResponseEntity<HttpStatus> addRole(@RequestBody @Valid Role role, BindingResult bindingResult) throws RoleNotCreatedException {
+//        this.roleValidator.validate(role, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new RoleNotCreatedException(AddErrorMessageFromMyException
                     .getErrorMessage(bindingResult));
