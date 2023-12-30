@@ -51,10 +51,10 @@ public class StateFromTableController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> addState(@RequestBody @Valid StateFromTable state, BindingResult bindingResult) {
-//        this.stateFromTablesvalidator.validate(state, bindingResult);
+    public ResponseEntity<HttpStatus> addState(@RequestBody @Valid StateFromTable state, BindingResult bindingResult) throws StateFromTableNotCreateException {
+        this.stateFromTablesvalidator.validate(state, bindingResult);
         if (bindingResult.hasErrors()) {
-            throw new StateFromTableNotCreateException(AddErrorMessageFromMyException.getErrorMessage(bindingResult));
+            throw new StateFromTableNotCreateException("Not unique state " + AddErrorMessageFromMyException.getErrorMessage(bindingResult));
         }
         this.stateFromTablesService.save(state);
         return ResponseEntity.ok(HttpStatus.OK);

@@ -22,7 +22,7 @@ public class StateFromTableValidator implements Validator {
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz.equals(StateFromTablesService.class);
+        return clazz.isAssignableFrom(StateFromTablesService.class);
     }
 
     /**

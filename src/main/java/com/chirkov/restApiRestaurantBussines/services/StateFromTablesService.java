@@ -38,10 +38,10 @@ public class StateFromTablesService {
 
     public Optional<StateFromTable> getStateByValue(String stateValue) {
         Optional<StateFromTable> findState;
-        for (StateFromTableEnum state1 :
+        for (StateFromTableEnum state :
                 StateFromTableEnum.values()) {
-            if (state1.toString().equals(stateValue)) {
-                findState = this.repository.findStateFromTablesByValue(state1);
+            if (state.toString().equals(stateValue)) {
+                findState = this.repository.findStateFromTablesByValue(state);
                 return findState;
             }
         }
