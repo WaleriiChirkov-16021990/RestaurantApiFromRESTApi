@@ -3,7 +3,6 @@ package com.chirkov.restApiRestaurantBussines.units.errorResponses;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
 public class ErrorResponceStateFromTable {
     private String entityObjectName;

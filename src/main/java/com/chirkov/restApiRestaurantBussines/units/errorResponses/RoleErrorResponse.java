@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class RoleErrorResponse {
     private String entityObjectName;
     private String message;

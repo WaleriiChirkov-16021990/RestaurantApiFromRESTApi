@@ -1,6 +1,5 @@
 package com.chirkov.restApiRestaurantBussines.services;
 
-import com.chirkov.restApiRestaurantBussines.models.RoleEnum;
 import com.chirkov.restApiRestaurantBussines.models.StateFromTable;
 import com.chirkov.restApiRestaurantBussines.models.StateFromTableEnum;
 import com.chirkov.restApiRestaurantBussines.repositories.StateFromTablesRepository;

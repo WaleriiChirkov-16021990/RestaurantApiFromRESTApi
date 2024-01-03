@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/people")
-@Getter
-@Setter
 public class PeopleController {
 
     private final ModelMapper modelMapper;

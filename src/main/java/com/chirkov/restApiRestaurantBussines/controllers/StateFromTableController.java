@@ -10,14 +10,13 @@ import com.chirkov.restApiRestaurantBussines.units.validators.StateFromTableVali
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/state_from_tables")
 public class StateFromTableController {
 
@@ -67,7 +66,6 @@ public class StateFromTableController {
                 System.currentTimeMillis(),
                 exception.getClass().getSimpleName()
         );
-        return new ResponseEntity<>(stateFromTable,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(stateFromTable, HttpStatus.BAD_REQUEST);
     }
-
 }

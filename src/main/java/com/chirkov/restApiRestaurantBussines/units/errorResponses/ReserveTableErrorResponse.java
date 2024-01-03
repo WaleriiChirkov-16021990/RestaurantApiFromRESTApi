@@ -2,14 +2,15 @@ package com.chirkov.restApiRestaurantBussines.units.errorResponses;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 @Getter
-public class DiscountErrorResponse {
+public class ReserveTableErrorResponse {
     private String entityObjectName;
     private String message;
     private long timestamp;
 
-    public DiscountErrorResponse(String message, long timestamp, String entityObjectName) {
+    public ReserveTableErrorResponse(String entityObjectName, String message, long timestamp) {
         this.entityObjectName = entityObjectName;
         this.message = message;
         this.timestamp = timestamp;

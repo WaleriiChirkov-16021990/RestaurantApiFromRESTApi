@@ -34,3 +34,22 @@ localhost:8080/restReviews/add
 "gradle":5,
 "comment":"this final restaurant review"
 }
+
+
+StateFromTable
+localhost:8080/state_from_tables/add
+{
+
+"name":"paid",
+"value":"PAID_THE_BILL"
+
+}
+
+
+ReserveTable
+localhost:8080/reserve_a_table/all
+{
+"accommodationNumber":2,
+"stateFromTable":1,
+"numberOfSeats":6
+}

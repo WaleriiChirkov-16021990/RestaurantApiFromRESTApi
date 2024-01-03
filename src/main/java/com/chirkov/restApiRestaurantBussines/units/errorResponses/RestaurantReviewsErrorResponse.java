@@ -1,5 +1,8 @@
 package com.chirkov.restApiRestaurantBussines.units.errorResponses;
 
+import lombok.Getter;
+
+@Getter
 public class RestaurantReviewsErrorResponse {
     private String entityObjectName;
     private String message;
