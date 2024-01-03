@@ -17,7 +17,6 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class PeopleService {
-
     private final PeopleRepository peopleRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final RoleService roleService;

@@ -23,8 +23,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reserve_a_table")
-@Getter
-@Setter
 public class ReserveTableController {
     private final ReserveTableService service;
     private final ReserveTableValidator validator;
