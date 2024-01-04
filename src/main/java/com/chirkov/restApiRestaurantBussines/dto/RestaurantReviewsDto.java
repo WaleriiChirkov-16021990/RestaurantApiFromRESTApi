@@ -5,11 +5,9 @@ import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Getter

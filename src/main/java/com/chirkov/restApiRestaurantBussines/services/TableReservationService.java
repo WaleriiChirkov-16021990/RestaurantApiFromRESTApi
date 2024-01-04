@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,12 @@ public class TableReservationService {
 
     @Transactional
     public void save(TableReservation tableReservation) {
+        enrichTableReservation(tableReservation);
         this.repository.save(tableReservation);
+    }
+
+    private void enrichTableReservation(TableReservation tableReservation) {
+        tableReservation.setCreate_at(LocalDateTime.now());
+        tableReservation.setUpdate_at(LocalDateTime.now());
     }
 }

@@ -40,7 +40,7 @@ public class TableReservationValidator implements Validator {
         List<TableReservation> tableReservations = this.service.getTableReservationByTable(validator.getTable());
         if (!tableReservations.isEmpty()) {
             tableReservations.forEach((reservations)-> {
-                if (reservations.getDate() == validator.getDate() && (validator.getTime() == reservations.getTime())) {
+                if (reservations.getDate() == validator.getDate()) {
                     errors.rejectValue("TableReservation","1111222233","Invalid date and time for reservation,the specified date is already booked");
                 }
 //                if (reservations.getDate() == validator.getDate() && ((validator.getTime()-reservations.getTime())< 2))

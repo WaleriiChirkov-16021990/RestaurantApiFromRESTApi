@@ -1,6 +1,9 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
+import com.chirkov.restApiRestaurantBussines.dto.TableReservationDto;
 import com.chirkov.restApiRestaurantBussines.models.TableReservation;
+import com.chirkov.restApiRestaurantBussines.services.PeopleService;
+import com.chirkov.restApiRestaurantBussines.services.ReserveTableService;
 import com.chirkov.restApiRestaurantBussines.services.TableReservationService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.TableReservationErrorResponse;
@@ -21,33 +24,39 @@ import java.util.List;
 public class TableReservationController {
     private final TableReservationService service;
     private final TableReservationValidator validator;
+    private final PeopleService peopleService;
+    private final ReserveTableService reserveTableService;
 
     @Autowired
-    public TableReservationController(TableReservationService service, TableReservationValidator validator) {
+    public TableReservationController(TableReservationService service, TableReservationValidator validator, PeopleService peopleService, ReserveTableService reserveTableService) {
         this.service = service;
         this.validator = validator;
+        this.peopleService = peopleService;
+        this.reserveTableService = reserveTableService;
     }
 
     @GetMapping("/all")
     public List<TableReservation> getAllTableReservations() {
-        return service.findAll();
+        return this.service.findAll();
     }
 
     @GetMapping("/{id}")
     public TableReservation getTableReservationById(@PathVariable("id") int id) throws TableReservationNotFoundException {
-        return service.getTableReservationById(id);
+        return this.service.getTableReservationById(id);
     }
 
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> save(@RequestBody @Valid TableReservation reservation, BindingResult bindingResult) throws TableReservationNotCreatedException {
-        validator.validate(reservation, bindingResult);
+    public ResponseEntity<HttpStatus> save(@RequestBody @Valid TableReservationDto reservationDto, BindingResult bindingResult) throws TableReservationNotCreatedException {
+        TableReservation reservation = reservationDto.mappingTableReservationDto(peopleService,reserveTableService);
+        // TODO Auto-generated method Update reservations
+        this.validator.validate(reservation, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new TableReservationNotCreatedException(
                     AddErrorMessageFromMyException.getErrorMessage(bindingResult)
             );
         }
-        service.save(reservation);
+        this.service.save(reservation);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

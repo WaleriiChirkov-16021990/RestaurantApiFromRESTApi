@@ -4,12 +4,15 @@ package com.chirkov.restApiRestaurantBussines.models;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+
+import static javax.persistence.FetchType.*;
 
 @Entity
 @Table(name = "Person")
@@ -59,11 +62,11 @@ public class Person {
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 //    private List<FoodReview> reviewList;
 //
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "person_role", referencedColumnName = "role_id")
     private Role role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")
     private Discount discount;
 

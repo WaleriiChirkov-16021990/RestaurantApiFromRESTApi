@@ -21,12 +21,12 @@ import java.util.List;
 public class StateFromTableController {
 
     private final StateFromTablesService stateFromTablesService;
-    private final StateFromTableValidator stateFromTablesvalidator;
+    private final StateFromTableValidator stateFromTablesValidator;
 
     @Autowired
-    public StateFromTableController(StateFromTablesService stateFromTablesService, StateFromTableValidator stateFromTablesvalidator) {
+    public StateFromTableController(StateFromTablesService stateFromTablesService, StateFromTableValidator stateFromTablesValidator) {
         this.stateFromTablesService = stateFromTablesService;
-        this.stateFromTablesvalidator = stateFromTablesvalidator;
+        this.stateFromTablesValidator = stateFromTablesValidator;
     }
 
     @GetMapping("/all")
@@ -51,7 +51,7 @@ public class StateFromTableController {
 
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> addState(@RequestBody @Valid StateFromTable state, BindingResult bindingResult) throws StateFromTableNotCreateException {
-        this.stateFromTablesvalidator.validate(state, bindingResult);
+        this.stateFromTablesValidator.validate(state, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new StateFromTableNotCreateException("Not unique state " + AddErrorMessageFromMyException.getErrorMessage(bindingResult));
         }
