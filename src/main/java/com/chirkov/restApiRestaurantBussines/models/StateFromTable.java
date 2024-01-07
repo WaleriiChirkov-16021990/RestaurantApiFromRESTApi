@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@Table(name = "State_from_table")
+@Table(name = "State_from_table",schema = "public")
 public class StateFromTable {
 
     @Id

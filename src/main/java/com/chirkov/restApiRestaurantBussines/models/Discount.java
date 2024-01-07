@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Discount")
+@Table(name = "Discount",schema = "public")
 @Getter
 @Setter
 public class Discount {
@@ -30,7 +30,8 @@ public class Discount {
     private DiscountEnum sale;
 
     @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<Person> personList;
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Objects;
 import static javax.persistence.FetchType.*;
 
 @Entity
-@Table(name = "Person")
+@Table(name = "Person",schema = "public")
 @Getter
 @Setter
 public class Person {
@@ -71,20 +71,21 @@ public class Person {
     private Discount discount;
 
     @OneToMany(mappedBy = "owner")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<RestaurantReviews> restaurantReviews;
-//
-//    @OneToMany(mappedBy = "owner")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<TableReservation> reservationList;
 
-//    @OneToMany(mappedBy = "authorThisRecodrs")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<TableReservation> createdReserveRecords;
-//
-//    @OneToMany(mappedBy = "authorOfUpdate")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<TableReservation> updatedReserveRecords;
+    @OneToMany(mappedBy = "owner")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    private List<TableReservation> reservationList;
+
+    @OneToMany(mappedBy = "authorThisRecords")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    private List<TableReservation> createdReserveRecords;
+
+    @OneToMany(mappedBy = "authorOfUpdate")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    private List<TableReservation> updatedReserveRecords;
 
     @Column(name = "person_created_at")
     private LocalDateTime createdAt;

@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 public class ErrorResponceStateFromTable {
-    private String entityObjectName;
-    private String message;
-    private long timestamp;
+    private final String entityObjectName;
+    private final String message;
+    private final long timestamp;
 
     public ErrorResponceStateFromTable(String message, long timestamp, String entityObjectName) {
         this.entityObjectName = entityObjectName;

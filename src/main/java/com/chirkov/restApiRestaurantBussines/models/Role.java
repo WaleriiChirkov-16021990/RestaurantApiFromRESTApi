@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Role")
+@Table(name = "Role",schema = "public")
 @Getter
 @Setter
 public class Role {

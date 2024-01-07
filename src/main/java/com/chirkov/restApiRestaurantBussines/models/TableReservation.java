@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
@@ -12,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@Table(name = "table_reservation")
+@Table(name = "table_reservation",schema = "public")
 public class TableReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +21,13 @@ public class TableReservation {
     private int id;
 
     @NotNull
+    @JsonIgnore // TODO узнать почему fetch не работает без явного исключения из response
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_table_id", referencedColumnName = "reverse_table_id")
     private ReserveTable table;
 
     @NotNull
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_user_id", referencedColumnName = "person_id")
     private Person owner;
@@ -41,6 +44,7 @@ public class TableReservation {
     @Column(name = "table_reservation_create_at")
     private LocalDateTime create_at;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_author_from_record", referencedColumnName = "person_id")
     @NotNull
@@ -51,6 +55,7 @@ public class TableReservation {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_author_from_update", referencedColumnName = "person_id")
     @NotNull

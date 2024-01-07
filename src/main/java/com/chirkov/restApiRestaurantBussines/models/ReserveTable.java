@@ -1,15 +1,18 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Reserve_table")
+@Table(name = "Reserve_table",schema = "public")
 @Getter
 @Setter
 public class ReserveTable {
@@ -24,7 +27,8 @@ public class ReserveTable {
     private int accommodationNumber;
 
     @NotNull
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reserve_table_state",referencedColumnName = "state_from_table_id")
     private StateFromTable stateFromTable;
 
@@ -32,10 +36,10 @@ public class ReserveTable {
     @Column(name = "reverse_table_number_of_seats")
     @Range(min = 0, max = 100, message = "Number of seats should between 0 to 100")
     private int numberOfSeats;
-//
-//    @OneToMany(mappedBy = "table")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<TableReservation> reservationList;
+
+    @OneToMany(mappedBy = "table",fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<TableReservation> reservationList;
 
     public ReserveTable() {
     }
