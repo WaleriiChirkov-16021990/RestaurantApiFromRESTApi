@@ -83,6 +83,9 @@ public class Person {
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<TableReservation> createdReserveRecords;
 
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
+    private List<Order> orderList;
+
     @OneToMany(mappedBy = "authorOfUpdate")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<TableReservation> updatedReserveRecords;

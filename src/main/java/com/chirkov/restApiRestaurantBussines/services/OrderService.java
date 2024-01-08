@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = {OrderNotFoundException.class})
+@Transactional(readOnly = true,
+        propagation = Propagation.REQUIRED,
+        rollbackFor = {OrderNotFoundException.class})
 public class OrderService {
 
     private final OrderRepository orderRepository;

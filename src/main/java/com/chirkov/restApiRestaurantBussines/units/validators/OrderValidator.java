@@ -32,6 +32,7 @@ public class OrderValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Order order = (Order) target;
+        // TODO Create a proper error message
 //        if (orderService.findById(order.getId()) != null) {
 //            errors.rejectValue("Order","23455555","This order is already exist");
 //        }
