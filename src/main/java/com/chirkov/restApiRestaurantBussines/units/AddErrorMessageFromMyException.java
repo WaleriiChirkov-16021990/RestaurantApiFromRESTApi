@@ -21,6 +21,6 @@ public class AddErrorMessageFromMyException {
                     .append(error.getDefaultMessage())
                     .append(";");
         }
-        return errorMessage.toString();
+        return errorMessage.get().toString();
     }
 }

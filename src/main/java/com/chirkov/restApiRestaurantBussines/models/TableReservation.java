@@ -3,6 +3,8 @@ package com.chirkov.restApiRestaurantBussines.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -22,7 +24,8 @@ public class TableReservation {
 
     @NotNull
     @JsonIgnore // TODO узнать почему fetch не работает без явного исключения из response
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SELECT)
+    @ManyToOne
     @JoinColumn(name = "table_reservation_table_id", referencedColumnName = "reverse_table_id")
     private ReserveTable table;
 

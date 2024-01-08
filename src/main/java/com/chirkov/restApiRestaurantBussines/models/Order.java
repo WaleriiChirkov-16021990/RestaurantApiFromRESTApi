@@ -25,7 +25,7 @@ public class Order {
 //    private OrderElements orderElements;
 
     @JsonIgnore
-    @Fetch(value = FetchMode.JOIN)
+    @Fetch(value = FetchMode.SELECT)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_owner", referencedColumnName = "person_id")
     private Person owner;

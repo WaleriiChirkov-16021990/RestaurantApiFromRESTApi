@@ -53,3 +53,11 @@ localhost:8080/reserve_a_table/all
 "stateFromTable":1,
 "numberOfSeats":6
 }
+
+Order
+localhost:8080/orders/add
+{
+"owner":3,
+"price":5000.00,
+"statusFromOrder":"CLOSED_SUCCESSFUL_ORDER"
+}
