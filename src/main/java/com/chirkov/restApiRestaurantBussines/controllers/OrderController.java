@@ -36,17 +36,17 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    private List<Order> findAllOrders() {
+    public List<Order> findAllOrders() {
         return orderService.findAll();
     }
 
     @GetMapping("/{id}")
-    private Order findById(@PathVariable("id") int id) throws OrderNotFoundException {
+    public Order findById(@PathVariable("id") int id) throws OrderNotFoundException {
         return orderService.findById(id);
     }
 
     @PostMapping("/add")
-    private ResponseEntity<HttpStatus> save(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult) throws OrderNotCreatedException {
+    public ResponseEntity<HttpStatus> save(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult) throws OrderNotCreatedException {
         Order order = orderDto.mappingbyOrder(this.peopleService);
         orderValidator.validate(order, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -58,7 +58,7 @@ public class OrderController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<OrderErrorResponse> handleOrder(OrderNotCreatedException createdException) {
+    public ResponseEntity<OrderErrorResponse> handleOrder(OrderNotCreatedException createdException) {
         OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
                 createdException.getMessage(),
                 System.currentTimeMillis(),
@@ -67,7 +67,7 @@ public class OrderController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<OrderErrorResponse> handleOrder(OrderNotFoundException foundException) {
+    public ResponseEntity<OrderErrorResponse> handleOrder(OrderNotFoundException foundException) {
         OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
                 foundException.getMessage(),
                 System.currentTimeMillis(),
@@ -78,7 +78,7 @@ public class OrderController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<OrderErrorResponse> handleOrder(PersonNotFoundException foundException) {
+    public ResponseEntity<OrderErrorResponse> handleOrder(PersonNotFoundException foundException) {
         OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
                 foundException.getMessage(),
                 System.currentTimeMillis(),

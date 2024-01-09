@@ -24,6 +24,10 @@ public class DishesService {
         this.repository = repository;
     }
 
+    public List<Dishes> findAllDishes() {
+        return repository.findAll();
+    }
+
     public Dishes getDishesById(long id) throws DishesNotFoundException {
         return repository.getReferenceById(id);
     }

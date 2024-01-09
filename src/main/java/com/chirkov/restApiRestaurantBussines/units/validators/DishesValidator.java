@@ -25,12 +25,17 @@ public class DishesValidator implements Validator {
     }
 
     /**
-     * @param target
-     * @param errors
+     * @param target - value to validate
+     * @param errors - optional a object for error message
      */
     @Override
     public void validate(Object target, Errors errors) {
         Dishes dishes = (Dishes) target;
-        // TODO Create validation for Dishes entity
+        Dishes entity = service.getDishesByName(dishes.getName());
+        if(entity != null) {
+            if (entity.equals(dishes)) {
+                errors.rejectValue("dishes","122233334444555","This dishes already exist");
+            }
+        }
     }
 }
