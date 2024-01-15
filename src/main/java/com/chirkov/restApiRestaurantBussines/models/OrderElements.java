@@ -17,13 +17,13 @@ public class OrderElements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_element_id")
-    private int id;
+    private long id;
 
     @OneToOne
     @JoinColumn(name = "order_element_orderElements", referencedColumnName = "order_id")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_element_dishes", referencedColumnName = "dishes_id")
     private Dishes dishes;
 
