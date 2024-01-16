@@ -46,10 +46,10 @@ public class Dishes {
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 //    private List<FoodReview> foodReviewList;
 
-//
-//    @OneToMany(mappedBy = "dishes")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<OrderElements> orderElementsIntegerMap;
+
+    @OneToMany(mappedBy = "dishes")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<OrderElements> orderElementsIntegerMap;
 //
 //    @ManyToMany
 //    @JoinTable(

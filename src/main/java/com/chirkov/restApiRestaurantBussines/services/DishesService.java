@@ -36,6 +36,9 @@ public class DishesService {
         return repository.findByName(name).orElseThrow(() -> new DishesNotFoundException("Dishes by name " + name + " not found"));
     }
 
+    public Optional<Dishes> getDishesByNameOpt(String name) {
+        return repository.findByName(name);
+    }
     public List<Dishes> getDishesByStartingWith(String start) throws DishesNotFoundException {
         return repository.findByNameStartingWith(start).orElseThrow(() -> new DishesNotFoundException("Dishes name by " + start + " starting not found"));
     }

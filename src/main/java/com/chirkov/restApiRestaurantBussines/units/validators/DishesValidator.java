@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
 @Component
 public class DishesValidator implements Validator {
     private final DishesService service;
@@ -31,10 +32,10 @@ public class DishesValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Dishes dishes = (Dishes) target;
-        Dishes entity = service.getDishesByName(dishes.getName());
-        if(entity != null) {
+        if (service.getDishesByNameOpt(dishes.getName()).isPresent()) {
+            Dishes entity = service.getDishesByName(dishes.getName());
             if (entity.equals(dishes)) {
-                errors.rejectValue("dishes","122233334444555","This dishes already exist");
+                errors.rejectValue("dishes", "122233334444555", "This dishes already exist");
             }
         }
     }
