@@ -74,3 +74,11 @@ localhost:8081/dishes/add
 "carbohydrates":50,
 "imageURL":"https://klike.net/uploads/posts/2022-09/1662462025_j-15.jpg"
 }
+
+OrderElements
+localhost:8081/order-element/add
+{
+"orderId":1,
+"dishesId":1,
+"quantity":1
+}
