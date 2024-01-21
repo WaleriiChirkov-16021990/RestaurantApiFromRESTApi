@@ -1,8 +1,11 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
+import com.chirkov.restApiRestaurantBussines.dto.OrderElementDto;
 import com.chirkov.restApiRestaurantBussines.models.Order;
 import com.chirkov.restApiRestaurantBussines.models.OrderElements;
+import com.chirkov.restApiRestaurantBussines.services.DishesService;
 import com.chirkov.restApiRestaurantBussines.services.OrderElementsService;
+import com.chirkov.restApiRestaurantBussines.services.OrderService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.OrderElementErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderElementNotCreatedException;
@@ -21,11 +24,15 @@ import java.util.List;
 @RequestMapping("/order-element")
 public class OrderElementController {
     private final OrderElementsService service;
+    private final DishesService dishesService;
+    private final OrderService orderService;
     private final OrderElementsValidator validator;
 
     @Autowired
-    public OrderElementController(OrderElementsService service, OrderElementsValidator validator) {
+    public OrderElementController(OrderElementsService service, DishesService dishesService, OrderService orderService, OrderElementsValidator validator) {
         this.service = service;
+        this.dishesService = dishesService;
+        this.orderService = orderService;
         this.validator = validator;
     }
 
@@ -45,7 +52,8 @@ public class OrderElementController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<OrderElements> addOrder(@RequestBody @Valid OrderElements orderElements, BindingResult bindingResult) throws OrderElementNotCreatedException {
+    public ResponseEntity<OrderElements> addOrder(@RequestBody @Valid OrderElementDto orderElementsdto, BindingResult bindingResult) throws OrderElementNotCreatedException {
+        OrderElements orderElements = orderElementsdto.mappingTransferObject(orderService,dishesService);
         validator.validate(orderElements, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new OrderElementNotCreatedException(AddErrorMessageFromMyException.getErrorMessage(bindingResult));

@@ -61,3 +61,16 @@ localhost:8080/orders/add
 "price":5000.00,
 "statusFromOrder":"CLOSED_SUCCESSFUL_ORDER"
 }
+
+Dishes
+localhost:8081/dishes/add
+{
+"name":"Pasta",
+"price":540.00,
+"weight":300.00,
+"calories":700,
+"proteins":30,
+"fats":200,
+"carbohydrates":50,
+"imageURL":"https://klike.net/uploads/posts/2022-09/1662462025_j-15.jpg"
+}

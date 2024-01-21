@@ -32,7 +32,7 @@ public class OrderElementsValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         OrderElements orderElements = (OrderElements) target;
-        if (service.getOrderElementsById(orderElements.getId()) != null) {
+        if (service.getOrderElementById(orderElements.getId()).isPresent()) {
             errors.rejectValue("OrderElements","23323245","OrderElements already exists");
         }
     }

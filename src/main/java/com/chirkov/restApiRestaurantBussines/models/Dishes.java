@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -47,6 +48,7 @@ public class Dishes {
 //    private List<FoodReview> foodReviewList;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "dishes")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<OrderElements> orderElementsIntegerMap;

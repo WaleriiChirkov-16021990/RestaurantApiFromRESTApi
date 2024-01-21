@@ -20,7 +20,7 @@ public class OrderElements {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "order_element_orderElements", referencedColumnName = "order_id")
+    @JoinColumn(name = "order_element_order_elements", referencedColumnName = "order_id")
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true,
@@ -33,11 +34,16 @@ public class OrderElementsService {
                 .orElseThrow(() -> new OrderElementNotFoundException("Not found orderElement by id = " + id));
     }
 
+    public Optional<OrderElements> getOrderElementById(long id) {
+        return repository.findOrderElementsById(id);
+    }
+
     public List<OrderElements> getOrderElementsByOrder(Order order) {
         return repository.findByOrder(order)
                 .orElseThrow(() -> new OrderElementNotFoundException("Not Found OrderElement for Order + " + order.getId()));
     }
 
+    @Transactional
     public void save(OrderElements orderElements) {
         repository.save(orderElements);
     }

@@ -6,4 +6,7 @@ spring.datasource.password=
 # Configure hibernate
 spring.jpa.properties.hibernate.dialect=
 spring.jpa.properties.hibernate.show_sql=
-
+#spring.jpa.hibernate.ddl-auto=validate
+#spring.jackson.serialization.FAIL_ON_EMPTY_BEANS=false
+#spring.datasource.hbm2ddl=true
+#<property name="hbm2ddl.auto">update</property>
