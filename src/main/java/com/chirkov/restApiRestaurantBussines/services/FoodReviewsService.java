@@ -43,8 +43,13 @@ public class FoodReviewsService {
         return foodReviewRepository.findAll();
     }
 
-    public FoodReview getFoodReviewOption(long id) {
+    public FoodReview getFoodReviewById(long id) {
         return foodReviewRepository.getReferenceById(id);
+    }
+
+    public FoodReview getById(long id) {
+        return foodReviewRepository.findById(id).orElseThrow(() ->
+                new FoodReviewNotFoundException("Food-Review by id = " + id + ", not found."));
     }
 
     public List<FoodReview> getFoodReviewsByDate(LocalDateTime dateTime) throws FoodReviewNotFoundException {

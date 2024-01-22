@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class FoodReview {
     @Column(name = "food_review_id")
     private int idFoodReview;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_review_person_id", referencedColumnName = "person_id")
     @NotNull

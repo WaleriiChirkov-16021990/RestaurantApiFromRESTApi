@@ -53,7 +53,7 @@ public class FoodReviewController {
 
     @GetMapping("/{id}")
     public ResponseEntity<FoodReview> getFoodReviewById(@PathVariable("id") long id) throws FoodReviewNotFoundException {
-        return new ResponseEntity<>(service.deleteFoodReview(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
