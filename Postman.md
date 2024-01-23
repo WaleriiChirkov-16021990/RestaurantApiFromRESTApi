@@ -82,3 +82,30 @@ localhost:8081/order-element/add
 "dishesId":1,
 "quantity":1
 }
+
+FoodReviews
+localhost:8081/food-reviews/add
+{
+"author":3,
+"dishes":1,
+"grade":4,
+"comment":"Очень хорошее мясо"
+}
+
+Ingredients
+localhost:8081/ingredients
+{
+"ingredientName":"Tomato",
+"remnant":200,
+"description":"Red Italiano Tomato",
+"isVegan":true,
+"isSpicy":false
+}
+
+UnitsOfMeasurement
+localhost:8081/unit-of-measurements
+{
+"name":"KILOGRAMMES",
+"unitOfMeasurement":"KILOGRAMMES",
+"commentary":"килограмм, 1 кг = 1000 гр."
+}
