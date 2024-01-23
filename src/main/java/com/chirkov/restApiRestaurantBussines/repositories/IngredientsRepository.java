@@ -16,7 +16,7 @@ public interface IngredientsRepository extends JpaRepository<Ingredients,Long> {
     Optional<List<Ingredients>> getByIngredientNameIsStartingWith(String ingredientName);
 
     Optional<List<Ingredients>> getByRemnant(int remnant);
-    Optional<List<Ingredients>> getByVeganIs(boolean veganIs);
-    Optional<List<Ingredients>> getBySpicyIs(boolean spicyIs);
+//    Optional<List<Ingredients>> getByVeganIs(boolean veganIs);
+//    Optional<List<Ingredients>> getBySpicyIs(boolean spicyIs);
 
 }

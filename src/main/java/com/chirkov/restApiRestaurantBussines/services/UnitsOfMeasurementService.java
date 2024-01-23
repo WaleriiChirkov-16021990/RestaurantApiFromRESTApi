@@ -62,7 +62,7 @@ public class UnitsOfMeasurementService {
         return repositories.getByUnitOfMeasurement(enumUnitsOfMeasurement);
     }
 
-    UnitsOfMeasurement getUnitsOfMeasurementById(long id) {
+    public UnitsOfMeasurement getUnitsOfMeasurementById(long id) {
         return repositories.findById(id).orElseThrow(() ->
                 new UnitsOfMeasurementNotFoundException("UnitsOfMeasurement by id = " + id + ", not found."));
     }

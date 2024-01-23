@@ -71,17 +71,17 @@ public class IngredientsService {
                         new IngredientsEmptyListException("Ingredients by remnant = " + remnant + ", not found"));
     }
 
-    public List<Ingredients> getIngredientByVegan(boolean isVegan) {
-        return repository.getByVeganIs(isVegan)
-                .orElseThrow(() ->
-                        new IngredientsEmptyListException("Ingredients by vegan = " + isVegan + ", not found"));
-    }
-
-    public List<Ingredients> getIngredientBySpicy(boolean isSpicy) {
-        return repository.getBySpicyIs(isSpicy)
-                .orElseThrow(() ->
-                        new IngredientsEmptyListException("Ingredients by spicy = " + isSpicy + ", not found"));
-    }
+//    public List<Ingredients> getIngredientByVegan(boolean isVegan) {
+//        return repository.getByVeganIs(isVegan)
+//                .orElseThrow(() ->
+//                        new IngredientsEmptyListException("Ingredients by vegan = " + isVegan + ", not found"));
+//    }
+//
+//    public List<Ingredients> getIngredientBySpicy(boolean isSpicy) {
+//        return repository.getBySpicyIs(isSpicy)
+//                .orElseThrow(() ->
+//                        new IngredientsEmptyListException("Ingredients by spicy = " + isSpicy + ", not found"));
+//    }
 
     @Transactional
     public Ingredients save(Ingredients ingredients) {
