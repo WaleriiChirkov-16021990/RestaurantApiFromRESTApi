@@ -42,24 +42,24 @@ public class Dishes {
 
     @Column(name = "dishes_image_url")
     private String imageURL;
-//
-//    @OneToMany(mappedBy = "dishes")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<FoodReview> foodReviewList;
+
+    @OneToMany(mappedBy = "dishes")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    private List<FoodReview> foodReviewList;
 
 
     @JsonIgnore
     @OneToMany(mappedBy = "dishes")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<OrderElements> orderElementsIntegerMap;
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "Dishes_Compositions_of_dishes",
-//            joinColumns = @JoinColumn(name = "dishes_id"),
-//            inverseJoinColumns = @JoinColumn(name = "compositions_of_dishes_id")
-//    )
-//    private List<CompositionsOfDishes> compositionsOfDishesList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "Dishes_Compositions_of_dishes",
+            joinColumns = @JoinColumn(name = "dishes_id"),
+            inverseJoinColumns = @JoinColumn(name = "compositions_of_dishes_id")
+    )
+    private List<CompositionsOfDishes> compositionsOfDishesList;
 
     @Override
     public boolean equals(Object o) {

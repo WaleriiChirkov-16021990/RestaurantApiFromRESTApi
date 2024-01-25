@@ -28,10 +28,10 @@ public class UnitsOfMeasurement {
     @Enumerated(EnumType.STRING)
     @NotNull
     private EnumUnitsOfMeasurement unitOfMeasurement;
-//
-//    @OneToMany(mappedBy = "units")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<CompositionsOfDishes> compositionsOfDishesList;
+
+    @OneToMany(mappedBy = "units")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<CompositionsOfDishes> compositionsOfDishesList;
 
     @Column(name = "units_of_measurement_commentary")
     @Size(min = 4, max = 300, message = "Commentary should between 4 to 300 symbol")

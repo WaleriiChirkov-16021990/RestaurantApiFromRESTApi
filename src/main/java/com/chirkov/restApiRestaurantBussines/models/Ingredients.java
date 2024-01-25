@@ -38,9 +38,9 @@ public class Ingredients {
     @Column(name = "ingredient_is_spicy")
     @NotNull
     private boolean isSpicy;
-//
-//    @OneToMany(mappedBy = "ingredient")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<CompositionsOfDishes> compositionsOfDishesList;
+
+    @OneToMany(mappedBy = "ingredient")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    private List<CompositionsOfDishes> compositionsOfDishesList;
 
 }
