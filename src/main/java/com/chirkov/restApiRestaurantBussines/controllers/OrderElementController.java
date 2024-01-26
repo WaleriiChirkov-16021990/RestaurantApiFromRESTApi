@@ -36,7 +36,7 @@ public class OrderElementController {
         this.validator = validator;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<OrderElements> getOrderElements() {
         return service.getAllOrderElements();
     }
@@ -51,7 +51,7 @@ public class OrderElementController {
         return service.getOrderElementsByOrder(order);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<OrderElements> addOrder(@RequestBody @Valid OrderElementDto orderElementsdto, BindingResult bindingResult) throws OrderElementNotCreatedException {
         OrderElements orderElements = orderElementsdto.mappingTransferObject(orderService,dishesService);
         validator.validate(orderElements, bindingResult);

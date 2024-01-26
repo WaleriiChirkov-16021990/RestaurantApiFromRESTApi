@@ -29,13 +29,13 @@ public class StateFromTableController {
         this.stateFromTablesValidator = stateFromTablesValidator;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<StateFromTable> findAll() {
         return this.stateFromTablesService.findAll();
     }
 
     @GetMapping("/{id}")
-    public StateFromTable getStateById(@PathVariable("id") int id) throws StateFromTableNotFoundException {
+    public StateFromTable getStateById(@PathVariable("id") Long id) throws StateFromTableNotFoundException {
         return this.stateFromTablesService.getStateById(id);
     }
 
@@ -49,7 +49,7 @@ public class StateFromTableController {
         return new ResponseEntity<>(stateFromTable, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> addState(@RequestBody @Valid StateFromTable state, BindingResult bindingResult) throws StateFromTableNotCreateException {
         this.stateFromTablesValidator.validate(state, bindingResult);
         if (bindingResult.hasErrors()) {

@@ -28,7 +28,7 @@ public class DishesController {
         this.validator = validator;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Dishes> getAllDishes() {
         return service.findAllDishes();
     }
@@ -48,7 +48,7 @@ public class DishesController {
         return service.getDishesByName(name);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> saveDishes(@RequestBody @Valid Dishes dishes, BindingResult bindingResult) throws DishesNotCreatedException {
         validator.validate(dishes, bindingResult);
         if (bindingResult.hasErrors()) {

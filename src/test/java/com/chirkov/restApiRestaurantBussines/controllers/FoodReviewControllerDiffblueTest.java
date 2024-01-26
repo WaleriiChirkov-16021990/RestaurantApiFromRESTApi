@@ -63,13 +63,13 @@ class FoodReviewControllerDiffblueTest {
     @Test
     void testDeleteFoodReviewById() throws Exception {
         Discount discount = new Discount();
-        discount.setId(1);
+        discount.setId(1L);
         discount.setName("Name");
         discount.setPersonList(new ArrayList<>());
         discount.setSale(DiscountEnum.ZERO);
 
         Role role = new Role();
-        role.setId(1);
+        role.setId(1L);
         role.setName("Name");
         role.setPersonList(new ArrayList<>());
         role.setRoleValue(RoleEnum.ROLE_ADMIN);
@@ -79,7 +79,7 @@ class FoodReviewControllerDiffblueTest {
         author.setCreatedReserveRecords(new ArrayList<>());
         author.setDiscount(discount);
         author.setEmail("jane.doe@example.org");
-        author.setId(1);
+        author.setId(1L);
         author.setLastName("Doe");
         author.setName("Name");
         author.setOrderList(new ArrayList<>());
@@ -112,7 +112,7 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDateCreate(LocalDate.of(1970, 1, 1).atStartOfDay());
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
-        foodReview.setIdFoodReview(1);
+        foodReview.setIdFoodReview(1L);
         when(foodReviewsService.deleteFoodReview(anyLong())).thenReturn(foodReview);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/food-reviews/{id}", 1L);
         MockMvcBuilders.standaloneSetup(foodReviewController)
@@ -138,13 +138,13 @@ class FoodReviewControllerDiffblueTest {
     @Test
     void testGetFoodReviewById() throws Exception {
         Discount discount = new Discount();
-        discount.setId(1);
+        discount.setId(1L);
         discount.setName("Name");
         discount.setPersonList(new ArrayList<>());
         discount.setSale(DiscountEnum.ZERO);
 
         Role role = new Role();
-        role.setId(1);
+        role.setId(1L);
         role.setName("Name");
         role.setPersonList(new ArrayList<>());
         role.setRoleValue(RoleEnum.ROLE_ADMIN);
@@ -154,7 +154,7 @@ class FoodReviewControllerDiffblueTest {
         author.setCreatedReserveRecords(new ArrayList<>());
         author.setDiscount(discount);
         author.setEmail("jane.doe@example.org");
-        author.setId(1);
+        author.setId(1L);
         author.setLastName("Doe");
         author.setName("Name");
         author.setOrderList(new ArrayList<>());
@@ -187,7 +187,7 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDateCreate(LocalDate.of(1970, 1, 1).atStartOfDay());
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
-        foodReview.setIdFoodReview(1);
+        foodReview.setIdFoodReview(1L);
         when(foodReviewsService.deleteFoodReview(anyLong())).thenReturn(foodReview);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews/{id}", 1L);
         MockMvcBuilders.standaloneSetup(foodReviewController)
@@ -229,13 +229,13 @@ class FoodReviewControllerDiffblueTest {
     @Test
     void testSaveFoodReview() throws Exception {
         Discount discount = new Discount();
-        discount.setId(1);
+        discount.setId(1L);
         discount.setName("Name");
         discount.setPersonList(new ArrayList<>());
         discount.setSale(DiscountEnum.ZERO);
 
         Role role = new Role();
-        role.setId(1);
+        role.setId(1L);
         role.setName("Name");
         role.setPersonList(new ArrayList<>());
         role.setRoleValue(RoleEnum.ROLE_ADMIN);
@@ -245,7 +245,7 @@ class FoodReviewControllerDiffblueTest {
         author.setCreatedReserveRecords(new ArrayList<>());
         author.setDiscount(discount);
         author.setEmail("jane.doe@example.org");
-        author.setId(1);
+        author.setId(1L);
         author.setLastName("Doe");
         author.setName("Name");
         author.setOrderList(new ArrayList<>());
@@ -278,17 +278,17 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDateCreate(LocalDate.of(1970, 1, 1).atStartOfDay());
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
-        foodReview.setIdFoodReview(1);
+        foodReview.setIdFoodReview(1L);
         when(foodReviewsService.saveFoodReview(Mockito.<FoodReview>any())).thenReturn(foodReview);
 
         Discount discount2 = new Discount();
-        discount2.setId(1);
+        discount2.setId(1L);
         discount2.setName("Name");
         discount2.setPersonList(new ArrayList<>());
         discount2.setSale(DiscountEnum.ZERO);
 
         Role role2 = new Role();
-        role2.setId(1);
+        role2.setId(1L);
         role2.setName("Name");
         role2.setPersonList(new ArrayList<>());
         role2.setRoleValue(RoleEnum.ROLE_ADMIN);
@@ -298,7 +298,7 @@ class FoodReviewControllerDiffblueTest {
         person.setCreatedReserveRecords(new ArrayList<>());
         person.setDiscount(discount2);
         person.setEmail("jane.doe@example.org");
-        person.setId(1);
+        person.setId(1L);
         person.setLastName("Doe");
         person.setName("Name");
         person.setOrderList(new ArrayList<>());
@@ -312,7 +312,7 @@ class FoodReviewControllerDiffblueTest {
         person.setUpdatedWho("2020-03-01");
         person.setUsername("janedoe");
         person.setYearOfBirth(1);
-        when(peopleService.findOne(anyInt())).thenReturn(person);
+        when(peopleService.findOne(anyLong())).thenReturn(person);
 
         Dishes dishes2 = new Dishes();
         dishes2.setCalories(1);
@@ -329,7 +329,7 @@ class FoodReviewControllerDiffblueTest {
         doNothing().when(foodReviewValidator).validate(Mockito.<Object>any(), Mockito.<Errors>any());
 
         FoodReviewDto foodReviewDto = new FoodReviewDto();
-        foodReviewDto.setAuthor(1);
+        foodReviewDto.setAuthor(1L);
         foodReviewDto.setComment("Comment");
         foodReviewDto.setDishes(1L);
         foodReviewDto.setGrade(1);

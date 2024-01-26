@@ -17,10 +17,10 @@ import java.util.Objects;
 public class TableReservationDto {
     @NotNull
     @Range(min = 1, max = 100, message = "Id of table is required and between 1 to 100")
-    private int table;
+    private Long table;
 
     @NotNull
-    private int owner;
+    private Long owner;
 
     @NotNull
     private LocalDateTime date;
@@ -30,7 +30,7 @@ public class TableReservationDto {
     private int numberOfGuests;
 
     @NotNull
-    private int authorThisRecords;
+    private Long authorThisRecords;
 
     public TableReservation mappingTableReservationDto(PeopleService peopleService, ReserveTableService reserveTableService) {
         TableReservation tableReservation = new TableReservation();

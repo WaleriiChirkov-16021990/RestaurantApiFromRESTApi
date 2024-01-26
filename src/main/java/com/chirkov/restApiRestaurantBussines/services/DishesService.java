@@ -39,6 +39,7 @@ public class DishesService {
     public Optional<Dishes> getDishesByNameOpt(String name) {
         return repository.findByName(name);
     }
+
     public List<Dishes> getDishesByStartingWith(String start) throws DishesNotFoundException {
         return repository.findByNameStartingWith(start).orElseThrow(() -> new DishesNotFoundException("Dishes name by " + start + " starting not found"));
     }
@@ -46,7 +47,7 @@ public class DishesService {
     // TODO Create a better implementation of getDishes
 
     @Transactional
-    public void save(Dishes dishes) {
-        repository.save(dishes);
+    public Dishes save(Dishes dishes) {
+        return repository.save(dishes);
     }
 }

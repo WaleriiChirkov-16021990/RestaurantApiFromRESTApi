@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderDto {
-    private int owner;
+    private Long owner;
     private double price;
     private String statusFromOrder;
 

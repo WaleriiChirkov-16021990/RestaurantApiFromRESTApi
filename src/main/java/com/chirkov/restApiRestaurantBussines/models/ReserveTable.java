@@ -20,7 +20,7 @@ public class ReserveTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reverse_table_id")
-    private int id;
+    private Long id;
 
     @NotNull
     @Column(name = "reverse_table_accommodation_number")

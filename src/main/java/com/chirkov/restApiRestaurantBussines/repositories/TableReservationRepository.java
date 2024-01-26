@@ -7,16 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TableReservationRepository extends JpaRepository<TableReservation,Integer> {
+public interface TableReservationRepository extends JpaRepository<TableReservation,LocalDate> {
     Optional<List<TableReservation>> getTableReservationByTable(ReserveTable table);
     List<TableReservation> getTableReservationByAuthorOfUpdate(Person AuthorOfUpdate);
-    List<TableReservation> getTableReservationByDate(LocalDate date);
+    List<TableReservation> getTableReservationByDate(LocalDateTime date);
     List<TableReservation> getTableReservationByOwner(Person owner);
     List<TableReservation> getTableReservationByAuthorThisRecords(Person owner);
-    Optional<TableReservation> getTableReservationById(int id);
+    Optional<TableReservation> getTableReservationById(Long id);
 
 }

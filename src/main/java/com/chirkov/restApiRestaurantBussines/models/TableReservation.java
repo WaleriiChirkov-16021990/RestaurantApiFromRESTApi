@@ -1,6 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -13,14 +14,13 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "table_reservation",schema = "public")
 public class TableReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "table_reservation_id")
-    private int id;
+    private Long id;
 
     @NotNull
     @JsonIgnore // TODO узнать почему fetch не работает без явного исключения из response

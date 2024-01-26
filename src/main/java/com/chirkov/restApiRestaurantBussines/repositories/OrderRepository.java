@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order,Integer> {
+public interface OrderRepository extends JpaRepository<Order,Long> {
     Optional<List<Order>> findByOwner(Person owner);
     Optional<List<Order>> findByPrice(double price);
     Optional<List<Order>> findByStatusFromOrder(StatusFromOrder status);

@@ -33,7 +33,7 @@ public class RestaurantReviewsController {
         this.peopleService = peopleService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<RestaurantReviews> getRestaurantsReviews() {
         return service.findAll();
     }
@@ -53,7 +53,7 @@ public class RestaurantReviewsController {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> addRestaurantReview(@RequestBody @Valid RestaurantReviewsDto reviewDto, BindingResult bindingResult) {
         RestaurantReviews review = reviewDto.mapReview(this.peopleService);
         this.validator.validate(review,bindingResult);

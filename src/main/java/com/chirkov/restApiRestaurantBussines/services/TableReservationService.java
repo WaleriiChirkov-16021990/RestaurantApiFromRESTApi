@@ -27,7 +27,7 @@ public class TableReservationService {
         return repository.findAll();
     }
 
-    public TableReservation getTableReservationById(int id) {
+    public TableReservation getTableReservationById(Long id) {
         Optional<TableReservation> reservation = repository.getTableReservationById(id);
         return reservation.orElseThrow(() -> new TableReservationNotFoundException("Table reservation not found for id : " + id));
     }

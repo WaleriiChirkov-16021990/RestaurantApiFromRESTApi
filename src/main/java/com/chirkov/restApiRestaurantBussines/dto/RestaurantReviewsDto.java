@@ -16,7 +16,7 @@ public class RestaurantReviewsDto {
 
     @NotNull
     @Pattern(regexp = "^\\d",message = "Id of person is numeric and  required")
-    private int owner;
+    private Long owner;
 
     @Pattern(regexp = "^\\d",message = "Rating for this restaurant is numeric")
     @Range(min = 1,max =5,message = "Rating for this restaurant with a between 1 and 5 rating")

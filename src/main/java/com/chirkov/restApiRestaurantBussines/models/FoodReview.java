@@ -17,7 +17,7 @@ public class FoodReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "food_review_id")
-    private int idFoodReview;
+    private Long idFoodReview;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

@@ -48,7 +48,7 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}")
-    public PersonDto getPerson(@PathVariable("id") int id) {
+    public PersonDto getPerson(@PathVariable("id") Long id) {
         return convertToPersonDto(peopleService.findOne(id));
     }
 
@@ -63,7 +63,7 @@ public class PeopleController {
     }
 
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonDto personDto, BindingResult bindingResult) {
         personDtoValidator.validate(personDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -91,7 +91,7 @@ public class PeopleController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
         if (peopleService.findOne(id) == null) {
             AtomicReference<StringBuilder> error = new AtomicReference<>(new StringBuilder());
             error.get().append("This user not found");
@@ -112,13 +112,13 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}/edit")
-    public ResponseEntity<HttpStatus> edit(@PathVariable("id") int id, Model model) {
+    public ResponseEntity<HttpStatus> edit(@PathVariable("id") Long id, Model model) {
         model.addAttribute("person", peopleService.findOne(id));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@PathVariable("id") int id, @RequestBody @Valid PersonDto person, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> update(@PathVariable("id") Long id, @RequestBody @Valid PersonDto person, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new PersonNotUpdatedException(
                     AddErrorMessageFromMyException

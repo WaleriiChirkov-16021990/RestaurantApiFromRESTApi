@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.lang.annotation.Documented;
 import java.util.Optional;
 @Repository
-public interface DiscountsRepository extends JpaRepository<Discount,Integer> {
-    Optional<Discount> findDiscountById(int id);
+public interface DiscountsRepository extends JpaRepository<Discount,Long> {
+    Optional<Discount> findDiscountById(Long id);
     Optional<Discount> findDiscountByName(String name);
     Optional<Discount> findDiscountBySale(@NotNull DiscountEnum value);
 

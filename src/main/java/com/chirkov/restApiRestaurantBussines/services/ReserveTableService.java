@@ -24,7 +24,7 @@ public class ReserveTableService {
         return repository.findAll();
     }
 
-    public ReserveTable findReserveById(int id) {
+    public ReserveTable findReserveById(Long id) {
         Optional<ReserveTable> reserveTable = repository.findById(id);
         return reserveTable.orElseThrow(() -> new ReserveTableNotFoundException("ReserveTable by Id= "+ id + ", not found"));
     }

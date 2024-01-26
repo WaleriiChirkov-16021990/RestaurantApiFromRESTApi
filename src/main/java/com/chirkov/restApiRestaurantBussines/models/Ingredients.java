@@ -18,7 +18,7 @@ public class Ingredients {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_id")
-    private long id;
+    private Long id;
 
     @Column(name = "ingredient_name")
     @NotNull

@@ -35,18 +35,18 @@ public class TableReservationController {
         this.reserveTableService = reserveTableService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<TableReservation> getAllTableReservations() {
         return this.service.findAll();
     }
 
     @GetMapping("/{id}")
-    public TableReservation getTableReservationById(@PathVariable("id") int id) throws TableReservationNotFoundException {
+    public TableReservation getTableReservationById(@PathVariable("id") Long id) throws TableReservationNotFoundException {
         return this.service.getTableReservationById(id);
     }
 
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> save(@RequestBody @Valid TableReservationDto reservationDto, BindingResult bindingResult) throws TableReservationNotCreatedException {
         TableReservation reservation = reservationDto.mappingTableReservationDto(peopleService,reserveTableService);
         // TODO Auto-generated method Update reservations

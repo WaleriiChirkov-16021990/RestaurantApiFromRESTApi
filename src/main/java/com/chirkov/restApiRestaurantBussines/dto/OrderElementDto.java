@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class OrderElementDto {
-    private int orderId;
-    private int dishesId;
+    private Long orderId;
+    private Long dishesId;
     private int quantity;
 
 

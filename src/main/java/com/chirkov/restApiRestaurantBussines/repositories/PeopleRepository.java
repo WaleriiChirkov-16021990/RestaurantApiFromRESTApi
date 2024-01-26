@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PeopleRepository extends JpaRepository<Person, Integer> {
+public interface PeopleRepository extends JpaRepository<Person, Long> {
+    void deleteById(Long id);
     List<Person> findPeopleByName(String name);
 
     List<Person> findPeopleByNameStartingWith(String startingWith);

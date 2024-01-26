@@ -5,6 +5,7 @@ import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.repositories.PeopleRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,28 +35,28 @@ public class PeopleService {
         return peopleRepository.findAll();
     }
 
-    public Person findOne(int id) {
+    public Person findOne(Long id) {
         Optional<Person> foundPerson = peopleRepository.findById(id);
         return foundPerson.orElseThrow(() -> new PersonNotFoundException("Person " + id + " not found"));
     }
 
     @Transactional
-    public void save(Person person) {
+    public Person save(Person person) {
         try {
             enrichPerson(person);
         } catch (RoleNotFoundException e) {
             e.printStackTrace();
         }
         person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
-        peopleRepository.save(person);
+        return peopleRepository.save(person);
     }
 
     private void enrichPerson(Person person) throws RoleNotFoundException {
 //        person.setRole(this.roleService.getRoleByName("youngUser"));
         // TODO Auto select role from person
-        person.setRole(this.roleService.getRoleById(1));
+        person.setRole(this.roleService.getRoleById(1L));
 //        person.setRole(this.roleService.getRoleById(person.getRole().getId()));
-        person.setDiscount(this.discountService.findById(1));
+        person.setDiscount(this.discountService.findById(1L));
         // TODO Auto select discount from new person
 //        person.setDiscount(this.discountService.findById(person.getDiscount().getId()));
         person.setCreatedAt(LocalDateTime.now());
@@ -64,10 +65,10 @@ public class PeopleService {
     }
 
     @Transactional
-    public void update(int id, Person updatePerson) {
+    public Person update(Long id, Person updatePerson) {
         updatePerson.setId(id);
         enrichUpdatePerson(updatePerson);
-        peopleRepository.save(updatePerson);
+        return peopleRepository.save(updatePerson);
     }
 
     private void enrichUpdatePerson(Person updatePerson) {
@@ -76,8 +77,7 @@ public class PeopleService {
     }
 
     @Transactional
-    public void delete(int id) {
-        peopleRepository.deleteById(id);
+    public void delete(Long id) { peopleRepository.deleteById(id);
     }
 
     @Transactional

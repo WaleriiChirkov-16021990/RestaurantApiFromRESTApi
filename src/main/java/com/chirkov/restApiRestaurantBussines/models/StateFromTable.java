@@ -19,7 +19,7 @@ public class StateFromTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "state_from_table_id")
-    private int id;
+    private Long id;
 
     @Column(name = "state_from_table_name")
     private String name;

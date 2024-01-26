@@ -26,7 +26,7 @@ public class DiscountService {
         return this.discountRepository.findAll();
     }
 
-    public Discount findById(int id) {
+    public Discount findById(Long id) {
         Optional<Discount> result = this.discountRepository.findDiscountById(id);
         return result.orElseThrow(DiscountNotFoundException::new);
     }
@@ -41,8 +41,8 @@ public class DiscountService {
     }
 
     @Transactional
-    public void save(Discount discount) {
-        this.discountRepository.save(discount);
+    public Discount save(Discount discount) {
+        return this.discountRepository.save(discount);
     }
 
 }

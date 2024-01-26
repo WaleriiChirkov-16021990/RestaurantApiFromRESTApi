@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -29,6 +30,7 @@ public class UnitsOfMeasurement {
     @NotNull
     private EnumUnitsOfMeasurement unitOfMeasurement;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "units")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<CompositionsOfDishes> compositionsOfDishesList;

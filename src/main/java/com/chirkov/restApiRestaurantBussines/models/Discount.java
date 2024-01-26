@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -18,7 +19,7 @@ public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "discount_id")
-    private int id;
+    private Long id;
 
     @Column(name = "discount_name")
     @NotNull
@@ -29,9 +30,10 @@ public class Discount {
     @NotNull
     private DiscountEnum sale;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+//    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<Person> personList;
 
     @Override

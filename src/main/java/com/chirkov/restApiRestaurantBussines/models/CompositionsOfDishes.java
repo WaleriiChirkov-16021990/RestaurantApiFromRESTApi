@@ -2,6 +2,7 @@ package com.chirkov.restApiRestaurantBussines.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,14 +11,13 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@Table(name = "compositions_of_dishes")
+@Data
+@Table(name = "compositions_of_dishes",schema = "public")
 public class CompositionsOfDishes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "compositions_of_dishes_id")
-    private int id;
+    private Long id;
 
     @Column(name = "compositions_of_dishes_name")
     private String name;
@@ -35,7 +35,6 @@ public class CompositionsOfDishes {
     @Column(name = "compositions_of_dishes_count_of_units")
     private int count;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "compositions_of_dishes_units", referencedColumnName = "units_of_measurement_id")
     @NotNull

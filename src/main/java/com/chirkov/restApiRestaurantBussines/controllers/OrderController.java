@@ -35,17 +35,17 @@ public class OrderController {
         this.peopleService = peopleService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Order> findAllOrders() {
         return orderService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Order findById(@PathVariable("id") int id) throws OrderNotFoundException {
+    public Order findById(@PathVariable("id") Long id) throws OrderNotFoundException {
         return orderService.findById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> save(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult) throws OrderNotCreatedException {
         Order order = orderDto.mappingbyOrder(this.peopleService);
         orderValidator.validate(order, bindingResult);

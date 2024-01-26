@@ -39,7 +39,7 @@ public class CompositionsOfDishesService {
         return result;
     }
 
-    public CompositionsOfDishes getById(long id) throws CompositionsOfDishesNotFoundException {
+    public CompositionsOfDishes getById(Long id) throws CompositionsOfDishesNotFoundException {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new CompositionsOfDishesNotFoundException("CompositionsOfDishes not found for id " + id));
@@ -82,7 +82,7 @@ public class CompositionsOfDishesService {
     }
 
     @Transactional
-    public CompositionsOfDishes deleteById(long id) {
+    public CompositionsOfDishes deleteById(Long id) {
         try {
             CompositionsOfDishes compositions = getById(id);
             repository.deleteById(id);

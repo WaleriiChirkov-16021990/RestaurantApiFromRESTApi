@@ -44,7 +44,7 @@ public class OrderElementsService {
     }
 
     @Transactional
-    public void save(OrderElements orderElements) {
-        repository.save(orderElements);
+    public OrderElements save(OrderElements orderElements) {
+        return repository.save(orderElements);
     }
 }

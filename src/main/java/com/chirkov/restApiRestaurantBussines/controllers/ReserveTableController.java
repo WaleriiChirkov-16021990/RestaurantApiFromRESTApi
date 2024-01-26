@@ -35,7 +35,7 @@ public class ReserveTableController {
         this.stateFromTablesService = stateFromTablesService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<ReserveTable> findAllTables() {
         return this.service.findAll();
     }
@@ -56,7 +56,7 @@ By addressing these potential issues, you should be able to resolve the "Templat
      */
 
     @GetMapping("/{id}")
-    public ReserveTable findById(@PathVariable("id") int id) throws ReserveTableNotFoundException {
+    public ReserveTable findById(@PathVariable("id") Long id) throws ReserveTableNotFoundException {
         return this.service.findReserveById(id);
     }
 
@@ -70,7 +70,7 @@ By addressing these potential issues, you should be able to resolve the "Templat
         return new ResponseEntity<>(stateFromTable, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> addReserveTable(@RequestBody @Valid ReserveTableDto tableDto, BindingResult bindingResult) {
         ReserveTable table = tableDto.mappingTable(stateFromTablesService);
         this.validator.validate(table, bindingResult);

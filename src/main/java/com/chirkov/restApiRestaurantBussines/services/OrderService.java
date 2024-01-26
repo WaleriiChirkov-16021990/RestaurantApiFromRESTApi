@@ -27,12 +27,12 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order findById(int id) {
+    public Order findById(Long id) {
         return orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Не найден Order с id = " + id));
     }
 
     @Transactional
-    public void save(Order order) {
-        orderRepository.save(order);
+    public Order save(Order order) {
+        return orderRepository.save(order);
     }
 }

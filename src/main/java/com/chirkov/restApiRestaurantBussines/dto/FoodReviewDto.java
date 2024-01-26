@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FoodReviewDto {
-    private int author;
-    private long dishes;
+    private Long author;
+    private Long dishes;
     private int grade;
     private String comment;
 

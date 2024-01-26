@@ -17,7 +17,7 @@ public class OrderElements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_element_id")
-    private long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "order_element_order_elements", referencedColumnName = "order_id")

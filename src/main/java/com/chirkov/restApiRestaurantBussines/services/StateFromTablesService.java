@@ -26,7 +26,7 @@ public class StateFromTablesService {
         return this.repository.findAll();
     }
 
-    public StateFromTable getStateById(int id) {
+    public StateFromTable getStateById(Long id) {
         Optional<StateFromTable> state = this.repository.findById(id);
         return state.orElseThrow(() -> new StateFromTableNotFoundException("Not found state by Id = " + id));
     }

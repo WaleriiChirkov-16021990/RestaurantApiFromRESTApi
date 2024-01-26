@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 @Repository
-public interface ReserveTableRepository extends JpaRepository<ReserveTable,Integer> {
+public interface ReserveTableRepository extends JpaRepository<ReserveTable,Long> {
     Optional<ReserveTable> findReserveTableByAccommodationNumber(int tableNumber);
     Optional<List<ReserveTable>> findReserveTableByStateFromTable(StateFromTable value);
     Optional<List<ReserveTable>> findReserveTableByNumberOfSeats(int numberOfSeats);

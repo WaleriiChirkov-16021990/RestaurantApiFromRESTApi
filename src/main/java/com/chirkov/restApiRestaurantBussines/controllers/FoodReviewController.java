@@ -33,13 +33,13 @@ public class FoodReviewController {
         this.validator = validator;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<FoodReview>> getFoodReviews()
             throws FoodReviewNotFoundException, FoodReviewEmptyListException {
         return new ResponseEntity<>(service.getFoodReviews(), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<FoodReview> saveFoodReview(@RequestBody FoodReviewDto reviewDto, BindingResult bindingResult)
             throws FoodReviewNotCreatedException, PersonNotFoundException, DishesNotFoundException {
         FoodReview review = reviewDto.mappingReview(peopleService, dishesService);

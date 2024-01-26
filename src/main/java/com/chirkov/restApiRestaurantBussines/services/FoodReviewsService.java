@@ -37,7 +37,7 @@ public class FoodReviewsService {
         } catch (Exception e) {
             throw new FoodReviewNotFoundException(e.getMessage(), e);
         }
-        if (list == null) {
+        if (list.isEmpty()) {
             throw new FoodReviewEmptyListException("Food-review empty list");
         }
         return foodReviewRepository.findAll();

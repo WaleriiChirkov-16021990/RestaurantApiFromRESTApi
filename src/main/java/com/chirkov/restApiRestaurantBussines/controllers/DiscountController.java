@@ -28,13 +28,13 @@ public class DiscountController {
         this.discountValidator = discountValidator;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Discount> getAllDiscounts() {
         return this.discountService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Discount getDiscount(@PathVariable("id") int id) throws DiscountNotFoundException {
+    public Discount getDiscount(@PathVariable("id") Long id) throws DiscountNotFoundException {
         return this.discountService.findById(id);
     }
 
@@ -53,7 +53,7 @@ public class DiscountController {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> addDiscount(@RequestBody @Valid Discount discount, BindingResult bindingResult) {
         this.discountValidator.validate(discount, bindingResult);
         if (bindingResult.hasErrors()) {

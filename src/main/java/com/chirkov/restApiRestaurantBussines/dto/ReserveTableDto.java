@@ -20,7 +20,7 @@ public class ReserveTableDto {
 
     @NotNull
     @Range(min = 1, max = 5, message = "The status number must be between 1 and 5 inclusive")
-    private int stateFromTable;
+    private Long stateFromTable;
 
     @NotNull
     @Range(min = 0, max = 100, message = "Number of seats should between 0 to 100")
@@ -29,7 +29,7 @@ public class ReserveTableDto {
     public ReserveTableDto() {
     }
 
-    public ReserveTableDto(int accommodationNumber, int stateFromTable, int numberOfSeats) {
+    public ReserveTableDto(int accommodationNumber, Long stateFromTable, int numberOfSeats) {
         this.accommodationNumber = accommodationNumber;
         this.stateFromTable = stateFromTable;
         this.numberOfSeats = numberOfSeats;

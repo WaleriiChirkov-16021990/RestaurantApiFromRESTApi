@@ -22,7 +22,7 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
-    private int id;
+    private Long id;
 
     @NotNull(message = "Name is not null")
     @Size(min = 2, max = 100, message = "Name length is between 2 and 100 symbol")

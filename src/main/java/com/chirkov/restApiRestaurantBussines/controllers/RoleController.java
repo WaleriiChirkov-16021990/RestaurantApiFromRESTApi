@@ -28,13 +28,13 @@ public class RoleController {
         this.roleValidator = roleValidator;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Role> findAll() {
         return roleService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Role getRoleByName(@PathVariable("id") int id) throws RoleNotFoundException {
+    public Role getRoleByName(@PathVariable("id") Long id) throws RoleNotFoundException {
         return roleService.getRoleById(id);
     }
 
@@ -53,7 +53,7 @@ public class RoleController {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<HttpStatus> addRole(@RequestBody @Valid Role role, BindingResult bindingResult) throws RoleNotCreatedException {
 //        this.roleValidator.validate(role, bindingResult);
         if (bindingResult.hasErrors()) {
