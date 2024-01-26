@@ -1,5 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,9 +22,10 @@ public class CompositionsOfDishes {
     @Column(name = "compositions_of_dishes_name")
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "compositionsOfDishesList")
-    @NotNull
     private List<Dishes> dishesList;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "compositions_of_dishes_ingredient_id", referencedColumnName = "ingredient_id")
@@ -32,6 +35,7 @@ public class CompositionsOfDishes {
     @Column(name = "compositions_of_dishes_count_of_units")
     private int count;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "compositions_of_dishes_units", referencedColumnName = "units_of_measurement_id")
     @NotNull

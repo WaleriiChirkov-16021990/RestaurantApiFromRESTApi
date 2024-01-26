@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Range;
@@ -17,7 +18,7 @@ public class Ingredients {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_id")
-    private int id;
+    private long id;
 
     @Column(name = "ingredient_name")
     @NotNull
@@ -39,6 +40,7 @@ public class Ingredients {
     @NotNull
     private boolean isSpicy;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "ingredient")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<CompositionsOfDishes> compositionsOfDishesList;
