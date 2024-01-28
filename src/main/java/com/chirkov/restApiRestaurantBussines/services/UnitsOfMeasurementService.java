@@ -28,7 +28,7 @@ public class UnitsOfMeasurementService {
         this.repositories = repositories;
     }
 
-    public List<UnitsOfMeasurement> findAllUnitsOfMeasurement() {
+    public List<UnitsOfMeasurement> findAll() {
         List<UnitsOfMeasurement> unitsOfMeasure;
         try {
             unitsOfMeasure = repositories.findAll();
@@ -62,7 +62,7 @@ public class UnitsOfMeasurementService {
         return repositories.getByUnitOfMeasurement(enumUnitsOfMeasurement);
     }
 
-    public UnitsOfMeasurement getUnitsOfMeasurementById(long id) {
+    public UnitsOfMeasurement findById(Long id) {
         return repositories.findById(id).orElseThrow(() ->
                 new UnitsOfMeasurementNotFoundException("UnitsOfMeasurement by id = " + id + ", not found."));
     }

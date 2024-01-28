@@ -1,11 +1,9 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.UnitsOfMeasurementDto;
-import com.chirkov.restApiRestaurantBussines.models.Ingredients;
 import com.chirkov.restApiRestaurantBussines.models.UnitsOfMeasurement;
 import com.chirkov.restApiRestaurantBussines.services.UnitsOfMeasurementService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
-import com.chirkov.restApiRestaurantBussines.units.errorResponses.IngredientsErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.UnitsOfMeasurementErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.UnitsOfMeasurementValidator;
@@ -32,7 +30,7 @@ public class UnitsOfMeasurementController {
 
     @GetMapping
     public List<UnitsOfMeasurement> findAll() {
-        return service.findAllUnitsOfMeasurement();
+        return service.findAll();
     }
 
     @PostMapping
@@ -50,7 +48,7 @@ public class UnitsOfMeasurementController {
 
     @GetMapping("/{id}")
     public UnitsOfMeasurement getById(@PathVariable long id) throws UnitsOfMeasurementNotFoundException {
-        return service.getUnitsOfMeasurementById(id);
+        return service.findById(id);
     }
 
 

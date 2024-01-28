@@ -1,12 +1,14 @@
 package com.chirkov.restApiRestaurantBussines.services;
 
 import com.chirkov.restApiRestaurantBussines.models.CompositionsOfDishes;
+import com.chirkov.restApiRestaurantBussines.units.abstracts.CompositionsOfDishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.repositories.CompositionsOfDishesRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesEmptyListException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,8 @@ import java.util.Optional;
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
         rollbackFor = CompositionsOfDishesNotFoundException.class)
-public class CompositionsOfDishesService {
+@Qualifier
+public class CompositionsOfDishesService implements CompositionsOfDishesServiceByRepository<CompositionsOfDishes> {
     private final CompositionsOfDishesRepository repository;
 
     @Autowired
@@ -26,6 +29,7 @@ public class CompositionsOfDishesService {
         this.repository = repository;
     }
 
+    @Override
     public List<CompositionsOfDishes> findAll() throws CompositionsOfDishesEmptyListException {
         List<CompositionsOfDishes> result;
         try {
@@ -39,14 +43,16 @@ public class CompositionsOfDishesService {
         return result;
     }
 
-    public CompositionsOfDishes getById(Long id) throws CompositionsOfDishesNotFoundException {
+    @Override
+    public CompositionsOfDishes findById(Long id) throws CompositionsOfDishesNotFoundException {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new CompositionsOfDishesNotFoundException("CompositionsOfDishes not found for id " + id));
     }
 
 
-    public CompositionsOfDishes getByName(String name) throws CompositionsOfDishesNotFoundException {
+    @Override
+    public CompositionsOfDishes findByName(String name) throws CompositionsOfDishesNotFoundException {
         return repository.findCompositionsOfDishesByName(name)
                 .orElseThrow(() ->
                         new CompositionsOfDishesNotFoundException("CompositionsOfDishes not found for name " + name));
@@ -82,13 +88,15 @@ public class CompositionsOfDishesService {
     }
 
     @Transactional
+    @Override
     public CompositionsOfDishes deleteById(Long id) {
         try {
-            CompositionsOfDishes compositions = getById(id);
+            CompositionsOfDishes compositions = findById(id);
             repository.deleteById(id);
             return compositions;
         } catch (Exception e) {
             throw new CompositionsOfDishesNotDeletedException(e.getMessage(), e);
         }
     }
+
 }

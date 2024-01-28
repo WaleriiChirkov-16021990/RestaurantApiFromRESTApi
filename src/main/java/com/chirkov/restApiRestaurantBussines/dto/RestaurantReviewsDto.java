@@ -6,27 +6,27 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 @Getter
 @Setter
 public class RestaurantReviewsDto {
 
-    @NotNull
-    @Pattern(regexp = "^\\d",message = "Id of person is numeric and  required")
+    @NotNull(message = "RestaurntReviewsDto/_Owner = null is not available for this application.")
+    @Pattern(regexp = "^\\d", message = "Id of person is numeric and  required")
+    @Min(value = 1, message = "RestaurantReviewsDto/_Owner must be between 1 and Long.MAX_VALUE.")
+    @Max(value = Long.MAX_VALUE, message = "RestaurantReviewsDto/_Owner must be between 1 and Long.MAX_VALUE.")
     private Long owner;
 
-    @Pattern(regexp = "^\\d",message = "Rating for this restaurant is numeric")
-    @Range(min = 1,max =5,message = "Rating for this restaurant with a between 1 and 5 rating")
+    @Pattern(regexp = "^\\d", message = "RestaurntReviewsDto/_Gradle. Rating for this restaurant is numeric")
+    @Range(min = 1, max = 5, message = "RestaurntReviewsDto/_Gradle. Rating for this restaurant with a between 1 and 5 rating")
     private int gradle;
 
-    @NotNull
+    @NotNull(message = "RestaurntReviewsDto/_Comment = null is not available for this application.")
+    @Size(max = 550, message = "RestaurntReviewsDto/_Comment must be between 1 and 550 symbol")
     private String comment;
 
-    public RestaurantReviewsDto() {
-    }
 
     public RestaurantReviews mapReview(PeopleService peopleService) {
         RestaurantReviews dto = new RestaurantReviews();
@@ -34,17 +34,5 @@ public class RestaurantReviewsDto {
         dto.setGradle(this.gradle);
         dto.setComment(this.comment);
         return dto;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RestaurantReviewsDto that)) return false;
-        return getOwner() == that.getOwner() && getGradle() == that.getGradle() && Objects.equals(getComment(), that.getComment());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getOwner(), getGradle(), getComment());
     }
 }

@@ -1,6 +1,7 @@
-# Post query localhost:8080/
+# Post query localhost:8081/
+
 Person
-localhost:8080/people/add
+localhost:8081/people
 {
 "name": "Mari",
 "lastName": "Minna",
@@ -20,7 +21,7 @@ Role
 }
 
 Discount
-localhost:8080/discount/add
+localhost:8081/discount
 POST request
 {
 "name": "twenty",
@@ -28,16 +29,15 @@ POST request
 }
 
 RestaurantReviews
-localhost:8080/restReviews/add
+localhost:8081/restReviews
 {
 "owner":3,
 "gradle":5,
 "comment":"this final restaurant review"
 }
 
-
 StateFromTable
-localhost:8080/state_from_tables/add
+localhost:8081/state_from_tables
 {
 
 "name":"paid",
@@ -45,9 +45,8 @@ localhost:8080/state_from_tables/add
 
 }
 
-
 ReserveTable
-localhost:8080/reserve_a_table/all
+localhost:8081/reserve_a_table
 {
 "accommodationNumber":2,
 "stateFromTable":1,
@@ -55,15 +54,25 @@ localhost:8080/reserve_a_table/all
 }
 
 Order
-localhost:8080/orders/add
+localhost:8081/orders
 {
 "owner":3,
 "price":5000.00,
 "statusFromOrder":"CLOSED_SUCCESSFUL_ORDER"
 }
 
+TableReservation
+localhost:8081/table-reservations
+{
+"table":1,
+"owner":3,
+"date":"2024-01-04T21:56:12.991310",
+"numberOfGuests":5,
+"authorThisRecords":3
+}
+
 Dishes
-localhost:8081/dishes/add
+localhost:8081/dishes
 {
 "name":"Pasta",
 "price":540.00,
@@ -76,7 +85,7 @@ localhost:8081/dishes/add
 }
 
 OrderElements
-localhost:8081/order-element/add
+localhost:8081/order-element
 {
 "orderId":1,
 "dishesId":1,
@@ -84,7 +93,7 @@ localhost:8081/order-element/add
 }
 
 FoodReviews
-localhost:8081/food-reviews/add
+localhost:8081/food-reviews
 {
 "author":3,
 "dishes":1,
@@ -108,4 +117,13 @@ localhost:8081/unit-of-measurements
 "name":"KILOGRAMMES",
 "unitOfMeasurement":"KILOGRAMMES",
 "commentary":"килограмм, 1 кг = 1000 гр."
+}
+
+Composition of dishes
+localhost:8081/composition_of_dishes
+{
+"name":"begetable red",
+"ingredient":1,
+"count":10,
+"units":2
 }

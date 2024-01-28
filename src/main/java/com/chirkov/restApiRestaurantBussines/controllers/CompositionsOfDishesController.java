@@ -6,6 +6,7 @@ import com.chirkov.restApiRestaurantBussines.services.CompositionsOfDishesServic
 import com.chirkov.restApiRestaurantBussines.services.IngredientsService;
 import com.chirkov.restApiRestaurantBussines.services.UnitsOfMeasurementService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstracts.CompositionsOfDishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.CompositionsOfDishesErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.CompositionsOfDishesValidator;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/composition_of_dishes")
 public class CompositionsOfDishesController {
 
-    private final CompositionsOfDishesService service;
+    private final CompositionsOfDishesServiceByRepository<CompositionsOfDishes> service;
     private final CompositionsOfDishesValidator validator;
     private final IngredientsService ingredientsService;
     private final UnitsOfMeasurementService unitsOfMeasurementService;
@@ -37,7 +38,7 @@ public class CompositionsOfDishesController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CompositionsOfDishes> findComById(@PathVariable Long id) throws CompositionsOfDishesNotFoundException {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
     @GetMapping

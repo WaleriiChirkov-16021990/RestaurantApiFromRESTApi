@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -16,20 +16,35 @@ import java.util.Objects;
 @Setter
 public class TableReservationDto {
     @NotNull
-    @Range(min = 1, max = 100, message = "Id of table is required and between 1 to 100")
+    @Min(value = 1, message = "TableReservationDto/table must no less 1")
+    @Max(value = Long.MAX_VALUE, message = "TableReservationDto/table must no greater than Long.MAX value")
     private Long table;
 
-    @NotNull
+
+    @NotNull(message = "TableReservationDto/owner must not be null")
+    @NotEmpty(message = "TableReservationDto/owner must not be empty")
+    @Min(value = 1, message = "TableReservationDto/owner must no less 1")
+    @Max(value = Long.MAX_VALUE, message = "TableReservationDto/owner must no greater than Long.MAX value")
     private Long owner;
 
-    @NotNull
+
+    @NotNull(message = "TableReservationDto/date must not be null")
+    @NotEmpty(message = "TableReservationDto/date must not be empty")
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{6}$", message = "TableReservationDto/_LocalDateTime is not a valid date")
     private LocalDateTime date;
 
-    @NotNull
-    @Range(min = 1, max = 100, message = "Number of seats should between 1 to 100")
+
+    @NotNull(message = "TableReservationDto/numberOfGuests must not be null")
+    @NotEmpty(message = "TableReservationDto/numberOfGuests must not be empty")
+    @Min(value = 0, message = "TableReservationDto/numberOfGuests must no less 0")
+    @Max(value = Integer.MAX_VALUE, message = "TableReservationDto/numberOfGuests must no greater than Integer.MAX value")
     private int numberOfGuests;
 
-    @NotNull
+
+    @NotNull(message = "TableReservationDto/authorThisRecords must not be null")
+    @NotEmpty(message = "TableReservationDto/authorThisRecords must not be empty")
+    @Min(value = 1, message = "TableReservationDto/authorThisRecords must no less 1")
+    @Max(value = Long.MAX_VALUE, message = "TableReservationDto/authorThisRecords must no greater than Long.MAX value")
     private Long authorThisRecords;
 
     public TableReservation mappingTableReservationDto(PeopleService peopleService, ReserveTableService reserveTableService) {
@@ -42,28 +57,5 @@ public class TableReservationDto {
         tableReservation.setAuthorThisRecords(person);
         tableReservation.setAuthorOfUpdate(person);
         return tableReservation;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TableReservationDto that)) return false;
-        return getTable() == that.getTable() && getOwner() == that.getOwner() && getNumberOfGuests() == that.getNumberOfGuests() && getAuthorThisRecords() == that.getAuthorThisRecords() && Objects.equals(getDate(), that.getDate());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getTable(), getOwner(), getDate(), getNumberOfGuests(), getAuthorThisRecords());
-    }
-
-    @Override
-    public String toString() {
-        return "TableReservationDto{" +
-                "table=" + table +
-                ", owner=" + owner +
-                ", date=" + date +
-                ", numberOfGuests=" + numberOfGuests +
-                ", authorThisRecords=" + authorThisRecords +
-                '}';
     }
 }

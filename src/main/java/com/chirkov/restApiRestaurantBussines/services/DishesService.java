@@ -2,7 +2,6 @@ package com.chirkov.restApiRestaurantBussines.services;
 
 import com.chirkov.restApiRestaurantBussines.models.Dishes;
 import com.chirkov.restApiRestaurantBussines.repositories.DishesRepository;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.DishesNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DishesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

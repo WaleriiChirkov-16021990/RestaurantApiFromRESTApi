@@ -133,6 +133,78 @@ class FoodReviewControllerDiffblueTest {
     }
 
     /**
+     * Method under test: {@link FoodReviewController#deleteFoodReviewById(long)}
+     */
+    @Test
+    void testDeleteFoodReviewById2() throws Exception {
+        Discount discount = new Discount();
+        discount.setId(1L);
+        discount.setName("Name");
+        discount.setPersonList(new ArrayList<>());
+        discount.setSale(DiscountEnum.ZERO);
+
+        Role role = new Role();
+        role.setId(1L);
+        role.setName("Name");
+        role.setPersonList(new ArrayList<>());
+        role.setRoleValue(RoleEnum.ROLE_ADMIN);
+
+        Person author = new Person();
+        author.setCreatedAt(LocalDate.of(1970, 1, 1).atStartOfDay());
+        author.setCreatedReserveRecords(new ArrayList<>());
+        author.setDiscount(discount);
+        author.setEmail("jane.doe@example.org");
+        author.setId(1L);
+        author.setLastName("Doe");
+        author.setName("Name");
+        author.setOrderList(new ArrayList<>());
+        author.setPassword("iloveyou");
+        author.setPhoneNumber("6625550144");
+        author.setReservationList(new ArrayList<>());
+        author.setRestaurantReviews(new ArrayList<>());
+        author.setRole(role);
+        author.setUpdatedAt(LocalDate.of(1970, 1, 1).atStartOfDay());
+        author.setUpdatedReserveRecords(new ArrayList<>());
+        author.setUpdatedWho("2020-03-01");
+        author.setUsername("janedoe");
+        author.setYearOfBirth(1);
+
+        Dishes dishes = new Dishes();
+        dishes.setCalories(1);
+        dishes.setCarbohydrates(1);
+        dishes.setCompositionsOfDishesList(new ArrayList<>());
+        dishes.setFats(1);
+        dishes.setFoodReviewList(new ArrayList<>());
+        dishes.setId(1L);
+        dishes.setImageURL("https://example.org/example");
+        dishes.setName("Name");
+        dishes.setOrderElementsIntegerMap(new ArrayList<>());
+        dishes.setPrice(10.0d);
+        dishes.setProteins(1);
+        dishes.setWeight(10.0d);
+
+        FoodReview foodReview = new FoodReview();
+        foodReview.setAuthor(author);
+        foodReview.setComment("Comment");
+        foodReview.setDateCreate(LocalDate.of(1970, 1, 1).atStartOfDay());
+        foodReview.setDishes(dishes);
+        foodReview.setGrade(1);
+        foodReview.setIdFoodReview(1L);
+        when(foodReviewsService.deleteFoodReview(anyLong())).thenReturn(foodReview);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/food-reviews/{id}", 1L);
+        MockMvcBuilders.standaloneSetup(foodReviewController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"idFoodReview\":1,\"dishes\":{\"id\":1,\"name\":\"Name\",\"price\":10.0,\"weight\":10.0,\"calories\":1,\"proteins\":1"
+                                        + ",\"fats\":1,\"carbohydrates\":1,\"imageURL\":\"https://example.org/example\",\"foodReviewList\":[],\"compositio"
+                                        + "nsOfDishesList\":[]},\"dateCreate\":[1970,1,1,0,0],\"grade\":1,\"comment\":\"Comment\"}"));
+    }
+
+    /**
      * Method under test: {@link FoodReviewController#getFoodReviewById(long)}
      */
     @Test
@@ -208,12 +280,99 @@ class FoodReviewControllerDiffblueTest {
     }
 
     /**
+     * Method under test: {@link FoodReviewController#getFoodReviewById(long)}
+     */
+    @Test
+    void testGetFoodReviewById2() throws Exception {
+        Discount discount = new Discount();
+        discount.setId(1L);
+        discount.setName("Name");
+        discount.setPersonList(new ArrayList<>());
+        discount.setSale(DiscountEnum.ZERO);
+
+        Role role = new Role();
+        role.setId(1L);
+        role.setName("Name");
+        role.setPersonList(new ArrayList<>());
+        role.setRoleValue(RoleEnum.ROLE_ADMIN);
+
+        Person author = new Person();
+        author.setCreatedAt(LocalDate.of(1970, 1, 1).atStartOfDay());
+        author.setCreatedReserveRecords(new ArrayList<>());
+        author.setDiscount(discount);
+        author.setEmail("jane.doe@example.org");
+        author.setId(1L);
+        author.setLastName("Doe");
+        author.setName("Name");
+        author.setOrderList(new ArrayList<>());
+        author.setPassword("iloveyou");
+        author.setPhoneNumber("6625550144");
+        author.setReservationList(new ArrayList<>());
+        author.setRestaurantReviews(new ArrayList<>());
+        author.setRole(role);
+        author.setUpdatedAt(LocalDate.of(1970, 1, 1).atStartOfDay());
+        author.setUpdatedReserveRecords(new ArrayList<>());
+        author.setUpdatedWho("2020-03-01");
+        author.setUsername("janedoe");
+        author.setYearOfBirth(1);
+
+        Dishes dishes = new Dishes();
+        dishes.setCalories(1);
+        dishes.setCarbohydrates(1);
+        dishes.setCompositionsOfDishesList(new ArrayList<>());
+        dishes.setFats(1);
+        dishes.setFoodReviewList(new ArrayList<>());
+        dishes.setId(1L);
+        dishes.setImageURL("https://example.org/example");
+        dishes.setName("Name");
+        dishes.setOrderElementsIntegerMap(new ArrayList<>());
+        dishes.setPrice(10.0d);
+        dishes.setProteins(1);
+        dishes.setWeight(10.0d);
+
+        FoodReview foodReview = new FoodReview();
+        foodReview.setAuthor(author);
+        foodReview.setComment("Comment");
+        foodReview.setDateCreate(LocalDate.of(1970, 1, 1).atStartOfDay());
+        foodReview.setDishes(dishes);
+        foodReview.setGrade(1);
+        foodReview.setIdFoodReview(1L);
+        when(foodReviewsService.getById(anyLong())).thenReturn(foodReview);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews/{id}", 1L);
+        MockMvcBuilders.standaloneSetup(foodReviewController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"idFoodReview\":1,\"dishes\":{\"id\":1,\"name\":\"Name\",\"price\":10.0,\"weight\":10.0,\"calories\":1,\"proteins\":1"
+                                        + ",\"fats\":1,\"carbohydrates\":1,\"imageURL\":\"https://example.org/example\",\"foodReviewList\":[],\"compositio"
+                                        + "nsOfDishesList\":[]},\"dateCreate\":[1970,1,1,0,0],\"grade\":1,\"comment\":\"Comment\"}"));
+    }
+
+    /**
      * Method under test: {@link FoodReviewController#getFoodReviews()}
      */
     @Test
     void testGetFoodReviews() throws Exception {
         when(foodReviewsService.getFoodReviews()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews/all");
+        MockMvcBuilders.standaloneSetup(foodReviewController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    /**
+     * Method under test: {@link FoodReviewController#getFoodReviews()}
+     */
+    @Test
+    void testGetFoodReviews2() throws Exception {
+        when(foodReviewsService.getFoodReviews()).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews");
         MockMvcBuilders.standaloneSetup(foodReviewController)
                 .build()
                 .perform(requestBuilder)
@@ -352,5 +511,30 @@ class FoodReviewControllerDiffblueTest {
                                         + "\"2020-03-01\"},\"dishes\":{\"id\":1,\"name\":\"Name\",\"price\":10.0,\"weight\":10.0,\"calories\":1,\"proteins\":1,"
                                         + "\"fats\":1,\"carbohydrates\":1,\"imageURL\":\"https://example.org/example\"},\"dateCreate\":null,\"grade\":1,"
                                         + "\"comment\":\"Comment\"}"));
+    }
+
+    /**
+     * Method under test:
+     * {@link FoodReviewController#saveFoodReview(FoodReviewDto, BindingResult)}
+     */
+    @Test
+    void testSaveFoodReview2() throws Exception {
+        when(foodReviewsService.getFoodReviews()).thenReturn(new ArrayList<>());
+
+        FoodReviewDto foodReviewDto = new FoodReviewDto();
+        foodReviewDto.setAuthor(1L);
+        foodReviewDto.setComment("Comment");
+        foodReviewDto.setDishes(1L);
+        foodReviewDto.setGrade(1);
+        String content = (new ObjectMapper()).writeValueAsString(foodReviewDto);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(foodReviewController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 }

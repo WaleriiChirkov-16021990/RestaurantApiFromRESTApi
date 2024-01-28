@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true,propagation = Propagation.REQUIRED,rollbackFor = {TableReservationNotFoundException.class})
+@Transactional(readOnly = true,
+        propagation = Propagation.REQUIRED,
+        rollbackFor = {TableReservationNotFoundException.class})
 public class TableReservationService {
     private final TableReservationRepository repository;
 

@@ -5,13 +5,16 @@ import com.chirkov.restApiRestaurantBussines.repositories.ReserveTableRepository
 import com.chirkov.restApiRestaurantBussines.units.exceptions.ReserveTableNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,
+        propagation = Propagation.REQUIRED,
+        rollbackFor = ReserveTableNotFoundException.class)
 public class ReserveTableService {
     private final ReserveTableRepository repository;
 
@@ -24,7 +27,7 @@ public class ReserveTableService {
         return repository.findAll();
     }
 
-    public ReserveTable findReserveById(Long id) {
+    public ReserveTable findById(Long id) {
         Optional<ReserveTable> reserveTable = repository.findById(id);
         return reserveTable.orElseThrow(() -> new ReserveTableNotFoundException("ReserveTable by Id= "+ id + ", not found"));
     }

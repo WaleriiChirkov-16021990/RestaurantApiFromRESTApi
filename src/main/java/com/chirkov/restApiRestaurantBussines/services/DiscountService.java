@@ -6,6 +6,7 @@ import com.chirkov.restApiRestaurantBussines.repositories.DiscountsRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DiscountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
@@ -13,7 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,
+        propagation = Propagation.REQUIRED,
+        rollbackFor = DiscountNotFoundException.class)
 public class DiscountService {
     private final DiscountsRepository discountRepository;
 

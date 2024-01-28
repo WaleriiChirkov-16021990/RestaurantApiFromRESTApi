@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Arrays;
@@ -15,11 +16,22 @@ import java.util.Arrays;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnitsOfMeasurementDto {
-    @NotNull
+
+
+    @NotNull(message = "UnitsOfMeasurementDto/_name must not be null")
+    @NotEmpty(message = "UnitsOfMeasurementDto/_name must not be empty")
+    @Size(max = 100, message = "UnitsOfMeasurementDto/_name must not exceed 100.")
     private String name;
-    @NotNull
+
+
+    @NotNull(message = "UnitsOfMeasurementDto/_unitOfMeasurement must not be null")
+    @NotEmpty(message = "UnitsOfMeasurementDto/_unitOfMeasurement must not be empty")
+    @Size(max = 50, message = "UnitsOfMeasurementDto/_unitOfMeasurement must not exceed 50.")
     private String unitOfMeasurement;
-    @Size(min = 4, max = 300, message = "Commentary should between 4 to 300 symbol")
+
+    @NotNull(message = "UnitsOfMeasurementDto/_commentary must not be null")
+    @NotEmpty(message = "UnitsOfMeasurementDto/_commentary must not be empty")
+    @Size(max = 300, message = "UnitsOfMeasurementDto/_Commentary should be not exceed 300 symbol")
     private String commentary;
 
     public UnitsOfMeasurement mappingUnitObject() throws UnitsOfMeasurementNotFoundException {
