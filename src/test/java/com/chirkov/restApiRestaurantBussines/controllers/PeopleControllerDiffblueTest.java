@@ -192,8 +192,8 @@ class PeopleControllerDiffblueTest {
         person.setUpdatedWho("2020-03-01");
         person.setUsername("janedoe");
         person.setYearOfBirth(1);
-        doNothing().when(peopleService).delete(Mockito.<Long>any());
-        when(peopleService.findOne(Mockito.<Long>any())).thenReturn(person);
+        doNothing().when(peopleService).deleteById(Mockito.<Long>any());
+        when(peopleService.findById(Mockito.<Long>any())).thenReturn(person);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/people/{id}", 1L);
         MockMvcBuilders.standaloneSetup(peopleController)
                 .build()
@@ -779,7 +779,7 @@ class PeopleControllerDiffblueTest {
         person.setUpdatedWho("2020-03-01");
         person.setUsername("janedoe");
         person.setYearOfBirth(1);
-        when(peopleService.findOne(Mockito.<Long>any())).thenReturn(person);
+        when(peopleService.findById(Mockito.<Long>any())).thenReturn(person);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/people/{id}/edit", 1L);
         MockMvcBuilders.standaloneSetup(peopleController)
                 .build()
@@ -1009,7 +1009,7 @@ class PeopleControllerDiffblueTest {
         person.setUpdatedWho("2020-03-01");
         person.setUsername("janedoe");
         person.setYearOfBirth(1);
-        when(peopleService.findOne(Mockito.<Long>any())).thenReturn(person);
+        when(peopleService.findById(Mockito.<Long>any())).thenReturn(person);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/people/{id}", 1L);
         MockMvcBuilders.standaloneSetup(peopleController)
                 .build()

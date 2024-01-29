@@ -69,7 +69,7 @@ class OrderElementControllerDiffblueTest {
      */
     @Test
     void testAddOrder() throws Exception {
-        when(orderElementsService.getAllOrderElements()).thenReturn(new ArrayList<>());
+        when(orderElementsService.findAll()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder contentTypeResult = MockMvcRequestBuilders.get("/order-element")
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -146,7 +146,7 @@ class OrderElementControllerDiffblueTest {
         orderElements.setDishes(dishes);
         orderElements.setId(1L);
         orderElements.setOrder(order);
-        when(orderElementsService.getOrderElementsById(anyLong())).thenReturn(orderElements);
+        when(orderElementsService.findById(anyLong())).thenReturn(orderElements);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/order-element/{id}", 1L);
         MockMvcBuilders.standaloneSetup(orderElementController)
                 .build()
@@ -285,7 +285,7 @@ class OrderElementControllerDiffblueTest {
      */
     @Test
     void testGetOrderElements() throws Exception {
-        when(orderElementsService.getAllOrderElements()).thenReturn(new ArrayList<>());
+        when(orderElementsService.findAll()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/order-element");
         MockMvcBuilders.standaloneSetup(orderElementController)
                 .build()

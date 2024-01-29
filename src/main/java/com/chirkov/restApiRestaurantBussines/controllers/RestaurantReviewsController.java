@@ -1,10 +1,12 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.RestaurantReviewsDto;
+import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.RestaurantReviewsService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.RestaurantReviewsErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotCreateException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotFoundException;
@@ -24,7 +26,7 @@ import java.util.Optional;
 public class RestaurantReviewsController {
     private final RestaurantReviewsService service;
     private final RestaurantReviewsValidator validator;
-    private final PeopleService peopleService;
+    private final PeopleServiceByRepository<Person> peopleService;
 
     @Autowired
     public RestaurantReviewsController(RestaurantReviewsService service, RestaurantReviewsValidator validator, PeopleService peopleService) {

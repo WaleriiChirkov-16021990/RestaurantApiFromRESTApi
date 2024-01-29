@@ -45,13 +45,13 @@ public class FoodReviewDto {
             throws PersonNotFoundException, DishesNotFoundException, FoodReviewNotCreatedException {
         FoodReview foodReview = new FoodReview();
         try {
-            Person person = peopleService.findOne(author);
+            Person person = peopleService.findById(author);
             if (person == null) {
                 throw new PersonNotFoundException("Person by id: {" + author + "}, not found");
             }
             foodReview.setAuthor(person);
 
-            Dishes findDishes = dishesService.getDishesById(dishes);
+            Dishes findDishes = dishesService.findById(dishes);
             if (findDishes == null) {
                 throw new DishesNotFoundException("Dishes by id: {" + dishes + "}, not found.");
             }

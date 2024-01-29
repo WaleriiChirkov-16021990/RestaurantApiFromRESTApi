@@ -6,7 +6,7 @@ import com.chirkov.restApiRestaurantBussines.services.CompositionsOfDishesServic
 import com.chirkov.restApiRestaurantBussines.services.IngredientsService;
 import com.chirkov.restApiRestaurantBussines.services.UnitsOfMeasurementService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
-import com.chirkov.restApiRestaurantBussines.units.abstracts.CompositionsOfDishesServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.CompositionsOfDishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.CompositionsOfDishesErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.CompositionsOfDishesValidator;

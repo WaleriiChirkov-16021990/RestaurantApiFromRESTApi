@@ -97,7 +97,7 @@ class ReserveTableControllerDiffblueTest {
         reserveTable.setNumberOfSeats(10);
         reserveTable.setReservationList(new ArrayList<>());
         reserveTable.setStateFromTable(stateFromTable);
-        when(reserveTableService.findReserveById(Mockito.<Long>any())).thenReturn(reserveTable);
+        when(reserveTableService.findById(Mockito.<Long>any())).thenReturn(reserveTable);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reserve_a_table/{id}", 1L);
         MockMvcBuilders.standaloneSetup(reserveTableController)
                 .build()

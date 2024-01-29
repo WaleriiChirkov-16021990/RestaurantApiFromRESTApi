@@ -1,8 +1,8 @@
-package com.chirkov.restApiRestaurantBussines.units.abstracts;
+package com.chirkov.restApiRestaurantBussines.units.abstractsServices;
 
 import java.util.List;
 
-public interface OrderServiceByRepository<M> {
+public interface StateFromTablesServiceByRepository<M> {
     M findById(Long id);
 
     List<M> findAll();

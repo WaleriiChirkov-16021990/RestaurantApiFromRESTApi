@@ -1,8 +1,8 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.models.Discount;
-import com.chirkov.restApiRestaurantBussines.services.DiscountService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DiscountServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.DiscountErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DiscountNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DiscountNotFoundException;
@@ -19,11 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/discount")
 public class DiscountController {
-    private final DiscountService discountService;
+//    @Qualifier("DiscountService")
+    private final DiscountServiceByRepository<Discount> discountService;
     private final DiscountValidator discountValidator;
 
     @Autowired
-    public DiscountController(DiscountService discountService, DiscountValidator discountValidator) {
+    public DiscountController(DiscountServiceByRepository<Discount> discountService, DiscountValidator discountValidator) {
         this.discountService = discountService;
         this.discountValidator = discountValidator;
     }
@@ -40,13 +41,13 @@ public class DiscountController {
 
     @GetMapping("/name/{name}")
     public Discount getDiscount(@PathVariable("name") String name) throws DiscountNotFoundException {
-        return this.discountService.findByName(name).orElseThrow(DiscountNotFoundException::new);
+        return this.discountService.findByName(name);
     }
 
     @ExceptionHandler
     private ResponseEntity<DiscountErrorResponse> handlerException(DiscountNotFoundException exception) {
         DiscountErrorResponse response = new DiscountErrorResponse(
-                exception.getStackTrace().toString(),
+                exception.getMessage(),
                 System.currentTimeMillis(),
                 exception.getClass().getSimpleName()
         );

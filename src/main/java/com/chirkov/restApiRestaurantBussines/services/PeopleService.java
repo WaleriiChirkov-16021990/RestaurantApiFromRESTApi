@@ -3,7 +3,11 @@ package com.chirkov.restApiRestaurantBussines.services;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 //import com.chirkov.restApiRestaurantBussines.models.RoleEnum;
 import com.chirkov.restApiRestaurantBussines.repositories.PeopleRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotUpdatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,8 +22,8 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
-        rollbackFor = PersonNotFoundException.class)
-public class PeopleService {
+        rollbackFor = {PersonNotCreatedException.class, PersonNotDeletedException.class})
+public class PeopleService implements PeopleServiceByRepository<Person> {
     private final PeopleRepository peopleRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final RoleService roleService;
@@ -37,20 +41,21 @@ public class PeopleService {
         return peopleRepository.findAll();
     }
 
-    public Person findOne(Long id) {
+    public Person findById(Long id) {
         Optional<Person> foundPerson = peopleRepository.findById(id);
         return foundPerson.orElseThrow(() -> new PersonNotFoundException("Person " + id + " not found"));
     }
 
     @Transactional
-    public Person save(Person person) {
+    public Person save(Person person) throws PersonNotCreatedException {
         try {
             enrichPerson(person);
-        } catch (RoleNotFoundException e) {
-            e.printStackTrace();
+            person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
+            return peopleRepository.save(person);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            throw new PersonNotCreatedException("Error saving person " + person + ": " + e.getMessage(), e);
         }
-        person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
-        return peopleRepository.save(person);
     }
 
     private void enrichPerson(Person person) throws RoleNotFoundException {
@@ -67,10 +72,14 @@ public class PeopleService {
     }
 
     @Transactional
-    public Person update(Long id, Person updatePerson) {
-        updatePerson.setId(id);
-        enrichUpdatePerson(updatePerson);
-        return peopleRepository.save(updatePerson);
+    public Person update(Long id, Person updatePerson) throws PersonNotUpdatedException {
+        try {
+            updatePerson.setId(id);
+            enrichUpdatePerson(updatePerson);
+            return peopleRepository.save(updatePerson);
+        } catch (Exception e) {
+            throw new PersonNotUpdatedException("Could not update person with id " + updatePerson.getId(), e);
+        }
     }
 
     private void enrichUpdatePerson(Person updatePerson) {
@@ -79,12 +88,34 @@ public class PeopleService {
     }
 
     @Transactional
-    public void delete(Long id) { peopleRepository.deleteById(id);
+    public Person deleteById(Long id) throws PersonNotDeletedException {
+        Person deletePerson = findById(id);
+        try {
+            peopleRepository.deleteById(id);
+            return deletePerson;
+        } catch (Exception e) {
+            throw new PersonNotDeletedException("Could not delete person with id " + id + "__\n" + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * @param name
+     * @return
+     */
+    @Override
+    public Person findByName(String name) {
+        return null;
     }
 
     @Transactional
-    public void delete(Person person) {
-        peopleRepository.delete(person);
+    public Person deleteByPerson(Person person) {
+        try {
+            peopleRepository.delete(person);
+            return person;
+        } catch (Exception e) {
+            throw new PersonNotDeletedException(
+                    "Could not delete person with username " + person.getUsername() + "__\n" + e.getMessage(), e);
+        }
     }
 
     public Optional<Person> findPersonByEmail(String email) {

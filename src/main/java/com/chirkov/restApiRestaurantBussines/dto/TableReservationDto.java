@@ -4,13 +4,12 @@ import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.TableReservation;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.ReserveTableService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -47,13 +46,13 @@ public class TableReservationDto {
     @Max(value = Long.MAX_VALUE, message = "TableReservationDto/authorThisRecords must no greater than Long.MAX value")
     private Long authorThisRecords;
 
-    public TableReservation mappingTableReservationDto(PeopleService peopleService, ReserveTableService reserveTableService) {
+    public TableReservation mappingTableReservationDto(PeopleServiceByRepository<Person> peopleService, ReserveTableService reserveTableService) {
         TableReservation tableReservation = new TableReservation();
-        tableReservation.setTable(reserveTableService.findReserveById(table));
-        tableReservation.setOwner(peopleService.findOne(owner));
+        tableReservation.setTable(reserveTableService.findById(table));
+        tableReservation.setOwner(peopleService.findById(owner));
         tableReservation.setDate(date);
         tableReservation.setNumberOfGuests(numberOfGuests);
-        Person person = peopleService.findOne(authorThisRecords);
+        Person person = peopleService.findById(authorThisRecords);
         tableReservation.setAuthorThisRecords(person);
         tableReservation.setAuthorOfUpdate(person);
         return tableReservation;

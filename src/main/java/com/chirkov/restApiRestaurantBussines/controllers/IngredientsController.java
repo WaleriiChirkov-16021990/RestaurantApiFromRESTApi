@@ -1,8 +1,8 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.models.Ingredients;
-import com.chirkov.restApiRestaurantBussines.services.IngredientsService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.IngredientsServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.IngredientsErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.IngredientsValidator;
@@ -19,11 +19,11 @@ import java.util.List;
 @RequestMapping("/ingredients")
 public class IngredientsController {
 
-    private final IngredientsService service;
+    private final IngredientsServiceByRepository<Ingredients> service;
     private final IngredientsValidator validator;
 
     @Autowired
-    public IngredientsController(IngredientsService service, IngredientsValidator validator) {
+    public IngredientsController(IngredientsServiceByRepository<Ingredients> service, IngredientsValidator validator) {
         this.service = service;
         this.validator = validator;
     }
@@ -44,7 +44,7 @@ public class IngredientsController {
 
     @GetMapping("/{id}")
     public Ingredients getIngredientsById(@PathVariable long id) throws IngredientsNotFoundException {
-        return service.getById(id);
+        return service.findById(id);
     }
 
 

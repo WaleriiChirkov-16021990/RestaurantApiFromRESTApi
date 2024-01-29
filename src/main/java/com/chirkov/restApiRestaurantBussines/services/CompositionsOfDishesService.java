@@ -1,7 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.services;
 
 import com.chirkov.restApiRestaurantBussines.models.CompositionsOfDishes;
-import com.chirkov.restApiRestaurantBussines.units.abstracts.CompositionsOfDishesServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.CompositionsOfDishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.repositories.CompositionsOfDishesRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesEmptyListException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesNotCreatedException;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
-        rollbackFor = CompositionsOfDishesNotFoundException.class)
+        rollbackFor = {CompositionsOfDishesNotCreatedException.class,CompositionsOfDishesNotDeletedException.class})
 @Qualifier
 public class CompositionsOfDishesService implements CompositionsOfDishesServiceByRepository<CompositionsOfDishes> {
     private final CompositionsOfDishesRepository repository;

@@ -57,7 +57,7 @@ By addressing these potential issues, you should be able to resolve the "Templat
 
     @GetMapping("/{id}")
     public ReserveTable findById(@PathVariable("id") Long id) throws ReserveTableNotFoundException {
-        return this.service.findReserveById(id);
+        return this.service.findById(id);
     }
 
     @ExceptionHandler

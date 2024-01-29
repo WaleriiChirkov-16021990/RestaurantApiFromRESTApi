@@ -34,7 +34,7 @@ public class DiscountValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Discount discount = (Discount) target;
-        if (this.discountService.findByName(discount.getName()).isPresent()) {
+        if (this.discountService.findByNameOptional(discount.getName()).isPresent()) {
             errors.rejectValue("discount_name","88888","This discount is already exists");
         }
         if (this.discountService.findByDiscountValue(discount.getSale()).isPresent()) {

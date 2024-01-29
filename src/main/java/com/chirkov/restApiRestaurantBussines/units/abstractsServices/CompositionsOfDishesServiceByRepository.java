@@ -1,10 +1,6 @@
-package com.chirkov.restApiRestaurantBussines.units.abstracts;
-
-import com.chirkov.restApiRestaurantBussines.models.CompositionsOfDishes;
-import org.springframework.data.jpa.repository.JpaRepository;
+package com.chirkov.restApiRestaurantBussines.units.abstractsServices;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CompositionsOfDishesServiceByRepository <M> {
     M findById(Long id);

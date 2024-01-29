@@ -2,6 +2,7 @@ package com.chirkov.restApiRestaurantBussines.services;
 
 import com.chirkov.restApiRestaurantBussines.models.ReserveTable;
 import com.chirkov.restApiRestaurantBussines.repositories.ReserveTableRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.ReserveTableServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.ReserveTableNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
         rollbackFor = ReserveTableNotFoundException.class)
-public class ReserveTableService {
+public class ReserveTableService implements ReserveTableServiceByRepository<ReserveTable> {
     private final ReserveTableRepository repository;
 
     @Autowired

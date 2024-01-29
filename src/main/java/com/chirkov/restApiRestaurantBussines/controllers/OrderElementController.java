@@ -1,12 +1,15 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.OrderElementDto;
+import com.chirkov.restApiRestaurantBussines.models.Dishes;
 import com.chirkov.restApiRestaurantBussines.models.Order;
 import com.chirkov.restApiRestaurantBussines.models.OrderElements;
 import com.chirkov.restApiRestaurantBussines.services.DishesService;
 import com.chirkov.restApiRestaurantBussines.services.OrderElementsService;
 import com.chirkov.restApiRestaurantBussines.services.OrderService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DishesServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.OrderElementsServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.OrderElementErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderElementNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderElementNotFoundException;
@@ -23,13 +26,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/order-element")
 public class OrderElementController {
-    private final OrderElementsService service;
-    private final DishesService dishesService;
+    private final OrderElementsServiceByRepository<OrderElements> service;
+    private final DishesServiceByRepository<Dishes> dishesService;
     private final OrderService orderService;
     private final OrderElementsValidator validator;
 
     @Autowired
-    public OrderElementController(OrderElementsService service, DishesService dishesService, OrderService orderService, OrderElementsValidator validator) {
+    public OrderElementController(OrderElementsServiceByRepository<OrderElements> service,
+                                  DishesServiceByRepository<Dishes> dishesService,
+                                  OrderService orderService,
+                                  OrderElementsValidator validator) {
         this.service = service;
         this.dishesService = dishesService;
         this.orderService = orderService;
@@ -38,12 +44,12 @@ public class OrderElementController {
 
     @GetMapping
     public List<OrderElements> getOrderElements() {
-        return service.getAllOrderElements();
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
     public OrderElements getOrderElementsById(@PathVariable("id") long id) throws OrderElementNotFoundException {
-        return service.getOrderElementsById(id);
+        return service.findById(id);
     }
 
     @GetMapping("/order/{order}")
@@ -52,8 +58,8 @@ public class OrderElementController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderElements> addOrder(@RequestBody @Valid OrderElementDto orderElementsdto, BindingResult bindingResult) throws OrderElementNotCreatedException {
-        OrderElements orderElements = orderElementsdto.mappingTransferObject(orderService,dishesService);
+    public ResponseEntity<OrderElements> addOrder(@RequestBody @Valid OrderElementDto orderElementsDto, BindingResult bindingResult) throws OrderElementNotCreatedException {
+        OrderElements orderElements = orderElementsDto.mappingTransferObject(orderService, dishesService);
         validator.validate(orderElements, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new OrderElementNotCreatedException(AddErrorMessageFromMyException.getErrorMessage(bindingResult));

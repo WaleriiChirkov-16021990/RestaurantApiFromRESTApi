@@ -3,11 +3,13 @@ package com.chirkov.restApiRestaurantBussines.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "Order_table",schema = "public")
@@ -19,10 +21,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
-//
-//    @OneToOne(mappedBy = "order")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private OrderElements orderElements;
+
+    @OneToMany(mappedBy = "order")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<OrderElements> orderElements;
 
     @JsonIgnore
     @Fetch(value = FetchMode.SELECT)

@@ -91,7 +91,7 @@ class IngredientsControllerDiffblueTest {
         ingredients.setRemnant(1);
         ingredients.setSpicy(true);
         ingredients.setVegan(true);
-        when(ingredientsService.getById(anyLong())).thenReturn(ingredients);
+        when(ingredientsService.findById(anyLong())).thenReturn(ingredients);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/ingredients/{id}", 1L);
         MockMvcBuilders.standaloneSetup(ingredientsController)
                 .build()

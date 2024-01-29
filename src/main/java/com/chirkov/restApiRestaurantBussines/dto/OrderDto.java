@@ -4,6 +4,7 @@ import com.chirkov.restApiRestaurantBussines.models.Order;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.StatusFromOrder;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,11 +34,11 @@ public class OrderDto {
     private String statusFromOrder;
 
 
-    public Order mappingbyOrder(PeopleService peopleService) throws PersonNotFoundException {
+    public Order mappingbyOrder(PeopleServiceByRepository<Person> peopleService) throws PersonNotFoundException {
         Order order = new Order();
         Person person;
         try {
-            person = peopleService.findOne(owner);
+            person = peopleService.findById(owner);
         } catch (Exception e) {
             throw new PersonNotFoundException(e.getMessage(), e);
         }

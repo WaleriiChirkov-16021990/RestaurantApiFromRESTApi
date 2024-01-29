@@ -2,20 +2,17 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.PersonDto;
 import com.chirkov.restApiRestaurantBussines.models.Person;
-import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.PersonErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.PersonDtoValidator;
-import lombok.Getter;
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,11 +25,11 @@ import java.util.stream.Collectors;
 public class PeopleController {
 
     private final ModelMapper modelMapper;
-    private final PeopleService peopleService;
+    private final PeopleServiceByRepository<Person> peopleService;
     private final PersonDtoValidator personDtoValidator;
 
     @Autowired
-    public PeopleController(ModelMapper modelMapper, PeopleService peopleService, PersonDtoValidator personDtoValidator) {
+    public PeopleController(ModelMapper modelMapper, PeopleServiceByRepository<Person> peopleService, PersonDtoValidator personDtoValidator) {
         this.modelMapper = modelMapper;
         this.peopleService = peopleService;
         this.personDtoValidator = personDtoValidator;
@@ -49,7 +46,7 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public PersonDto getPerson(@PathVariable("id") Long id) {
-        return convertToPersonDto(peopleService.findOne(id));
+        return convertToPersonDto(peopleService.findById(id));
     }
 
     @ExceptionHandler
@@ -92,12 +89,12 @@ public class PeopleController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
-        if (peopleService.findOne(id) == null) {
+        if (peopleService.findById(id) == null) {
             AtomicReference<StringBuilder> error = new AtomicReference<>(new StringBuilder());
             error.get().append("This user not found");
             throw new PersonNotDelete(error.toString());
         }
-        peopleService.delete(id);
+        peopleService.deleteById(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -113,12 +110,13 @@ public class PeopleController {
 
     @GetMapping("/{id}/edit")
     public ResponseEntity<HttpStatus> edit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("person", peopleService.findOne(id));
+        model.addAttribute("person", peopleService.findById(id));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@PathVariable("id") Long id, @RequestBody @Valid PersonDto person, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> update(@PathVariable("id") Long id, @RequestBody @Valid PersonDto person,
+                                             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new PersonNotUpdatedException(
                     AddErrorMessageFromMyException

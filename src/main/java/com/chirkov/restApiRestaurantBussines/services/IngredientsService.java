@@ -2,8 +2,10 @@ package com.chirkov.restApiRestaurantBussines.services;
 
 import com.chirkov.restApiRestaurantBussines.models.Ingredients;
 import com.chirkov.restApiRestaurantBussines.repositories.IngredientsRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.IngredientsServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.IngredientsEmptyListException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.IngredientsNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.IngredientsNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.IngredientsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,8 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED,
-        rollbackFor = IngredientsNotFoundException.class)
-public class IngredientsService {
+        rollbackFor = {IngredientsNotCreatedException.class, IngredientsNotDeletedException.class})
+public class IngredientsService implements IngredientsServiceByRepository<Ingredients> {
     private final IngredientsRepository repository;
 
     @Autowired
@@ -38,7 +40,23 @@ public class IngredientsService {
         return ingredients;
     }
 
-    public Ingredients getByName(String name) {
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public Ingredients deleteById(Long id) {
+        Ingredients deletedIngredients = findById(id);
+        try {
+            repository.deleteById(id);
+            return deletedIngredients;
+        } catch (Exception e) {
+            throw new IngredientsNotDeletedException("Error deleting " + id + "__" + e.getMessage(), e);
+        }
+    }
+
+    public Ingredients findByName(String name) {
         return repository.getByIngredientName(name)
                 .orElseThrow(() ->
                         new IngredientsNotFoundException("Ingredients by name" + name + ", not found."));
@@ -48,7 +66,7 @@ public class IngredientsService {
         return repository.getByIngredientName(name);
     }
 
-    public Ingredients getById(long id) {
+    public Ingredients findById(Long id) {
         return repository.findById(id).orElseThrow(() ->
                 new IngredientsNotFoundException("Ingredients by id" + id + ", not found."));
     }
@@ -86,7 +104,7 @@ public class IngredientsService {
     @Transactional
     public Ingredients save(Ingredients ingredients) {
         if (ingredients == null) {
-            throw new IngredientsNotCreatedException("Ingredient" + ingredients + ", not created");
+            throw new IngredientsNotCreatedException("Ingredient" + ingredients + " = null, is not saved");
         }
         try {
             return repository.save(ingredients);

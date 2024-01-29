@@ -1,10 +1,9 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.models.Dishes;
-import com.chirkov.restApiRestaurantBussines.services.DishesService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.DishesErrorResponse;
-import com.chirkov.restApiRestaurantBussines.units.errorResponses.OrderErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.DishesValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +18,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/dishes")
 public class DishesController {
-    private final DishesService service;
+    private final DishesServiceByRepository<Dishes> service;
     private final DishesValidator validator;
 
     @Autowired
-    public DishesController(DishesService service, DishesValidator validator) {
+    public DishesController(DishesServiceByRepository<Dishes> service, DishesValidator validator) {
         this.service = service;
         this.validator = validator;
     }
 
     @GetMapping
     public List<Dishes> getAllDishes() {
-        return service.findAllDishes();
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
     public Dishes getDishesById(@PathVariable("id") long id) throws DiscountNotFoundException {
-        return service.getDishesById(id);
+        return service.findById(id);
     }
 
     @GetMapping("/name/{start}")
@@ -45,7 +44,7 @@ public class DishesController {
 
     @GetMapping("/{name}")
     public Dishes getDishesByName(@PathVariable("name") String name) throws DiscountNotFoundException {
-        return service.getDishesByName(name);
+        return service.findByName(name);
     }
 
     @PostMapping

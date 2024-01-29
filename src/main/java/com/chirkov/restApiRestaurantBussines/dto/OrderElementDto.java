@@ -1,8 +1,10 @@
 package com.chirkov.restApiRestaurantBussines.dto;
 
+import com.chirkov.restApiRestaurantBussines.models.Dishes;
 import com.chirkov.restApiRestaurantBussines.models.OrderElements;
 import com.chirkov.restApiRestaurantBussines.services.DishesService;
 import com.chirkov.restApiRestaurantBussines.services.OrderService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderElementNotCreatedException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,11 +38,11 @@ public class OrderElementDto {
     private int quantity;
 
 
-    public OrderElements mappingTransferObject(OrderService orderService, DishesService dishesService) throws OrderElementNotCreatedException {
+    public OrderElements mappingTransferObject(OrderService orderService, DishesServiceByRepository<Dishes> dishesService) throws OrderElementNotCreatedException {
         OrderElements orderElements = new OrderElements();
         try {
             orderElements.setOrder(orderService.findById(orderId));
-            orderElements.setDishes(dishesService.getDishesById(dishesId));
+            orderElements.setDishes(dishesService.findById(dishesId));
             orderElements.setCount(quantity);
         } catch (Exception e) {
             throw new OrderElementNotCreatedException(e.getMessage(), e);

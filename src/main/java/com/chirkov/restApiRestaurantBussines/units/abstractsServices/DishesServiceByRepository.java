@@ -1,4 +1,4 @@
-package com.chirkov.restApiRestaurantBussines.units.abstracts;
+package com.chirkov.restApiRestaurantBussines.units.abstractsServices;
 
 import java.util.List;
 
@@ -12,4 +12,6 @@ public interface DishesServiceByRepository<M> {
     M findByName(String name);
 
     M save(M discount);
+
+    List<M> getDishesByStartingWith(String name);
 }

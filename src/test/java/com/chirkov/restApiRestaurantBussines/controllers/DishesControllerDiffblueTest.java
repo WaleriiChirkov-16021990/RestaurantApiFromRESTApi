@@ -117,7 +117,7 @@ class DishesControllerDiffblueTest {
      */
     @Test
     void testGetAllDishes() throws Exception {
-        when(dishesService.findAllDishes()).thenReturn(new ArrayList<>());
+        when(dishesService.findAll()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dishes");
         MockMvcBuilders.standaloneSetup(dishesController)
                 .build()
@@ -148,7 +148,7 @@ class DishesControllerDiffblueTest {
 
         ArrayList<Dishes> dishesList = new ArrayList<>();
         dishesList.add(dishes);
-        when(dishesService.findAllDishes()).thenReturn(dishesList);
+        when(dishesService.findAll()).thenReturn(dishesList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dishes");
         MockMvcBuilders.standaloneSetup(dishesController)
                 .build()
@@ -166,7 +166,7 @@ class DishesControllerDiffblueTest {
      */
     @Test
     void testGetDishesById() throws Exception {
-        when(dishesService.findAllDishes()).thenReturn(new ArrayList<>());
+        when(dishesService.findAll()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dishes/{id}", "", "Uri Variables");
         MockMvcBuilders.standaloneSetup(dishesController)
                 .build()
@@ -197,7 +197,7 @@ class DishesControllerDiffblueTest {
 
         ArrayList<Dishes> dishesList = new ArrayList<>();
         dishesList.add(dishes);
-        when(dishesService.findAllDishes()).thenReturn(dishesList);
+        when(dishesService.findAll()).thenReturn(dishesList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dishes/{id}", "", "Uri Variables");
         MockMvcBuilders.standaloneSetup(dishesController)
                 .build()
@@ -215,7 +215,7 @@ class DishesControllerDiffblueTest {
      */
     @Test
     void testGetDishesByName() throws Exception {
-        when(dishesService.findAllDishes()).thenReturn(new ArrayList<>());
+        when(dishesService.findAll()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dishes/{name}", "", "Uri Variables");
         MockMvcBuilders.standaloneSetup(dishesController)
                 .build()
@@ -246,7 +246,7 @@ class DishesControllerDiffblueTest {
 
         ArrayList<Dishes> dishesList = new ArrayList<>();
         dishesList.add(dishes);
-        when(dishesService.findAllDishes()).thenReturn(dishesList);
+        when(dishesService.findAll()).thenReturn(dishesList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dishes/{name}", "", "Uri Variables");
         MockMvcBuilders.standaloneSetup(dishesController)
                 .build()
@@ -315,7 +315,7 @@ class DishesControllerDiffblueTest {
      */
     @Test
     void testSaveDishes() throws Exception {
-        when(dishesService.findAllDishes()).thenReturn(new ArrayList<>());
+        when(dishesService.findAll()).thenReturn(new ArrayList<>());
 
         Dishes dishes = new Dishes();
         dishes.setCalories(1);
@@ -363,7 +363,7 @@ class DishesControllerDiffblueTest {
 
         ArrayList<Dishes> dishesList = new ArrayList<>();
         dishesList.add(dishes);
-        when(dishesService.findAllDishes()).thenReturn(dishesList);
+        when(dishesService.findAll()).thenReturn(dishesList);
 
         Dishes dishes2 = new Dishes();
         dishes2.setCalories(1);

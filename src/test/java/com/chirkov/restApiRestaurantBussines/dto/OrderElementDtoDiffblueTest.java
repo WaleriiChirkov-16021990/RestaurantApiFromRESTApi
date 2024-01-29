@@ -364,10 +364,10 @@ class OrderElementDtoDiffblueTest {
         dishes.setProteins(1);
         dishes.setWeight(10.0d);
         DishesService dishesService = mock(DishesService.class);
-        when(dishesService.getDishesById(anyLong())).thenReturn(dishes);
+        when(dishesService.findById(anyLong())).thenReturn(dishes);
         OrderElements actualMappingTransferObjectResult = orderElementDto.mappingTransferObject(orderService,
                 dishesService);
-        verify(dishesService).getDishesById(anyLong());
+        verify(dishesService).findById(anyLong());
         verify(orderService).findById(Mockito.<Long>any());
         assertEquals(1, actualMappingTransferObjectResult.getCount());
         assertSame(dishes, actualMappingTransferObjectResult.getDishes());

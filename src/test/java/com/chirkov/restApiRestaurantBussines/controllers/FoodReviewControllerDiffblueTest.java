@@ -1,6 +1,5 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
-import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -113,7 +112,7 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
         foodReview.setIdFoodReview(1L);
-        when(foodReviewsService.deleteFoodReview(anyLong())).thenReturn(foodReview);
+        when(foodReviewsService.deleteById(anyLong())).thenReturn(foodReview);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/food-reviews/{id}", 1L);
         MockMvcBuilders.standaloneSetup(foodReviewController)
                 .build()
@@ -190,7 +189,7 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
         foodReview.setIdFoodReview(1L);
-        when(foodReviewsService.deleteFoodReview(anyLong())).thenReturn(foodReview);
+        when(foodReviewsService.deleteById(anyLong())).thenReturn(foodReview);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/food-reviews/{id}", 1L);
         MockMvcBuilders.standaloneSetup(foodReviewController)
                 .build()
@@ -260,7 +259,7 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
         foodReview.setIdFoodReview(1L);
-        when(foodReviewsService.deleteFoodReview(anyLong())).thenReturn(foodReview);
+        when(foodReviewsService.deleteById(anyLong())).thenReturn(foodReview);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews/{id}", 1L);
         MockMvcBuilders.standaloneSetup(foodReviewController)
                 .build()
@@ -337,7 +336,7 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
         foodReview.setIdFoodReview(1L);
-        when(foodReviewsService.getById(anyLong())).thenReturn(foodReview);
+        when(foodReviewsService.findById(anyLong())).thenReturn(foodReview);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews/{id}", 1L);
         MockMvcBuilders.standaloneSetup(foodReviewController)
                 .build()
@@ -356,7 +355,7 @@ class FoodReviewControllerDiffblueTest {
      */
     @Test
     void testGetFoodReviews() throws Exception {
-        when(foodReviewsService.getFoodReviews()).thenReturn(new ArrayList<>());
+        when(foodReviewsService.findAll()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews/all");
         MockMvcBuilders.standaloneSetup(foodReviewController)
                 .build()
@@ -371,7 +370,7 @@ class FoodReviewControllerDiffblueTest {
      */
     @Test
     void testGetFoodReviews2() throws Exception {
-        when(foodReviewsService.getFoodReviews()).thenReturn(new ArrayList<>());
+        when(foodReviewsService.findAll()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/food-reviews");
         MockMvcBuilders.standaloneSetup(foodReviewController)
                 .build()
@@ -438,7 +437,7 @@ class FoodReviewControllerDiffblueTest {
         foodReview.setDishes(dishes);
         foodReview.setGrade(1);
         foodReview.setIdFoodReview(1L);
-        when(foodReviewsService.saveFoodReview(Mockito.<FoodReview>any())).thenReturn(foodReview);
+        when(foodReviewsService.save(Mockito.<FoodReview>any())).thenReturn(foodReview);
 
         Discount discount2 = new Discount();
         discount2.setId(1L);
@@ -471,7 +470,7 @@ class FoodReviewControllerDiffblueTest {
         person.setUpdatedWho("2020-03-01");
         person.setUsername("janedoe");
         person.setYearOfBirth(1);
-        when(peopleService.findOne(anyLong())).thenReturn(person);
+        when(peopleService.findById(anyLong())).thenReturn(person);
 
         Dishes dishes2 = new Dishes();
         dishes2.setCalories(1);
@@ -484,7 +483,7 @@ class FoodReviewControllerDiffblueTest {
         dishes2.setPrice(10.0d);
         dishes2.setProteins(1);
         dishes2.setWeight(10.0d);
-        when(dishesService.getDishesById(anyLong())).thenReturn(dishes2);
+        when(dishesService.findById(anyLong())).thenReturn(dishes2);
         doNothing().when(foodReviewValidator).validate(Mockito.<Object>any(), Mockito.<Errors>any());
 
         FoodReviewDto foodReviewDto = new FoodReviewDto();
@@ -519,7 +518,7 @@ class FoodReviewControllerDiffblueTest {
      */
     @Test
     void testSaveFoodReview2() throws Exception {
-        when(foodReviewsService.getFoodReviews()).thenReturn(new ArrayList<>());
+        when(foodReviewsService.findAll()).thenReturn(new ArrayList<>());
 
         FoodReviewDto foodReviewDto = new FoodReviewDto();
         foodReviewDto.setAuthor(1L);

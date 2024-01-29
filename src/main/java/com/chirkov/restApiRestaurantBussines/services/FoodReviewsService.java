@@ -4,6 +4,7 @@ import com.chirkov.restApiRestaurantBussines.models.Dishes;
 import com.chirkov.restApiRestaurantBussines.models.FoodReview;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.repositories.FoodReviewRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.FoodReviewsServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.FoodReviewEmptyListException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.FoodReviewNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.FoodReviewNotDeletedException;
@@ -20,8 +21,8 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
-        rollbackFor = FoodReviewNotFoundException.class)
-public class FoodReviewsService {
+        rollbackFor = {FoodReviewNotCreatedException.class, FoodReviewNotDeletedException.class})
+public class FoodReviewsService implements FoodReviewsServiceByRepository<FoodReview> {
     private final FoodReviewRepository foodReviewRepository;
 
     @Autowired
@@ -29,7 +30,7 @@ public class FoodReviewsService {
         this.foodReviewRepository = foodReviewRepository;
     }
 
-    public List<FoodReview> getFoodReviews() {
+    public List<FoodReview> findAll() {
         List<FoodReview> list;
         try {
             list = foodReviewRepository.findAll();
@@ -42,11 +43,11 @@ public class FoodReviewsService {
         return foodReviewRepository.findAll();
     }
 
-    public FoodReview getFoodReviewById(long id) {
-        return foodReviewRepository.getReferenceById(id);
+    public Optional<FoodReview> findByIdOptional(Long id) {
+        return foodReviewRepository.findById(id);
     }
 
-    public FoodReview getById(long id) {
+    public FoodReview findById(Long id) {
         return foodReviewRepository.findById(id).orElseThrow(() ->
                 new FoodReviewNotFoundException("Food-Review by id = " + id + ", not found."));
     }
@@ -86,7 +87,7 @@ public class FoodReviewsService {
     }
 
     @Transactional
-    public FoodReview saveFoodReview(FoodReview review) throws FoodReviewNotCreatedException {
+    public FoodReview save(FoodReview review) throws FoodReviewNotCreatedException {
         try {
             enrichFoodReview(review);
             return this.foodReviewRepository.save(review);
@@ -96,8 +97,9 @@ public class FoodReviewsService {
         }
     }
 
+    @Override
     @Transactional
-    public FoodReview deleteFoodReview(long reviewId) throws FoodReviewNotDeletedException {
+    public FoodReview deleteById(Long reviewId) throws FoodReviewNotDeletedException {
         FoodReview reviewForDelete;
         try {
             reviewForDelete = this.foodReviewRepository.getReferenceById(reviewId);

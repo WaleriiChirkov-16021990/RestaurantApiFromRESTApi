@@ -1,13 +1,13 @@
 package com.chirkov.restApiRestaurantBussines.dto;
 
+import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
-import com.chirkov.restApiRestaurantBussines.services.PeopleService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -28,9 +28,9 @@ public class RestaurantReviewsDto {
     private String comment;
 
 
-    public RestaurantReviews mapReview(PeopleService peopleService) {
+    public RestaurantReviews mapReview(PeopleServiceByRepository<Person> peopleService) {
         RestaurantReviews dto = new RestaurantReviews();
-        dto.setOwner(peopleService.findOne(this.owner));
+        dto.setOwner(peopleService.findById(this.owner));
         dto.setGradle(this.gradle);
         dto.setComment(this.comment);
         return dto;

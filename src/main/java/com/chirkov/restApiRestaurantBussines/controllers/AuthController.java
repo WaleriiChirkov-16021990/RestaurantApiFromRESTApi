@@ -3,6 +3,7 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 import com.chirkov.restApiRestaurantBussines.dto.PersonDto;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.validators.PersonDtoValidator;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 @Getter
 public class AuthController {
 
-    private final PeopleService peopleService;
+    private final PeopleServiceByRepository<Person> peopleService;
     private final ModelMapper modelMapper;
     private final PersonDtoValidator personDtoValidator;
 

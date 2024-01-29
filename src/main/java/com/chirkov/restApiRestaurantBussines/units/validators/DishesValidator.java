@@ -33,7 +33,7 @@ public class DishesValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Dishes dishes = (Dishes) target;
         if (service.getDishesByNameOpt(dishes.getName()).isPresent()) {
-            Dishes entity = service.getDishesByName(dishes.getName());
+            Dishes entity = service.findByName(dishes.getName());
             if (entity.equals(dishes)) {
                 errors.rejectValue("dishes", "122233334444555", "This dishes already exist");
             }

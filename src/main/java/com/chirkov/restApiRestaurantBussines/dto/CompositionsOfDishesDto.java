@@ -44,7 +44,7 @@ public class CompositionsOfDishesDto {
         try {
             CompositionsOfDishes compositions = new CompositionsOfDishes();
             Ingredients ingredients;
-            ingredients = serviceIngredient.getById(ingredient);
+            ingredients = serviceIngredient.findById(ingredient);
             UnitsOfMeasurement unitsOfMeasurement = service.findById(units);
             compositions.setName(name);
             compositions.setCount(count);

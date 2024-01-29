@@ -3,6 +3,7 @@ package com.chirkov.restApiRestaurantBussines.services;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
 import com.chirkov.restApiRestaurantBussines.repositories.RestaurantReviewsRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.Optional;
         rollbackFor = RestaurantReviewsNotFoundException.class)
 public class RestaurantReviewsService {
     private final RestaurantReviewsRepository repository;
-    private final PeopleService peopleService;
+    private final PeopleServiceByRepository<Person> peopleService;
 
 
     @Autowired

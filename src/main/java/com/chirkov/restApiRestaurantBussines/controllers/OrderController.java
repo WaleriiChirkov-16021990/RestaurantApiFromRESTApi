@@ -2,9 +2,12 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.OrderDto;
 import com.chirkov.restApiRestaurantBussines.models.Order;
+import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.services.OrderService;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.OrderServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.OrderErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderNotFoundException;
@@ -24,12 +27,12 @@ import java.util.List;
 @RequestMapping("/orders")
 @Getter
 public class OrderController {
-    private final OrderService orderService;
+    private final OrderServiceByRepository<Order> orderService;
     private final OrderValidator orderValidator;
-    private final PeopleService peopleService;
+    private final PeopleServiceByRepository<Person> peopleService;
 
     @Autowired
-    public OrderController(OrderService orderService, OrderValidator orderValidator, PeopleService peopleService) {
+    public OrderController(OrderServiceByRepository<Order> orderService, OrderValidator orderValidator, PeopleServiceByRepository<Person> peopleService) {
         this.orderService = orderService;
         this.orderValidator = orderValidator;
         this.peopleService = peopleService;

@@ -1,11 +1,13 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.TableReservationDto;
+import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.TableReservation;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.ReserveTableService;
 import com.chirkov.restApiRestaurantBussines.services.TableReservationService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.TableReservationErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotFoundException;
@@ -24,7 +26,7 @@ import java.util.List;
 public class TableReservationController {
     private final TableReservationService service;
     private final TableReservationValidator validator;
-    private final PeopleService peopleService;
+    private final PeopleServiceByRepository<Person> peopleService;
     private final ReserveTableService reserveTableService;
 
     @Autowired
