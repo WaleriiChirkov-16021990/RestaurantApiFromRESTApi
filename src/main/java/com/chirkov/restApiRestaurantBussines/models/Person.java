@@ -1,6 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -15,7 +16,7 @@ import java.util.Objects;
 import static javax.persistence.FetchType.*;
 
 @Entity
-@Table(name = "Person",schema = "public")
+@Table(name = "Person", schema = "public")
 @Getter
 @Setter
 public class Person {
@@ -57,11 +58,12 @@ public class Person {
     @NotNull(message = "Password is not empty")
     @Size(min = 6, message = "Password contains min 6 symbol")
     private String password;
-//
-//    @OneToMany(mappedBy = "author")
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<FoodReview> reviewList;
-//
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "author")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<FoodReview> reviewList;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "person_role", referencedColumnName = "role_id")
     private Role role;
@@ -70,22 +72,27 @@ public class Person {
     @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")
     private Discount discount;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "owner")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
 //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<RestaurantReviews> restaurantReviews;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "owner")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<TableReservation> reservationList;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "authorThisRecords")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<TableReservation> createdReserveRecords;
 
-    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
+    @JsonBackReference
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Order> orderList;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "authorOfUpdate")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<TableReservation> updatedReserveRecords;
@@ -94,7 +101,7 @@ public class Person {
     private LocalDateTime createdAt;
 
     @Column(name = "person_updated_at")
-    private LocalDateTime  updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "person_updated_who")
     private String updatedWho;

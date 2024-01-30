@@ -54,7 +54,7 @@ public class DishesController {
             throw new DishesNotCreatedException(AddErrorMessageFromMyException.getErrorMessage(bindingResult));
         }
         service.save(dishes);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     @ExceptionHandler
@@ -68,8 +68,8 @@ public class DishesController {
         return new ResponseEntity<>(orderErrorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<DishesErrorResponse> handleOrder(DishesNotCreatedException foundException) {
+    @ExceptionHandler({DishesNotCreatedException.class, DishesNotCreatedException.class})
+    public ResponseEntity<DishesErrorResponse> handleOrder(Exception foundException) {
         DishesErrorResponse orderErrorResponse = new DishesErrorResponse(
                 foundException.getMessage(),
                 System.currentTimeMillis(),

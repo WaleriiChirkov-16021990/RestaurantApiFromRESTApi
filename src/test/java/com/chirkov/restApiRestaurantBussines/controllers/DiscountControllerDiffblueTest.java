@@ -108,7 +108,7 @@ class DiscountControllerDiffblueTest {
         discount.setPersonList(new ArrayList<>());
         discount.setSale(DiscountEnum.ZERO);
         Optional<Discount> ofResult = Optional.of(discount);
-        when(discountService.findByName(Mockito.<String>any())).thenReturn(ofResult);
+        when(discountService.findByName(Mockito.<String>any())).thenReturn(ofResult.get());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/discount/name/{name}", "Name");
         MockMvcBuilders.standaloneSetup(discountController)
                 .build()

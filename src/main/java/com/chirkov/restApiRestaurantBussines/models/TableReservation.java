@@ -23,14 +23,14 @@ public class TableReservation {
     private Long id;
 
     @NotNull
-    @JsonIgnore // TODO узнать почему fetch не работает без явного исключения из response
+//    @JsonIgnore
+    // TODO узнать почему fetch не работает без явного исключения из response
 //    @Fetch(FetchMode.SELECT)
     @ManyToOne
     @JoinColumn(name = "table_reservation_table_id", referencedColumnName = "reverse_table_id")
     private ReserveTable table;
 
     @NotNull
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_user_id", referencedColumnName = "person_id")
     private Person owner;
@@ -47,7 +47,6 @@ public class TableReservation {
     @Column(name = "table_reservation_create_at")
     private LocalDateTime create_at;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_author_from_record", referencedColumnName = "person_id")
     @NotNull
@@ -58,7 +57,6 @@ public class TableReservation {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_author_from_update", referencedColumnName = "person_id")
     @NotNull

@@ -2,11 +2,15 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.CompositionsOfDishesDto;
 import com.chirkov.restApiRestaurantBussines.models.CompositionsOfDishes;
+import com.chirkov.restApiRestaurantBussines.models.Ingredients;
+import com.chirkov.restApiRestaurantBussines.models.UnitsOfMeasurement;
 import com.chirkov.restApiRestaurantBussines.services.CompositionsOfDishesService;
 import com.chirkov.restApiRestaurantBussines.services.IngredientsService;
 import com.chirkov.restApiRestaurantBussines.services.UnitsOfMeasurementService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.CompositionsOfDishesServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.IngredientsServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.UnitsOfMeasurementServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.CompositionsOfDishesErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.CompositionsOfDishesValidator;
@@ -25,8 +29,8 @@ public class CompositionsOfDishesController {
 
     private final CompositionsOfDishesServiceByRepository<CompositionsOfDishes> service;
     private final CompositionsOfDishesValidator validator;
-    private final IngredientsService ingredientsService;
-    private final UnitsOfMeasurementService unitsOfMeasurementService;
+    private final IngredientsServiceByRepository<Ingredients> ingredientsService;
+    private final UnitsOfMeasurementServiceByRepository<UnitsOfMeasurement> unitsOfMeasurementService;
 
     @Autowired
     public CompositionsOfDishesController(CompositionsOfDishesService service, CompositionsOfDishesValidator validator, IngredientsService injectionService, UnitsOfMeasurementService unitsOfMeasurementService) {
@@ -59,11 +63,7 @@ public class CompositionsOfDishesController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CompositionsOfDishes> deleteCom(@PathVariable Long id) throws CompositionsOfDishesNotDeletedException {
-        try {
-            return new ResponseEntity<>(service.deleteById(id), HttpStatus.OK);
-        } catch (Exception e) {
-            throw new CompositionsOfDishesNotDeletedException("Error deleting failed ");
-        }
+        return new ResponseEntity<>(service.deleteById(id), HttpStatus.OK);
     }
 
     @ExceptionHandler({CompositionsOfDishesNotDeletedException.class, CompositionsOfDishesNotCreatedException.class})
@@ -73,7 +73,7 @@ public class CompositionsOfDishesController {
                 System.currentTimeMillis(),
                 e.getClass().getSimpleName()
         );
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CompositionsOfDishesEmptyListException.class)

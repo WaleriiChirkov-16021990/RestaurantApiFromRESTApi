@@ -84,7 +84,7 @@ class StateFromTableControllerDiffblueTest {
         stateFromTable.setId(1L);
         stateFromTable.setName("Name");
         stateFromTable.setValue(StateFromTableEnum.READY_TO_BOARD);
-        when(stateFromTablesService.getStateById(Mockito.<Long>any())).thenReturn(stateFromTable);
+        when(stateFromTablesService.findById(Mockito.<Long>any())).thenReturn(stateFromTable);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/state_from_tables/{id}", 1L);
         MockMvcBuilders.standaloneSetup(stateFromTableController)
                 .build()

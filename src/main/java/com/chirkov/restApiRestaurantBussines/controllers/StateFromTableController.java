@@ -3,8 +3,10 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 import com.chirkov.restApiRestaurantBussines.models.StateFromTable;
 import com.chirkov.restApiRestaurantBussines.services.StateFromTablesService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.StateFromTablesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.ErrorResponceStateFromTable;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.StateFromTableNotCreateException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.StateFromTableNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.StateFromTableNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.validators.StateFromTableValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,11 @@ import java.util.List;
 @RequestMapping("/state_from_tables")
 public class StateFromTableController {
 
-    private final StateFromTablesService stateFromTablesService;
+    private final StateFromTablesServiceByRepository<StateFromTable> stateFromTablesService;
     private final StateFromTableValidator stateFromTablesValidator;
 
     @Autowired
-    public StateFromTableController(StateFromTablesService stateFromTablesService, StateFromTableValidator stateFromTablesValidator) {
+    public StateFromTableController(StateFromTablesServiceByRepository<StateFromTable> stateFromTablesService, StateFromTableValidator stateFromTablesValidator) {
         this.stateFromTablesService = stateFromTablesService;
         this.stateFromTablesValidator = stateFromTablesValidator;
     }
@@ -36,7 +38,7 @@ public class StateFromTableController {
 
     @GetMapping("/{id}")
     public StateFromTable getStateById(@PathVariable("id") Long id) throws StateFromTableNotFoundException {
-        return this.stateFromTablesService.getStateById(id);
+        return this.stateFromTablesService.findById(id);
     }
 
     @ExceptionHandler
@@ -56,11 +58,11 @@ public class StateFromTableController {
             throw new StateFromTableNotCreateException("Not unique state " + AddErrorMessageFromMyException.getErrorMessage(bindingResult));
         }
         this.stateFromTablesService.save(state);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @ExceptionHandler
-    private ResponseEntity<ErrorResponceStateFromTable> handlerException(StateFromTableNotCreateException exception) {
+    @ExceptionHandler({StateFromTableNotCreateException.class, StateFromTableNotDeletedException.class})
+    private ResponseEntity<ErrorResponceStateFromTable> handlerException(Exception exception) {
         ErrorResponceStateFromTable stateFromTable = new ErrorResponceStateFromTable(
                 exception.getMessage(),
                 System.currentTimeMillis(),

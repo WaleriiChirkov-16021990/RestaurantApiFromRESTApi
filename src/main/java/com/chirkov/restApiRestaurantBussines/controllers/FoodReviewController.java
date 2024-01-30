@@ -1,11 +1,15 @@
 package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.FoodReviewDto;
+import com.chirkov.restApiRestaurantBussines.models.Dishes;
 import com.chirkov.restApiRestaurantBussines.models.FoodReview;
+import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.services.DishesService;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.FoodReviewsServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.FoodReviewErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.FoodReviewValidator;
@@ -21,12 +25,15 @@ import java.util.List;
 @RequestMapping("/food-reviews")
 public class FoodReviewController {
     private final FoodReviewsServiceByRepository<FoodReview> service;
-    private final PeopleService peopleService;
-    private final DishesService dishesService;
+    private final PeopleServiceByRepository<Person> peopleService;
+    private final DishesServiceByRepository<Dishes> dishesService;
     private final FoodReviewValidator validator;
 
     @Autowired
-    public FoodReviewController(FoodReviewsServiceByRepository<FoodReview> service, PeopleService peopleService, DishesService dishesService, FoodReviewValidator validator) {
+    public FoodReviewController(FoodReviewsServiceByRepository<FoodReview> service,
+                                PeopleServiceByRepository<Person> peopleService,
+                                DishesServiceByRepository<Dishes> dishesService,
+                                FoodReviewValidator validator) {
         this.service = service;
         this.peopleService = peopleService;
         this.dishesService = dishesService;

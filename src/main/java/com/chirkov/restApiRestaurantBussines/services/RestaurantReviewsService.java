@@ -4,6 +4,10 @@ import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
 import com.chirkov.restApiRestaurantBussines.repositories.RestaurantReviewsRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.RestaurantReviewsServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.ReserveTableNotFoundException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotCreateException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +21,8 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
-        rollbackFor = RestaurantReviewsNotFoundException.class)
-public class RestaurantReviewsService {
+        rollbackFor = {RestaurantReviewsNotCreateException.class,RestaurantReviewsNotDeletedException.class})
+public class RestaurantReviewsService implements RestaurantReviewsServiceByRepository<RestaurantReviews> {
     private final RestaurantReviewsRepository repository;
     private final PeopleServiceByRepository<Person> peopleService;
 
@@ -33,8 +37,34 @@ public class RestaurantReviewsService {
         return this.repository.findById(id);
     }
 
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public RestaurantReviews findById(Long id) {
+        return this.repository.findById(id).orElseThrow(() ->
+                new ReserveTableNotFoundException("Not found restaurant review for id = " + id));
+    }
+
     public List<RestaurantReviews> findAll() {
         return this.repository.findAll();
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public RestaurantReviews deleteById(Long id) {
+        RestaurantReviews res = findById(id);
+        try {
+            this.repository.deleteById(id);
+            return res;
+        } catch (Exception e) {
+            throw new RestaurantReviewsNotDeletedException(
+                    "Error deleting restaurant review for id = " + id + "_\n" + e.getMessage(), e);
+        }
     }
 
     public Optional<List<RestaurantReviews>> findAllByPerson(Person person) {
@@ -42,12 +72,14 @@ public class RestaurantReviewsService {
     }
 
     @Transactional
-    public void save(RestaurantReviews review) {
+    public RestaurantReviews save(RestaurantReviews review) {
         try {
             enrichReview(review);
             this.repository.save(review);
+            return review;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RestaurantReviewsNotCreateException(
+                    "Could not save review for " + review + ": " + e.getMessage(), e);
         }
     }
 

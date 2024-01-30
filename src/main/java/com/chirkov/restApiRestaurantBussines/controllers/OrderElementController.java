@@ -10,8 +10,10 @@ import com.chirkov.restApiRestaurantBussines.services.OrderService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DishesServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.OrderElementsServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.OrderServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.OrderElementErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderElementNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderElementNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderElementNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.validators.OrderElementsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +30,13 @@ import java.util.List;
 public class OrderElementController {
     private final OrderElementsServiceByRepository<OrderElements> service;
     private final DishesServiceByRepository<Dishes> dishesService;
-    private final OrderService orderService;
+    private final OrderServiceByRepository<Order> orderService;
     private final OrderElementsValidator validator;
 
     @Autowired
     public OrderElementController(OrderElementsServiceByRepository<OrderElements> service,
                                   DishesServiceByRepository<Dishes> dishesService,
-                                  OrderService orderService,
+                                  OrderServiceByRepository<Order> orderService,
                                   OrderElementsValidator validator) {
         this.service = service;
         this.dishesService = dishesService;
@@ -78,8 +80,8 @@ public class OrderElementController {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<OrderElementErrorResponse> handlerException(OrderElementNotCreatedException exception) {
+    @ExceptionHandler({OrderElementNotCreatedException.class, OrderElementNotDeletedException.class})
+    public ResponseEntity<OrderElementErrorResponse> handlerException(Exception exception) {
         OrderElementErrorResponse errorResponse = new OrderElementErrorResponse(
                 exception.getMessage(),
                 System.currentTimeMillis(),

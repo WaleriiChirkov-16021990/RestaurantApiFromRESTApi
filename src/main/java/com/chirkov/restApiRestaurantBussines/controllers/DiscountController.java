@@ -5,6 +5,7 @@ import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyExceptio
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DiscountServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.DiscountErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DiscountNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.DiscountNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DiscountNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.validators.DiscountValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/discount")
 public class DiscountController {
-//    @Qualifier("DiscountService")
     private final DiscountServiceByRepository<Discount> discountService;
     private final DiscountValidator discountValidator;
 
@@ -61,11 +61,11 @@ public class DiscountController {
             throw new DiscountNotCreatedException(AddErrorMessageFromMyException.getErrorMessage(bindingResult));
         }
         this.discountService.save(discount);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @ExceptionHandler
-    private ResponseEntity<DiscountErrorResponse> handlerException(DiscountNotCreatedException exception) {
+    @ExceptionHandler({DiscountNotCreatedException.class, DiscountNotDeletedException.class})
+    private ResponseEntity<DiscountErrorResponse> handlerException(Exception exception) {
         DiscountErrorResponse exceptionHandler = new DiscountErrorResponse(
                 exception.getMessage(),
                 System.currentTimeMillis(),

@@ -1,6 +1,8 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -13,8 +15,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Reserve_table",schema = "public")
-@Getter
-@Setter
+@Data
 public class ReserveTable {
 
     @Id
@@ -37,12 +38,10 @@ public class ReserveTable {
     @Range(min = 0, max = 100, message = "Number of seats should between 0 to 100")
     private int numberOfSeats;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "table",fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<TableReservation> reservationList;
-
-    public ReserveTable() {
-    }
 
     @Override
     public boolean equals(Object o) {

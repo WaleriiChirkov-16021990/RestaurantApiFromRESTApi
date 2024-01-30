@@ -1,5 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.units.abstractsServices;
 
+import com.chirkov.restApiRestaurantBussines.models.StateFromTable;
+
 import java.util.List;
 
 public interface ReserveTableServiceByRepository<M> {
@@ -9,7 +11,7 @@ public interface ReserveTableServiceByRepository<M> {
 
     M deleteById(Long id);
 
-    M findByName(String name);
+    List<M> findByStateFromTable(StateFromTable status);
 
     M save(M discount);
 }

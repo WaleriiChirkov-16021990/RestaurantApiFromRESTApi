@@ -10,9 +10,41 @@ localhost:8081/people
 "email": "mannaa@gmail.com",
 "username": "manna",
 "password":"mannamanna",
-}
 "discount":5,
 "role":1
+}
+
+{
+"name": "Mari",
+"lastName": "Minna",
+"yearOfBirth": 1993,
+"phoneNumber": "89002225569",
+"email": "mannaa@gmail.com",
+"username": "manna",
+"password": "$2a$10$mXEFaVyrbQELW1H.H0IDwuq3.EDYzDGYzQANmVmeHKwq5j/A6fxvW"
+}
+
+{
+"name": "Ignat",
+"lastName": "Kupryashin",
+"yearOfBirth": 1985,
+"phoneNumber": "89153007949",
+"email": "kupryashin@gmail.com",
+"username": "ignatkupryashin",
+"password":"secretpassword",
+"discount":5,
+"role":2
+}
+{
+"name": "Ignat",
+"lastName": "Kupryashin",
+"yearOfBirth": 1985,
+"phoneNumber": "89153007949",
+"email": "kupryashin@gmail.com",
+"username": "ignatkupryashin",
+"password": "$2a$10$22qb7NQGkriyfX/HFEQN5utLbWJYxKo.owYefJGDFi/eTxjLl2QBO"
+}
+
 
 Role
 {

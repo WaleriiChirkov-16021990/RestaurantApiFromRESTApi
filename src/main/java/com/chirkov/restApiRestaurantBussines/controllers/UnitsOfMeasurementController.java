@@ -2,8 +2,8 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.UnitsOfMeasurementDto;
 import com.chirkov.restApiRestaurantBussines.models.UnitsOfMeasurement;
-import com.chirkov.restApiRestaurantBussines.services.UnitsOfMeasurementService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.UnitsOfMeasurementServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.UnitsOfMeasurementErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.UnitsOfMeasurementValidator;
@@ -19,11 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/unit-of-measurements")
 public class UnitsOfMeasurementController {
-    private final UnitsOfMeasurementService service;
+    private final UnitsOfMeasurementServiceByRepository<UnitsOfMeasurement> service;
     private final UnitsOfMeasurementValidator validator;
 
     @Autowired
-    public UnitsOfMeasurementController(UnitsOfMeasurementService service, UnitsOfMeasurementValidator validator) {
+    public UnitsOfMeasurementController(UnitsOfMeasurementServiceByRepository<UnitsOfMeasurement> service, UnitsOfMeasurementValidator validator) {
         this.service = service;
         this.validator = validator;
     }
@@ -36,7 +36,7 @@ public class UnitsOfMeasurementController {
     @PostMapping
     public ResponseEntity<UnitsOfMeasurement> addUnitOfMeasurement(
             @RequestBody @Valid UnitsOfMeasurementDto unitsOfMeasurementdto, BindingResult bindingResult)
-            throws UnitsOfMeasurementNotCreatedException,UnitsOfMeasurementNotFoundException {
+            throws UnitsOfMeasurementNotCreatedException, UnitsOfMeasurementNotFoundException {
         UnitsOfMeasurement unitsOfMeasurement = unitsOfMeasurementdto.mappingUnitObject();
         validator.validate(unitsOfMeasurement, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -52,7 +52,8 @@ public class UnitsOfMeasurementController {
     }
 
 
-    @ExceptionHandler({UnitsOfMeasurementNotDeletedException.class, UnitsOfMeasurementNotCreatedException.class})
+    @ExceptionHandler({UnitsOfMeasurementNotDeletedException.class,
+            UnitsOfMeasurementNotCreatedException.class})
     private ResponseEntity<UnitsOfMeasurementErrorResponse> getUnitsOfMeasurementErrorResponse(Exception e) {
         UnitsOfMeasurementErrorResponse response = new UnitsOfMeasurementErrorResponse(
                 e.getMessage(),

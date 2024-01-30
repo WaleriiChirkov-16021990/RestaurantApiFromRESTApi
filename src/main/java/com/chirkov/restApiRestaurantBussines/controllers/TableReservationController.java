@@ -2,14 +2,18 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 
 import com.chirkov.restApiRestaurantBussines.dto.TableReservationDto;
 import com.chirkov.restApiRestaurantBussines.models.Person;
+import com.chirkov.restApiRestaurantBussines.models.ReserveTable;
 import com.chirkov.restApiRestaurantBussines.models.TableReservation;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.ReserveTableService;
 import com.chirkov.restApiRestaurantBussines.services.TableReservationService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.ReserveTableServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.TableReservationServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.TableReservationErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.validators.TableReservationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +28,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/table-reservations")
 public class TableReservationController {
-    private final TableReservationService service;
+    private final TableReservationServiceByRepository<TableReservation> service;
     private final TableReservationValidator validator;
     private final PeopleServiceByRepository<Person> peopleService;
-    private final ReserveTableService reserveTableService;
+    private final ReserveTableServiceByRepository<ReserveTable> reserveTableService;
 
     @Autowired
-    public TableReservationController(TableReservationService service, TableReservationValidator validator, PeopleService peopleService, ReserveTableService reserveTableService) {
+    public TableReservationController(TableReservationServiceByRepository<TableReservation> service,
+                                      TableReservationValidator validator, PeopleService peopleService,
+                                      ReserveTableServiceByRepository<ReserveTable> reserveTableService) {
         this.service = service;
         this.validator = validator;
         this.peopleService = peopleService;
@@ -44,13 +50,13 @@ public class TableReservationController {
 
     @GetMapping("/{id}")
     public TableReservation getTableReservationById(@PathVariable("id") Long id) throws TableReservationNotFoundException {
-        return this.service.getTableReservationById(id);
+        return this.service.findById(id);
     }
 
 
     @PostMapping
     public ResponseEntity<HttpStatus> save(@RequestBody @Valid TableReservationDto reservationDto, BindingResult bindingResult) throws TableReservationNotCreatedException {
-        TableReservation reservation = reservationDto.mappingTableReservationDto(peopleService,reserveTableService);
+        TableReservation reservation = reservationDto.mappingTableReservationDto(peopleService, reserveTableService);
         // TODO Auto-generated method Update reservations
         this.validator.validate(reservation, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -59,7 +65,7 @@ public class TableReservationController {
             );
         }
         this.service.save(reservation);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
 
@@ -74,13 +80,13 @@ public class TableReservationController {
     }
 
 
-    @ExceptionHandler
-    private ResponseEntity<TableReservationErrorResponse> handlerException(TableReservationNotCreatedException exception) {
+    @ExceptionHandler({TableReservationNotCreatedException.class, TableReservationNotDeletedException.class})
+    private ResponseEntity<TableReservationErrorResponse> handlerException(Exception exception) {
         TableReservationErrorResponse stateFromTable = new TableReservationErrorResponse(
                 exception.getMessage(),
                 System.currentTimeMillis(),
                 exception.getClass().getSimpleName()
         );
-        return new ResponseEntity<>(stateFromTable, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(stateFromTable, HttpStatus.BAD_REQUEST);
     }
 }

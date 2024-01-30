@@ -7,8 +7,10 @@ import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.RestaurantReviewsService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.RestaurantReviewsServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.RestaurantReviewsErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotCreateException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RestaurantReviewsNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.validators.RestaurantReviewsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/restReviews")
 public class RestaurantReviewsController {
-    private final RestaurantReviewsService service;
+    private final RestaurantReviewsServiceByRepository<RestaurantReviews> service;
     private final RestaurantReviewsValidator validator;
     private final PeopleServiceByRepository<Person> peopleService;
 
     @Autowired
-    public RestaurantReviewsController(RestaurantReviewsService service, RestaurantReviewsValidator validator, PeopleService peopleService) {
+    public RestaurantReviewsController(RestaurantReviewsServiceByRepository<RestaurantReviews> service, RestaurantReviewsValidator validator, PeopleServiceByRepository<Person> peopleService) {
         this.service = service;
         this.validator = validator;
         this.peopleService = peopleService;
@@ -41,7 +43,7 @@ public class RestaurantReviewsController {
     }
 
     @GetMapping("/{id}")
-    public Optional<RestaurantReviews> getRestaurantReview(@PathVariable("id") int id) {
+    public RestaurantReviews getRestaurantReview(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
@@ -58,24 +60,24 @@ public class RestaurantReviewsController {
     @PostMapping
     public ResponseEntity<HttpStatus> addRestaurantReview(@RequestBody @Valid RestaurantReviewsDto reviewDto, BindingResult bindingResult) {
         RestaurantReviews review = reviewDto.mapReview(this.peopleService);
-        this.validator.validate(review,bindingResult);
+        this.validator.validate(review, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new RestaurantReviewsNotCreateException(
                     AddErrorMessageFromMyException.getErrorMessage(bindingResult)
             );
         }
         this.service.save(review);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @ExceptionHandler
-    private ResponseEntity<RestaurantReviewsErrorResponse> handlerException(RestaurantReviewsNotCreateException exception) {
+    @ExceptionHandler({RestaurantReviewsNotCreateException.class, RestaurantReviewsNotDeletedException.class})
+    private ResponseEntity<RestaurantReviewsErrorResponse> handlerException(Exception exception) {
         RestaurantReviewsErrorResponse errorResponse = new RestaurantReviewsErrorResponse(
                 exception.getMessage(),
                 exception.getClass().getSimpleName(),
                 System.currentTimeMillis()
         );
-        return new  ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }
 

@@ -9,9 +9,7 @@ import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyExceptio
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.OrderServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.OrderErrorResponse;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderNotCreatedException;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.OrderNotFoundException;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import com.chirkov.restApiRestaurantBussines.units.validators.OrderValidator;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,16 +55,7 @@ public class OrderController {
                     AddErrorMessageFromMyException.getErrorMessage(bindingResult));
         }
         this.orderService.save(order);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<OrderErrorResponse> handleOrder(OrderNotCreatedException createdException) {
-        OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
-                createdException.getMessage(),
-                System.currentTimeMillis(),
-                createdException.getClass().getSimpleName());
-        return new ResponseEntity<>(orderErrorResponse, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     @ExceptionHandler
@@ -80,13 +69,13 @@ public class OrderController {
         return new ResponseEntity<>(orderErrorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<OrderErrorResponse> handleOrder(PersonNotFoundException foundException) {
+    @ExceptionHandler({OrderNotDeletedException.class, OrderNotCreatedException.class})
+    public ResponseEntity<OrderErrorResponse> handleOrder(Exception foundException) {
         OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
                 foundException.getMessage(),
                 System.currentTimeMillis(),
                 foundException.getClass().getSimpleName());
 //        TODO find right info for Exception
-        return new ResponseEntity<>(orderErrorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(orderErrorResponse, HttpStatus.BAD_REQUEST);
     }
 }

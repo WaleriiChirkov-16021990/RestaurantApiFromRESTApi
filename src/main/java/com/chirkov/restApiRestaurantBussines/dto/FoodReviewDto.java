@@ -5,6 +5,8 @@ import com.chirkov.restApiRestaurantBussines.models.FoodReview;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.services.DishesService;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.DishesServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DishesNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.FoodReviewNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
@@ -41,7 +43,7 @@ public class FoodReviewDto {
     @Size(max = 600, message = "FoodReviewDto/comment must not exceed 600.")
     private String comment;
 
-    public FoodReview mappingReview(PeopleService peopleService, DishesService dishesService)
+    public FoodReview mappingReview(PeopleServiceByRepository<Person> peopleService, DishesServiceByRepository<Dishes> dishesService)
             throws PersonNotFoundException, DishesNotFoundException, FoodReviewNotCreatedException {
         FoodReview foodReview = new FoodReview();
         try {

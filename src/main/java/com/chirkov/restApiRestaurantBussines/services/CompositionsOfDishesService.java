@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
-        rollbackFor = {CompositionsOfDishesNotCreatedException.class,CompositionsOfDishesNotDeletedException.class})
+        rollbackFor = {CompositionsOfDishesNotCreatedException.class, CompositionsOfDishesNotDeletedException.class})
 @Qualifier
 public class CompositionsOfDishesService implements CompositionsOfDishesServiceByRepository<CompositionsOfDishes> {
     private final CompositionsOfDishesRepository repository;
@@ -89,7 +89,7 @@ public class CompositionsOfDishesService implements CompositionsOfDishesServiceB
 
     @Transactional
     @Override
-    public CompositionsOfDishes deleteById(Long id) {
+    public CompositionsOfDishes deleteById(Long id) throws CompositionsOfDishesNotDeletedException {
         try {
             CompositionsOfDishes compositions = findById(id);
             repository.deleteById(id);

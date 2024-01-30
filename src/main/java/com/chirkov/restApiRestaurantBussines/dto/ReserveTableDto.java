@@ -1,7 +1,9 @@
 package com.chirkov.restApiRestaurantBussines.dto;
 
 import com.chirkov.restApiRestaurantBussines.models.ReserveTable;
+import com.chirkov.restApiRestaurantBussines.models.StateFromTable;
 import com.chirkov.restApiRestaurantBussines.services.StateFromTablesService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.StateFromTablesServiceByRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
@@ -24,9 +26,9 @@ public class ReserveTableDto {
     @Range(min = 0, max = 100, message = "Number of seats should between 0 to 100")
     private int numberOfSeats;
 
-    public ReserveTable mappingTable(StateFromTablesService service) {
+    public ReserveTable mappingTable(StateFromTablesServiceByRepository<StateFromTable> service) {
         ReserveTable reserveTable = new ReserveTable();
-        reserveTable.setStateFromTable(service.getStateById(stateFromTable));
+        reserveTable.setStateFromTable(service.findById(stateFromTable));
         reserveTable.setAccommodationNumber(accommodationNumber);
         reserveTable.setNumberOfSeats(numberOfSeats);
         return reserveTable;

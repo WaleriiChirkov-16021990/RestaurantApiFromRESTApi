@@ -38,7 +38,7 @@ public class RoleValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Role role = (Role) target;
-        if (this.roleService.getRoleByName(role.getName()).isPresent()) {
+        if (this.roleService.getRoleByNameOptional(role.getName()).isPresent()) {
             errors.rejectValue("name","166662", "Role does already exists");
         }
         if (this.roleService.getRoleByRoleValue(String.valueOf(role.getRoleValue())).isPresent()) {

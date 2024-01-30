@@ -217,6 +217,16 @@ person_updated_at timestamp,
 person_updated_who VARCHAR(100)                              NOT NULL
 );
 
+{
+"name": "Mari",
+"lastName": "Minna",
+"yearOfBirth": 1993,
+"phoneNumber": "89002225569",
+"email": "mannaa@gmail.com",
+"username": "manna",
+"password": "$2a$10$mXEFaVyrbQELW1H.H0IDwuq3.EDYzDGYzQANmVmeHKwq5j/A6fxvW"
+}
+
 DROP TABLE Person;
 -- DROP TABLE users;
 

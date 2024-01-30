@@ -2,7 +2,7 @@ package com.chirkov.restApiRestaurantBussines.units.abstractsServices;
 
 import java.util.List;
 
-public interface UnitOfMeasurementServiceByRepository<M> {
+public interface UnitsOfMeasurementServiceByRepository<M> {
     M findById(Long id);
 
     List<M> findAll();

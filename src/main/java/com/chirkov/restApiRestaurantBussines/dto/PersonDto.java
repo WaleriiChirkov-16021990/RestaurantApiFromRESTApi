@@ -27,7 +27,6 @@ public class PersonDto {
     @NotNull(message = "Year of birth DTO is not null")
     private int yearOfBirth;
 
-    //    @Size(min = 11, max = 11, message = "Mobile number must contains strictly 11 digits")
     @NotNull(message = "PhoneNumber DTO is not null")
     @Pattern(regexp = "^89\\d{9}$", message = "Your phoneNumber should be contains 11 digits and begin '89...'")
     private String phoneNumber;

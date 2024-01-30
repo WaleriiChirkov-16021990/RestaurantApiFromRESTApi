@@ -69,7 +69,7 @@ public class PeopleController {
                             .getErrorMessage(bindingResult));
         }
         peopleService.save(convertToPerson(personDto));
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     private Person convertToPerson(PersonDto personDto) {

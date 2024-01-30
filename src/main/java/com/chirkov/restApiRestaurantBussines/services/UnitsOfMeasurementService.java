@@ -3,8 +3,10 @@ package com.chirkov.restApiRestaurantBussines.services;
 import com.chirkov.restApiRestaurantBussines.models.EnumUnitsOfMeasurement;
 import com.chirkov.restApiRestaurantBussines.models.UnitsOfMeasurement;
 import com.chirkov.restApiRestaurantBussines.repositories.UnitsOfMeasurementRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.UnitsOfMeasurementServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.UnitsOfMeasurementEmptyListException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.UnitsOfMeasurementNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.UnitsOfMeasurementNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.UnitsOfMeasurementNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,9 @@ import java.util.Optional;
 @Transactional(
         readOnly = true,
         propagation = Propagation.REQUIRED,
-        rollbackFor = UnitsOfMeasurementNotFoundException.class
+        rollbackFor = {UnitsOfMeasurementNotCreatedException.class, UnitsOfMeasurementNotDeletedException.class}
 )
-public class UnitsOfMeasurementService {
+public class UnitsOfMeasurementService implements UnitsOfMeasurementServiceByRepository<UnitsOfMeasurement> {
     private final UnitsOfMeasurementRepository repositories;
 
     @Autowired
@@ -28,12 +30,12 @@ public class UnitsOfMeasurementService {
         this.repositories = repositories;
     }
 
-    public List<UnitsOfMeasurement> findAll() {
+    public List<UnitsOfMeasurement> findAll() throws UnitsOfMeasurementEmptyListException {
         List<UnitsOfMeasurement> unitsOfMeasure;
         try {
             unitsOfMeasure = repositories.findAll();
         } catch (Exception e) {
-            throw new IllegalStateException(e.getMessage(), e);
+            throw new UnitsOfMeasurementEmptyListException(e.getMessage(), e);
         }
         if (unitsOfMeasure.isEmpty()) {
             throw new UnitsOfMeasurementEmptyListException("UnitsOfMeasurement could not be found. Empty list.");
@@ -41,15 +43,43 @@ public class UnitsOfMeasurementService {
         return unitsOfMeasure;
     }
 
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public UnitsOfMeasurement deleteById(Long id) throws UnitsOfMeasurementNotDeletedException {
+        UnitsOfMeasurement unitsOfMeasurement = findById(id);
+        try {
+            this.repositories.deleteById(id);
+            return unitsOfMeasurement;
+        } catch (Exception e) {
+            throw new UnitsOfMeasurementNotDeletedException(
+                    "Error deleting units of measurement id =" + id + "_\n" + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * @param name
+     * @return
+     */
+    @Override
+    public UnitsOfMeasurement findByName(String name) {
+        return this.repositories.getByName(name).orElseThrow(() ->
+                new UnitsOfMeasurementNotFoundException("UnitsOfMeasurement by name = " + name + ", not found."));
+    }
+
     public Long getIdByName(String name) {
         return repositories.getIdByName(name)
                 .orElseThrow(() ->
-                        new UnitsOfMeasurementNotFoundException("UnitsOfMeasurement could not be found for name '" + name + "'."));
+                        new UnitsOfMeasurementNotFoundException(
+                                "UnitsOfMeasurement could not be found for name '" + name + "'."));
     }
 
     public EnumUnitsOfMeasurement findEnumUnitsOfMeasurementByName(String name) {
         return repositories.getEnumByName(name).orElseThrow(() ->
-                new UnitsOfMeasurementNotFoundException("Enumerated UnitsOfMeasurement could not be found for name '" + name + "'."));
+                new UnitsOfMeasurementNotFoundException(
+                        "Enumerated UnitsOfMeasurement could not be found for name '" + name + "'."));
     }
 
     public UnitsOfMeasurement getUnitsOfMeasurementByEnumerated(EnumUnitsOfMeasurement enumUnitsOfMeasurement) {

@@ -5,6 +5,8 @@ import com.chirkov.restApiRestaurantBussines.models.Ingredients;
 import com.chirkov.restApiRestaurantBussines.models.UnitsOfMeasurement;
 import com.chirkov.restApiRestaurantBussines.services.IngredientsService;
 import com.chirkov.restApiRestaurantBussines.services.UnitsOfMeasurementService;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.IngredientsServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.UnitsOfMeasurementServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesNotCreatedException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,7 +41,8 @@ public class CompositionsOfDishesDto {
     @Max(value = Long.MAX_VALUE, message = "compositionsOfDishes/units must no greater than Long.MAX value")
     private long units;
 
-    public CompositionsOfDishes mappingObject(IngredientsService serviceIngredient, UnitsOfMeasurementService service)
+    public CompositionsOfDishes mappingObject(IngredientsServiceByRepository<Ingredients> serviceIngredient,
+                                              UnitsOfMeasurementServiceByRepository<UnitsOfMeasurement> service)
             throws CompositionsOfDishesNotCreatedException {
         try {
             CompositionsOfDishes compositions = new CompositionsOfDishes();

@@ -3,8 +3,10 @@ package com.chirkov.restApiRestaurantBussines.controllers;
 import com.chirkov.restApiRestaurantBussines.models.Role;
 import com.chirkov.restApiRestaurantBussines.services.RoleService;
 import com.chirkov.restApiRestaurantBussines.units.AddErrorMessageFromMyException;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.RoleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.RoleErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.validators.RoleValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 public class RoleController {
-    private final RoleService roleService;
+    private final RoleServiceByRepository<Role> roleService;
     private final RoleValidator roleValidator;
 
     @Autowired
-    public RoleController(RoleService roleService, RoleValidator roleValidator) {
+    public RoleController(RoleServiceByRepository<Role> roleService, RoleValidator roleValidator) {
         this.roleService = roleService;
         this.roleValidator = roleValidator;
     }
@@ -35,12 +37,12 @@ public class RoleController {
 
     @GetMapping("/{id}")
     public Role getRoleByName(@PathVariable("id") Long id) throws RoleNotFoundException {
-        return roleService.getRoleById(id);
+        return roleService.findById(id);
     }
 
     @GetMapping("/name/{name}")
     public Role getRoleByName(@PathVariable("name") String name) throws RoleNotFoundException {
-        return roleService.getRoleByName(name).orElseThrow(RoleNotFoundException::new);
+        return roleService.findByName(name);
     }
 
     @ExceptionHandler
@@ -56,17 +58,18 @@ public class RoleController {
     @PostMapping
     public ResponseEntity<HttpStatus> addRole(@RequestBody @Valid Role role, BindingResult bindingResult) throws RoleNotCreatedException {
 //        this.roleValidator.validate(role, bindingResult);
+        // TODO Auto-generated method stub
         if (bindingResult.hasErrors()) {
             throw new RoleNotCreatedException(AddErrorMessageFromMyException
                     .getErrorMessage(bindingResult));
         }
         this.roleService.save(role);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.CREATED);
 
     }
 
-    @ExceptionHandler
-    private ResponseEntity<RoleErrorResponse> handlerException(RoleNotCreatedException exception) {
+    @ExceptionHandler({RoleNotCreatedException.class, RoleNotDeletedException.class})
+    private ResponseEntity<RoleErrorResponse> handlerException(Exception exception) {
         RoleErrorResponse roleErrorResponse = new RoleErrorResponse(
                 exception.getMessage(),
                 System.currentTimeMillis(),

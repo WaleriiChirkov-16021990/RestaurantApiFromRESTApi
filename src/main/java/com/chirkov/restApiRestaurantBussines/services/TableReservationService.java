@@ -3,6 +3,9 @@ package com.chirkov.restApiRestaurantBussines.services;
 import com.chirkov.restApiRestaurantBussines.models.ReserveTable;
 import com.chirkov.restApiRestaurantBussines.models.TableReservation;
 import com.chirkov.restApiRestaurantBussines.repositories.TableReservationRepository;
+import com.chirkov.restApiRestaurantBussines.units.abstractsServices.TableReservationServiceByRepository;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotCreatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotDeletedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.TableReservationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +19,8 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
-        rollbackFor = {TableReservationNotFoundException.class})
-public class TableReservationService {
+        rollbackFor = {TableReservationNotCreatedException.class, TableReservationNotDeletedException.class})
+public class TableReservationService implements TableReservationServiceByRepository<TableReservation> {
     private final TableReservationRepository repository;
 
     @Autowired
@@ -25,24 +28,49 @@ public class TableReservationService {
         this.repository = repository;
     }
 
+    @Override
     public List<TableReservation> findAll() {
         return repository.findAll();
     }
 
-    public TableReservation getTableReservationById(Long id) {
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public TableReservation deleteById(Long id) {
+        TableReservation deletingTableReservation = findById(id);
+        try {
+            this.repository.deleteById(id);
+            return deletingTableReservation;
+        } catch (Exception e) {
+            throw new TableReservationNotDeletedException(
+                    "Table reservation error deleting by id = " + id + "_\n" + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public TableReservation findById(Long id) {
         Optional<TableReservation> reservation = repository.getTableReservationById(id);
         return reservation.orElseThrow(() -> new TableReservationNotFoundException("Table reservation not found for id : " + id));
     }
 
+    @Override
     public List<TableReservation> getTableReservationByTable(ReserveTable table) {
         Optional<List<TableReservation>> reservation = repository.getTableReservationByTable(table);
         return reservation.orElseThrow(() -> new TableReservationNotFoundException("This table reservation does not exist"));
     }
 
+    @Override
     @Transactional
-    public void save(TableReservation tableReservation) {
+    public TableReservation save(TableReservation tableReservation) throws TableReservationNotCreatedException {
         enrichTableReservation(tableReservation);
-        this.repository.save(tableReservation);
+        try {
+            return this.repository.save(tableReservation);
+        } catch (Exception e) {
+            throw new TableReservationNotCreatedException(
+                    "Error create table reservation: " + tableReservation + "_\n" + e.getMessage(), e);
+        }
     }
 
     private void enrichTableReservation(TableReservation tableReservation) {

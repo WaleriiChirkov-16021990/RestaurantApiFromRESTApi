@@ -210,7 +210,7 @@ class TableReservationControllerDiffblueTest {
         tableReservation.setOwner(owner);
         tableReservation.setTable(table);
         tableReservation.setUpdate_at(LocalDate.of(1970, 1, 1).atStartOfDay());
-        when(tableReservationService.getTableReservationById(Mockito.<Long>any())).thenReturn(tableReservation);
+        when(tableReservationService.findById(Mockito.<Long>any())).thenReturn(tableReservation);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/table-reservations/{id}", 1L);
         MockMvcBuilders.standaloneSetup(tableReservationController)
                 .build()
