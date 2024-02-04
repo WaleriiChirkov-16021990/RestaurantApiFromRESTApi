@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.security;
 
+import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -7,20 +8,26 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
 
 
     private final PersonDetailsService personDetailsService;
+    private final PeopleService peopleService;
 
     @Autowired
-    public AuthProviderImpl(PersonDetailsService personDetailsService) {
+    public AuthProviderImpl(PersonDetailsService personDetailsService, PeopleService peopleService) {
         this.personDetailsService = personDetailsService;
+        this.peopleService = peopleService;
     }
 
     @Override
@@ -29,12 +36,14 @@ public class AuthProviderImpl implements AuthenticationProvider {
         UserDetails personDetails = personDetailsService.loadUserByUsername(username);
 
         String password = authentication.getCredentials().toString();
+//        String encodePass = new BCryptPasswordEncoder().encode(password);
 
         if (!password.equals(personDetails.getPassword())) {
             throw new BadCredentialsException("incorrect password");
         }
-
-        return new UsernamePasswordAuthenticationToken(personDetails, password, Collections.emptyList());
+        String role = peopleService.findByName(username).getRole().getName();
+//        System.out.println(role);
+        return new UsernamePasswordAuthenticationToken(personDetails, password, List.of(new SimpleGrantedAuthority(role)));
     }
 
     @Override

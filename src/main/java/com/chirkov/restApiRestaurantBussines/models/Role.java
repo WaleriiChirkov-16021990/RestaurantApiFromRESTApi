@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -29,6 +30,7 @@ public class Role {
     @NotNull
     private RoleEnum roleValue;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "role")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Person> personList;

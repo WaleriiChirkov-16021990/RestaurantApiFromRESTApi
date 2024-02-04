@@ -34,10 +34,15 @@ public class PeopleController {
         this.peopleService = peopleService;
         this.personDtoValidator = personDtoValidator;
     }
+//
+//    @GetMapping
+//    public List<PersonDto> getPeople() {
+//        return peopleService.findAll().stream().map(this::convertToPersonDto).collect(Collectors.toList());
+//    }
 
     @GetMapping
-    public List<PersonDto> getPeople() {
-        return peopleService.findAll().stream().map(this::convertToPersonDto).collect(Collectors.toList());
+    public List<Person> getPeople() {
+        return peopleService.findAll();
     }
 
     private PersonDto convertToPersonDto(Person person) {

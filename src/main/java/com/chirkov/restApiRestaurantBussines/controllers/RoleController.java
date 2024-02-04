@@ -11,6 +11,7 @@ import com.chirkov.restApiRestaurantBussines.units.validators.RoleValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,16 +31,19 @@ public class RoleController {
         this.roleValidator = roleValidator;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<Role> findAll() {
         return roleService.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER') OR hasAuthority('ADMIN')")
     public Role getRoleByName(@PathVariable("id") Long id) throws RoleNotFoundException {
         return roleService.findById(id);
     }
 
+    @PreAuthorize("hasAuthority('USER') OR hasAuthority('ADMIN')")
     @GetMapping("/name/{name}")
     public Role getRoleByName(@PathVariable("name") String name) throws RoleNotFoundException {
         return roleService.findByName(name);
@@ -56,6 +60,7 @@ public class RoleController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<HttpStatus> addRole(@RequestBody @Valid Role role, BindingResult bindingResult) throws RoleNotCreatedException {
 //        this.roleValidator.validate(role, bindingResult);
         // TODO Auto-generated method stub
@@ -65,7 +70,6 @@ public class RoleController {
         }
         this.roleService.save(role);
         return ResponseEntity.ok(HttpStatus.CREATED);
-
     }
 
     @ExceptionHandler({RoleNotCreatedException.class, RoleNotDeletedException.class})
@@ -77,6 +81,4 @@ public class RoleController {
         );
         return new ResponseEntity<>(roleErrorResponse, HttpStatus.BAD_REQUEST);
     }
-
-
 }
