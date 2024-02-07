@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DatabaseMigrationSettings" lastSelectedDirectory="..\..\AppData\Roaming\JetBrains\IntelliJIdea2023.2\consoles\db\6173452d-3904-438e-8acc-a2dfa68e1838" />
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit name="Default" defaultSearchScope="Project">
+        <packages>
+          <package value="com.chirkov.restApiRestaurantBussines" />
+        </packages>
+      </persistence-unit>
+    </persistence-units>
+  </component>
+</project>

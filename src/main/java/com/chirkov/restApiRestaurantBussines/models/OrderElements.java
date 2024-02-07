@@ -19,7 +19,7 @@ public class OrderElements {
     @Column(name = "order_element_id")
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "order_element_order_elements", referencedColumnName = "order_id")
     private Order order;
 
