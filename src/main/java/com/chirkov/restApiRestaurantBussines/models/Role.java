@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,7 +33,8 @@ public class Role {
     private RoleEnum roleValue;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "role")
+    @ManyToMany(mappedBy = "role")
+    @Fetch(FetchMode.JOIN)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Person> personList;
 

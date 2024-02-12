@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.security;
 
+import com.chirkov.restApiRestaurantBussines.models.Role;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,8 @@ public class AuthProviderImpl implements AuthenticationProvider {
         if (!password.equals(personDetails.getPassword())) {
             throw new BadCredentialsException("incorrect password");
         }
-        String role = peopleService.findByName(username).getRole().getName();
-//        System.out.println(role);
-        return new UsernamePasswordAuthenticationToken(personDetails, password, List.of(new SimpleGrantedAuthority(role)));
+        List<SimpleGrantedAuthority> roles = peopleService.findByName(username).getRole().stream().map((element) -> new SimpleGrantedAuthority(element.getName())).toList();    ;
+        return new UsernamePasswordAuthenticationToken(personDetails, password, roles);
     }
 
     @Override

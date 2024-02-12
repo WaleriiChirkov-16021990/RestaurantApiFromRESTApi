@@ -7,6 +7,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Table(name = "Discount",schema = "public")
 @Getter
 @Setter
-public class Discount {
+public class Discount implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

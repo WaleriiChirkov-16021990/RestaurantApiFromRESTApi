@@ -6,6 +6,7 @@ import com.chirkov.restApiRestaurantBussines.repositories.RoleRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.RoleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotDeletedException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,13 +20,10 @@ import java.util.Optional;
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
         rollbackFor = {RoleNotCreatedException.class, RoleNotDeletedException.class})
+@AllArgsConstructor
 public class RoleService implements RoleServiceByRepository<Role> {
     private final RoleRepository roleRepository;
 
-    @Autowired
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 
     @Override
     public List<Role> findAll() {
@@ -91,6 +89,12 @@ public class RoleService implements RoleServiceByRepository<Role> {
         } catch (Exception e) {
             throw new RoleNotCreatedException("Role " + role.toString() + " is not created");
         }
+    }
+
+    List<Role> getRolesByPersonName(String name) throws RoleNotFoundException {
+        return this.roleRepository.findByPersonList_NameStartsWithIgnoreCase(name)
+                .orElseThrow(() -> new RoleNotFoundException("Role " + name + " not found"));
+
     }
 
 }
