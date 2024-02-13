@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,6 +74,16 @@ public class OrderService implements OrderServiceByRepository<Order> {
 
     @Transactional
     public Order save(Order order) {
-        return orderRepository.save(order);
+        try {
+            enrichedOrder(order);
+            return orderRepository.save(order);
+        } catch (Exception e) {
+            throw new OrderNotCreatedException("Error creating order " + order.getId() + "_\n" + e.getMessage(), e);
+        }
+    }
+
+    private void enrichedOrder(Order order) {
+        order.setDateCreate(LocalDateTime.now());
+        order.setStatusFromOrder(StatusFromOrder.OPEN);
     }
 }

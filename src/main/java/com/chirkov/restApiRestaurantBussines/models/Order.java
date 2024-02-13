@@ -9,13 +9,19 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "Order_table",schema = "public")
 @Getter
 @Setter
-public class Order {
+public class Order implements Serializable {
+
+    @Serial
+    private final static long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +46,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private StatusFromOrder statusFromOrder;
+
+    @Column(name = "order_date_create")
+    @NotNull
+    private LocalDateTime dateCreate;
 }

@@ -9,6 +9,8 @@ import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +21,11 @@ import static javax.persistence.FetchType.*;
 @Table(name = "Person", schema = "public")
 @Getter
 @Setter
-public class Person {
+public class Person implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")

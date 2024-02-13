@@ -1,5 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
-public enum EnumUnitsOfMeasurement {
+import java.io.Serializable;
+
+public enum EnumUnitsOfMeasurement implements Serializable {
     GRAMMES, KILOGRAMMES, PIECES, MILLILITERS, LITERS, TABLESPOON, TEASPOON, PINCH
 }

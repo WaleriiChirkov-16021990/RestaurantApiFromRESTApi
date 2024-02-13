@@ -2,7 +2,6 @@ package com.chirkov.restApiRestaurantBussines.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -10,13 +9,19 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Reserve_table",schema = "public")
-@Data
-public class ReserveTable {
+@Getter
+@Setter
+public class ReserveTable implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,26 +47,26 @@ public class ReserveTable {
     @OneToMany(mappedBy = "table",fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<TableReservation> reservationList;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ReserveTable that)) return false;
-        return getId() == that.getId() && getAccommodationNumber() == that.getAccommodationNumber() && getNumberOfSeats() == that.getNumberOfSeats() && Objects.equals(getStateFromTable(), that.getStateFromTable());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getAccommodationNumber(), getStateFromTable(), getNumberOfSeats());
-    }
-
-    @Override
-    public String toString() {
-        return "ReserveTable{" +
-                "id=" + id +
-                ", accommodationNumber=" + accommodationNumber +
-                ", stateFromTable=" + stateFromTable +
-                ", numberOfSeats=" + numberOfSeats +
-                '}';
-    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof ReserveTable that)) return false;
+//        return getId() == that.getId() && getAccommodationNumber() == that.getAccommodationNumber() && getNumberOfSeats() == that.getNumberOfSeats() && Objects.equals(getStateFromTable(), that.getStateFromTable());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getId(), getAccommodationNumber(), getStateFromTable(), getNumberOfSeats());
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "ReserveTable{" +
+//                "id=" + id +
+//                ", accommodationNumber=" + accommodationNumber +
+//                ", stateFromTable=" + stateFromTable +
+//                ", numberOfSeats=" + numberOfSeats +
+//                '}';
+//    }
 }

@@ -1,5 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
-public enum RoleEnum {
+import java.io.Serializable;
+
+public enum RoleEnum implements Serializable {
     ROLE_ADMIN, ROLE_USER
 }

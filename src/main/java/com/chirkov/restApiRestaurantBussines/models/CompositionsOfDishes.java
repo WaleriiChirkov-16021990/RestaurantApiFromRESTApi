@@ -2,18 +2,27 @@ package com.chirkov.restApiRestaurantBussines.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "compositions_of_dishes",schema = "public")
-public class CompositionsOfDishes {
+public class CompositionsOfDishes implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "compositions_of_dishes_id")
@@ -22,7 +31,7 @@ public class CompositionsOfDishes {
     @Column(name = "compositions_of_dishes_name")
     private String name;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToMany(mappedBy = "compositionsOfDishesList")
     private List<Dishes> dishesList;
 

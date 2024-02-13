@@ -7,12 +7,17 @@ import org.hibernate.validator.constraints.Range;
 
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "order_element",schema = "public")
 @Getter
 @Setter
-public class OrderElements {
+public class OrderElements implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
