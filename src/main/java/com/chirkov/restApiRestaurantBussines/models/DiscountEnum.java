@@ -1,6 +1,8 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
-public enum DiscountEnum {
+import java.io.Serializable;
+
+public enum DiscountEnum implements Serializable {
     ZERO, FIVE, TEN, FIFTEEN, TWENTY
 }
 

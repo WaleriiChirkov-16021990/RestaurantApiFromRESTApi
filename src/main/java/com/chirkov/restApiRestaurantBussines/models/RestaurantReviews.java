@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,7 +14,12 @@ import java.util.Objects;
 @Table(name = "Restaurant_reviews",schema = "public")
 @Getter
 @Setter
-public class RestaurantReviews {
+public class RestaurantReviews implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_reviews_id")

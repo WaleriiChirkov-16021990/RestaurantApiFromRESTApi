@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +17,11 @@ import java.util.Objects;
 @Getter
 @Setter
 @Table(name = "Dishes", schema = "public")
-public class Dishes {
+public class Dishes implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dishes_id")
@@ -44,15 +51,17 @@ public class Dishes {
     @Column(name = "dishes_image_url")
     private String imageURL;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "dishes")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<FoodReview> foodReviewList;
 
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "dishes")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<OrderElements> orderElementsIntegerMap;
+
 
     @ManyToMany
     @JoinTable(

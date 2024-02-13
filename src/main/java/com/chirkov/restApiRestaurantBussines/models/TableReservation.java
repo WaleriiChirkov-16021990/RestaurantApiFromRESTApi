@@ -10,13 +10,21 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "table_reservation",schema = "public")
-public class TableReservation {
+public class TableReservation implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "table_reservation_id")
@@ -55,7 +63,6 @@ public class TableReservation {
     @Column(name = "table_reservation_update_at")
     private LocalDateTime update_at;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_reservation_author_from_update", referencedColumnName = "person_id")
