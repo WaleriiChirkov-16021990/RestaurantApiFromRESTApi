@@ -64,9 +64,13 @@ public class Person {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<FoodReview> reviewList;
 
-    @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "person_role", referencedColumnName = "role_id")
-    private Role role;
+    @ManyToMany(fetch = EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @JoinTable(name = "person_role",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    @JoinColumn(name = "person_role", referencedColumnName = "role_id")
+    private List<Role> role;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "person_discount", referencedColumnName = "discount_id")

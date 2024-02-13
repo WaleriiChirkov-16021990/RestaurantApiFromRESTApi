@@ -2,6 +2,7 @@ package com.chirkov.restApiRestaurantBussines.services;
 
 import com.chirkov.restApiRestaurantBussines.models.Person;
 //import com.chirkov.restApiRestaurantBussines.models.RoleEnum;
+import com.chirkov.restApiRestaurantBussines.models.Role;
 import com.chirkov.restApiRestaurantBussines.repositories.PeopleRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotCreatedException;
@@ -16,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.relation.RoleNotFoundException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true,
@@ -59,9 +59,10 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
     }
 
     private void enrichPerson(Person person) throws RoleNotFoundException {
-//        person.setRole(this.roleService.getRoleByName("youngUser"));
-        // TODO Auto select role from person
-        person.setRole(this.roleService.findById(3L));
+        List<Role> roles = new ArrayList<>();
+        roles.add(this.roleService.findById(1L));
+        // TODO Auto select role from new person
+        person.setRole(roles);
 //        person.setRole(this.roleService.getRoleById(person.getRole().getId()));
         person.setDiscount(this.discountService.findById(1L));
         // TODO Auto select discount from new person
@@ -124,6 +125,22 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
 
     public Optional<Person> findPersonByPhoneNumber(String phoneNumber) {
         return peopleRepository.findPersonByPhoneNumber(phoneNumber);
+    }
+
+    public Date getStartYear() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 1958);
+        calendar.set(Calendar.MONTH, Calendar.APRIL);
+        calendar.set(Calendar.DAY_OF_MONTH, 6);
+        return calendar.getTime();
+    }
+
+    public Date getEndYear() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2024);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 31);
+        return calendar.getTime();
     }
 
 
