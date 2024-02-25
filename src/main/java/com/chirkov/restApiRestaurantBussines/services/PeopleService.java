@@ -58,9 +58,34 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
         }
     }
 
+    @Transactional
+    public Person saveAdmin(Person person) throws PersonNotCreatedException {
+        try {
+            enrichPersonAdmin(person);
+            person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
+            return peopleRepository.save(person);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            throw new PersonNotCreatedException("Error saving person " + person + ": " + e.getMessage(), e);
+        }
+    }
+
+    private void enrichPersonAdmin(Person person) throws RoleNotFoundException {
+        List<Role> roles = new ArrayList<>();
+        roles.add(this.roleService.findByName("ADMIN"));
+        roles.add(this.roleService.findById(1L));
+//        roles.add(this.roleService.findById(2L));
+        person.setRole(roles);
+        person.setDiscount(this.discountService.findById(5L));
+        person.setCreatedAt(LocalDateTime.now());
+        person.setUpdatedAt(LocalDateTime.now());
+        person.setUpdatedWho("Valerii Chirkov");
+    }
+
     private void enrichPerson(Person person) throws RoleNotFoundException {
         List<Role> roles = new ArrayList<>();
-        roles.add(this.roleService.findById(1L));
+        roles.add(this.roleService.findByName("USER"));
+//        roles.add(this.roleService.findById(1L));
         // TODO Auto select role from new person
         person.setRole(roles);
 //        person.setRole(this.roleService.getRoleById(person.getRole().getId()));
