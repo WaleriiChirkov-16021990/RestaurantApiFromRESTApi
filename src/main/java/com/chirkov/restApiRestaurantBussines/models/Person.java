@@ -2,7 +2,9 @@ package com.chirkov.restApiRestaurantBussines.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
@@ -21,6 +23,8 @@ import static javax.persistence.FetchType.*;
 @Table(name = "Person", schema = "public")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person implements Serializable {
 
     @Serial
@@ -116,8 +120,6 @@ public class Person implements Serializable {
     @Column(name = "person_updated_who")
     private String updatedWho;
 
-    public Person() {
-    }
 
     public Person(String name, String lastName, int yearOfBirth, String phoneNumber, String email, String username, String password) {
         this.name = name;
@@ -128,37 +130,37 @@ public class Person implements Serializable {
         this.username = username;
         this.password = password;
     }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", yearOfBirth=" + yearOfBirth +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Person person)) return false;
-        return getId() == person.getId()
-                && getYearOfBirth() == person.getYearOfBirth()
-                && Objects.equals(getName(), person.getName())
-                && Objects.equals(getLastName(), person.getLastName())
-                && Objects.equals(getPhoneNumber(), person.getPhoneNumber())
-                && Objects.equals(getEmail(), person.getEmail())
-                && Objects.equals(getUsername(), person.getUsername())
-                && Objects.equals(getPassword(), person.getPassword());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getLastName(), getYearOfBirth(), getPhoneNumber(), getEmail(), getUsername(), getPassword());
-    }
+//
+//    @Override
+//    public String toString() {
+//        return "Person{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", yearOfBirth=" + yearOfBirth +
+//                ", phoneNumber='" + phoneNumber + '\'' +
+//                ", email='" + email + '\'' +
+//                ", username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                '}';
+//    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Person person)) return false;
+//        return getId() == person.getId()
+//                && getYearOfBirth() == person.getYearOfBirth()
+//                && Objects.equals(getName(), person.getName())
+//                && Objects.equals(getLastName(), person.getLastName())
+//                && Objects.equals(getPhoneNumber(), person.getPhoneNumber())
+//                && Objects.equals(getEmail(), person.getEmail())
+//                && Objects.equals(getUsername(), person.getUsername())
+//                && Objects.equals(getPassword(), person.getPassword());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getId(), getName(), getLastName(), getYearOfBirth(), getPhoneNumber(), getEmail(), getUsername(), getPassword());
+//    }
 }

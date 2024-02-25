@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -47,7 +48,7 @@ public class FoodReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<FoodReview> saveFoodReview(@RequestBody FoodReviewDto reviewDto, BindingResult bindingResult)
+    public ResponseEntity<FoodReview> saveFoodReview(@RequestBody @Valid FoodReviewDto reviewDto, BindingResult bindingResult)
             throws FoodReviewNotCreatedException, PersonNotFoundException, DishesNotFoundException {
         FoodReview review = reviewDto.mappingReview(peopleService, dishesService);
         validator.validate(review, bindingResult);
