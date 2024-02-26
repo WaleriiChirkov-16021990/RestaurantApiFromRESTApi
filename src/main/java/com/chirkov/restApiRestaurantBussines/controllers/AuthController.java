@@ -31,17 +31,34 @@ public class AuthController {
         this.personDtoValidator = personDtoValidator;
     }
 
+    /**
+     * Retrieves the login page.
+     *
+     * @return         	the login page template
+     */
     @GetMapping("/login")
     public String loginPage() {
         return "auth/login";
     }
 
-
+    /**
+     * A description of the entire Java function.
+     *
+     * @param  person	description of parameter
+     * @return         	description of return value
+     */
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("person") PersonDto person) {
         return "auth/registration";
     }
 
+    /**
+     * Perform registration for a person.
+     *
+     * @param  personDto        the data transfer object for the person
+     * @param  bindingResult    the result of the validation binding
+     * @return                  the destination view name
+     */
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("person") @Valid PersonDto personDto, BindingResult bindingResult) {
         personDtoValidator.validate(personDto, bindingResult);
@@ -52,12 +69,23 @@ public class AuthController {
         return "auth/people";
     }
 
+    /**
+     * Converts a PersonDto object to a Person object using modelMapper.
+     *
+     * @param  personDto  the PersonDto object to be converted
+     * @return            the converted Person object
+     */
     private Person convertToPerson(PersonDto personDto) {
         return modelMapper.map(personDto, Person.class);
 
     }
 
-    @GetMapping("/test")
+    /**
+     * A logout user.
+     *
+     * @return destination view name page for logout user
+     */
+    @GetMapping("/logout")
     public String getLogoutPage() {
         return "auth/people";
     }
