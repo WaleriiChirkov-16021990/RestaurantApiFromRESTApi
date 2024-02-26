@@ -71,11 +71,13 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
     }
 
     private void enrichPersonAdmin(Person person) throws RoleNotFoundException {
-        List<Role> roles = new ArrayList<>();
-        roles.add(this.roleService.findByName("ADMIN"));
-        roles.add(this.roleService.findById(1L));
+//        List<Role> roles = new ArrayList<>();
+        Role admin = this.roleService.findByName("ADMIN");
+        Role user = this.roleService.findByName("USER");
+//        roles.add();
+//        roles.add();
 //        roles.add(this.roleService.findById(2L));
-        person.setRole(roles);
+        person.setRole(List.of(admin, user));
         person.setDiscount(this.discountService.findById(5L));
         person.setCreatedAt(LocalDateTime.now());
         person.setUpdatedAt(LocalDateTime.now());
@@ -169,4 +171,7 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
     }
 
 
+    public List<Person> saveAll(List<Person> fakePeople) {
+        return peopleRepository.saveAll(fakePeople);
+    }
 }

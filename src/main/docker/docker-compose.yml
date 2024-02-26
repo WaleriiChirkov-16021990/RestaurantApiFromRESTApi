@@ -2,7 +2,7 @@ version: '2'
 
 services:
   app:
-    container_name: app
+    container_name: app-spring
     image: rest-api-restaurant-bussines:latest
     #        image: 00313/docker-spring-boot-postgres:latest
     build:
@@ -17,7 +17,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SERVER_PORT=8080
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
       - SPRING_DATASOURCE_INITIALIZE=true
       - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
       - SPRING_HIBERNATE_SHOW_SQL=true
@@ -34,4 +34,5 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
 #    volumes:
+#      - ./data/postgres:/docker-entrypoint-initdb.d
 #      - ./data/postgres:/var/lib/postgresql/data

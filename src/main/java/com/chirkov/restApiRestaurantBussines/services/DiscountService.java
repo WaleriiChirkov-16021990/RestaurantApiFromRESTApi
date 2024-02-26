@@ -71,4 +71,7 @@ public class DiscountService implements DiscountServiceByRepository<Discount> {
         return this.discountRepository.save(discount);
     }
 
+    public List<Discount> saveAll(List<Discount> zero) {
+        return this.discountRepository.saveAll(zero);
+    }
 }
