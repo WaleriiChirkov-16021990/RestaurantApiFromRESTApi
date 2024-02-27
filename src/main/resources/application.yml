@@ -5,45 +5,45 @@
 #  datasource:
 #    driver-class-name: org.postgresql.Driver
 #    url: jdbc:postgresql://localhost:5432/testDb
-#    #spring.datasource.url=jdbc:postgresql://localhost:5432/postgres_wch
-#    ##spring.datasource.url=jdbc:postgresql://localhost:5432/restauranDatabase
+#    spring.datasource.url=jdbc:postgresql://localhost:5432/postgres_wch
+    #spring.datasource.url=jdbc:postgresql://localhost:5432/restauranDatabase
 #    username: postgres
-#    #spring.datasource.username=root
+    #spring.datasource.username=root
 #    password: 1Z2x3c4v5B
-#    #spring.datasource.password=root
-#    hbm2ddl: true
-#    #<property name="hbm2ddl.auto">update</property>
-#    ## Configure hibernate
+    #spring.datasource.password=root
+#    hbm2ddl: update
+    #<property name="hbm2ddl.auto">update</property>
+    ## Configure hibernate
 #  jpa:
 #    properties:
 #      hibernate:
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
 #        show_sql: true
 #        ddl-auto: create-drop
-#  #configure the default jackson
+  #configure the default jackson
 #  jackson:
 #    serialization:
 #      fail-on-empty-beans: false
 #token:
 #  signing:
 #    key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
-server:
-  port: 8082
-spring:
-  application:
-    name: security-security
-  datasource:
-    url: jdbc:h2:mem:security-security
-    driverClassName: org.h2.Driver
-    username: root
-    password: root
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+#server:
+#  port: 8082
+#spring:
+#  application:
+#    name: security-security
+#  datasource:
+#    url: jdbc:h2:mem:security-security
+#    driverClassName: org.h2.Driver
+#    username: root
+#    password: root
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
 token:
   signing:
     key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855

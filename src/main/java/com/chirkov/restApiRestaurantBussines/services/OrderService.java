@@ -39,6 +39,7 @@ public class OrderService implements OrderServiceByRepository<Order> {
      * @return
      */
     @Override
+    @Transactional
     public Order deleteById(Long id) {
         Order order = findById(id);
         try {

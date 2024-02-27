@@ -38,6 +38,7 @@ public class TableReservationService implements TableReservationServiceByReposit
      * @return
      */
     @Override
+    @Transactional
     public TableReservation deleteById(Long id) {
         TableReservation deletingTableReservation = findById(id);
         try {

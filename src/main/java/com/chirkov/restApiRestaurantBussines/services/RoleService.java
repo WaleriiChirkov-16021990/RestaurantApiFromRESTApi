@@ -34,6 +34,7 @@ public class RoleService implements RoleServiceByRepository<Role> {
      * @return
      */
     @Override
+    @Transactional
     public Role deleteById(Long id) throws RoleNotFoundException {
         Role role = findById(id);
         try {

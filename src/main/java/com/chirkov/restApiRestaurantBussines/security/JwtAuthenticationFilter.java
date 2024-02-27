@@ -1,6 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.security;
 
 import com.chirkov.restApiRestaurantBussines.services.JwtService;
+import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.UserService;
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
@@ -24,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String HEADER_NAME = "Authorization";
     private final JwtService jwtService;
+//    private final PeopleService userService;
     private final UserService userService;
 
     @Override

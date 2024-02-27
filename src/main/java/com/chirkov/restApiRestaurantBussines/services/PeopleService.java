@@ -172,6 +172,7 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
     }
 
 
+    @Transactional
     public List<Person> saveAll(List<Person> fakePeople) {
         return peopleRepository.saveAll(fakePeople);
     }

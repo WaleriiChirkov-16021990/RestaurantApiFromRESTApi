@@ -36,6 +36,7 @@ public class ReserveTableService implements ReserveTableServiceByRepository<Rese
      * @return
      */
     @Override
+    @Transactional
     public ReserveTable deleteById(Long id) throws ReserveTableNotDeletedException {
         ReserveTable reserveTable = findById(id);
         try {

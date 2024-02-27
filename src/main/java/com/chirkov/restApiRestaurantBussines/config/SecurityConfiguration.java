@@ -3,7 +3,6 @@ package com.chirkov.restApiRestaurantBussines.config;
 import com.chirkov.restApiRestaurantBussines.security.JwtAuthenticationFilter;
 import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.PersonDetailsService;
-import com.chirkov.restApiRestaurantBussines.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

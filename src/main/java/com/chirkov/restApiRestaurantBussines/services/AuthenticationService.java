@@ -5,6 +5,7 @@ import com.chirkov.restApiRestaurantBussines.dto.PersonDto;
 import com.chirkov.restApiRestaurantBussines.dto.SignInRequest;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.security.PersonDetails;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +28,8 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
+
+    @Transactional
     public JwtAuthenticationResponse signUp(PersonDto request) {
         Person person = mapper.map(request, Person.class);
         userService.save(person);

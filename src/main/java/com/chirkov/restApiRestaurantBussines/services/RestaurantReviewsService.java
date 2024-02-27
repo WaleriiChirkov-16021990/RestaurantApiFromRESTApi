@@ -56,6 +56,7 @@ public class RestaurantReviewsService implements RestaurantReviewsServiceByRepos
      * @return
      */
     @Override
+    @Transactional
     public RestaurantReviews deleteById(Long id) {
         RestaurantReviews res = findById(id);
         try {

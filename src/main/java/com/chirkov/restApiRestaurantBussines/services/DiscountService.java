@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true,
-        propagation = Propagation.REQUIRED,
+@Transactional(
+//        readOnly = true,
+        propagation = Propagation.REQUIRES_NEW,
         rollbackFor = {DiscountNotCreatedException.class, DishesNotDeletedException.class})
 
 public class DiscountService implements DiscountServiceByRepository<Discount> {
@@ -38,6 +39,7 @@ public class DiscountService implements DiscountServiceByRepository<Discount> {
      * @return
      */
     @Override
+    @Transactional
     public Discount deleteById(Long id) {
         try {
             Discount findDiscount = findById(id);
@@ -71,6 +73,7 @@ public class DiscountService implements DiscountServiceByRepository<Discount> {
         return this.discountRepository.save(discount);
     }
 
+    @Transactional
     public List<Discount> saveAll(List<Discount> zero) {
         return this.discountRepository.saveAll(zero);
     }
