@@ -6,13 +6,12 @@ import com.chirkov.restApiRestaurantBussines.repositories.RoleRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.RoleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotDeletedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +34,7 @@ public class RoleService implements RoleServiceByRepository<Role> {
      * @return
      */
     @Override
+    @Transactional
     public Role deleteById(Long id) throws RoleNotFoundException {
         Role role = findById(id);
         try {

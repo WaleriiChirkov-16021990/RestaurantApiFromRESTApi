@@ -3,11 +3,12 @@ package com.chirkov.restApiRestaurantBussines.dto;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.RestaurantReviews;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.*;
+//import javax.validation.constraints.*;
 
 @Getter
 @Setter

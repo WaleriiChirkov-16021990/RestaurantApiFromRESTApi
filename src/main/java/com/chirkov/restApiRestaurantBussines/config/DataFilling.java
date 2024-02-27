@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Configuration
 public class DataFilling {
@@ -43,31 +45,29 @@ public class DataFilling {
             twenty.setName("TWENTY");
             twenty.setSale(DiscountEnum.TWENTY);
 
-            discountService.save(zero);
-            discountService.save(five);
-            discountService.save(ten);
-            discountService.save(fifteen);
-            discountService.save(twenty);
+            discountService.saveAll(List.of(zero, five, ten, fifteen, twenty));
         };
     }
 
-    @Bean
-    CommandLineRunner runnerPeople(PeopleService peopleService, Faker faker) {
-        return args -> {
-            for (int i = 0; i < 8; i++) {
-                Person person = new Person();
-                person.setName(faker.name().name());
-                person.setLastName(faker.name().lastName());
-                person.setUsername(faker.name().username());
-                person.setEmail(faker.internet().emailAddress());
-                person.setPassword(person.getUsername());
-                Date between = faker.date().between(peopleService.getStartYear(), peopleService.getEndYear());
-                person.setYearOfBirth(between.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear());
-                person.setPhoneNumber("89" + faker.number().numberBetween(100000000, 999999999));
-                peopleService.save(person);
-            }
-        };
-    }
+//    @Bean
+//    CommandLineRunner runnerPeople(PeopleService peopleService, Faker faker) {
+//        return args -> {
+//            List<Person> fakePeople = new ArrayList<>();
+//            for (int i = 0; i < 8; i++) {
+//                Person person = new Person();
+//                person.setName(faker.name().name());
+//                person.setLastName(faker.name().lastName());
+//                person.setUsername(faker.name().username());
+//                person.setEmail(faker.internet().emailAddress());
+//                person.setPassword(person.getUsername());
+//                Date between = faker.date().between(peopleService.getStartYear(), peopleService.getEndYear());
+//                person.setYearOfBirth(between.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear());
+//                person.setPhoneNumber("89" + faker.number().numberBetween(100000000, 999999999));
+//                fakePeople.add(person);
+//            }
+//            peopleService.saveAll(fakePeople);
+//        };
+//    }
 
     @Bean
     CommandLineRunner runnerStaticPeople(PeopleService peopleService, Faker faker) {
@@ -82,6 +82,17 @@ public class DataFilling {
             wch.setYearOfBirth(1990);
             wch.setPhoneNumber("89043568304");
             peopleService.saveAdmin(wch);
+
+
+            Person ignat = new Person();
+            ignat.setName("Ignat");
+            ignat.setLastName("Kupryashin");
+            ignat.setUsername("ignat");
+            ignat.setEmail("kupryashin@gmail.com");
+            ignat.setPassword("ignat");
+            ignat.setYearOfBirth(1985);
+            ignat.setPhoneNumber("89153007949");
+            peopleService.saveAdmin(ignat);
 
         };
     }

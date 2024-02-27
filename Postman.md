@@ -10,8 +10,6 @@ localhost:8081/people
 "email": "mannaa@gmail.com",
 "username": "manna",
 "password":"mannamanna",
-"discount":5,
-"role":1
 }
 
 {

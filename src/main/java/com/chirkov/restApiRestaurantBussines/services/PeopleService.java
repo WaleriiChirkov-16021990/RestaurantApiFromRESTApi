@@ -4,18 +4,18 @@ import com.chirkov.restApiRestaurantBussines.models.Person;
 //import com.chirkov.restApiRestaurantBussines.models.RoleEnum;
 import com.chirkov.restApiRestaurantBussines.models.Role;
 import com.chirkov.restApiRestaurantBussines.repositories.PeopleRepository;
+import com.chirkov.restApiRestaurantBussines.security.PersonDetails;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotCreatedException;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotDeletedException;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
-import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotUpdatedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.relation.RoleNotFoundException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -71,11 +71,13 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
     }
 
     private void enrichPersonAdmin(Person person) throws RoleNotFoundException {
-        List<Role> roles = new ArrayList<>();
-        roles.add(this.roleService.findByName("ADMIN"));
-        roles.add(this.roleService.findById(1L));
+//        List<Role> roles = new ArrayList<>();
+        Role admin = this.roleService.findByName("ADMIN");
+        Role user = this.roleService.findByName("USER");
+//        roles.add();
+//        roles.add();
 //        roles.add(this.roleService.findById(2L));
-        person.setRole(roles);
+        person.setRole(List.of(admin, user));
         person.setDiscount(this.discountService.findById(5L));
         person.setCreatedAt(LocalDateTime.now());
         person.setUpdatedAt(LocalDateTime.now());
@@ -160,6 +162,7 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
         return calendar.getTime();
     }
 
+
     public Date getEndYear() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2024);
@@ -168,5 +171,48 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
         return calendar.getTime();
     }
 
+
+    @Transactional
+    public List<Person> saveAll(List<Person> fakePeople) {
+        return peopleRepository.saveAll(fakePeople);
+    }
+
+
+    /**
+     * Получение пользователя по имени пользователя
+     *
+     * @return пользователь
+     */
+    public Person getByUsername(String username) {
+        return peopleRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+
+    }
+
+    /**
+     * Получение пользователя по имени пользователя
+     * <p>
+     * Нужен для Spring Security
+     *
+     * @return пользователь
+     */
+    public UserDetailsService userDetailsService() {
+//        return new PersonDetails(this::getByUsername);
+//
+        return username -> {
+            return new PersonDetails(getByUsername(username));
+        };
+    }
+
+    /**
+     * Получение текущего пользователя
+     *
+     * @return текущий пользователь
+     */
+    public PersonDetails getCurrentUser() {
+        // Получение имени пользователя из контекста Spring Security
+        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new PersonDetails(getByUsername(username)); // getByUsername(username);
+    }
 
 }

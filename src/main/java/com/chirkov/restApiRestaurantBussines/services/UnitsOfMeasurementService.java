@@ -48,6 +48,7 @@ public class UnitsOfMeasurementService implements UnitsOfMeasurementServiceByRep
      * @return
      */
     @Override
+    @Transactional
     public UnitsOfMeasurement deleteById(Long id) throws UnitsOfMeasurementNotDeletedException {
         UnitsOfMeasurement unitsOfMeasurement = findById(id);
         try {

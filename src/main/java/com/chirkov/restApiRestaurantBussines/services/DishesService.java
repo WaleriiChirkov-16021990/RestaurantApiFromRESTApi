@@ -36,6 +36,7 @@ public class DishesService implements DishesServiceByRepository<Dishes> {
      * @return
      */
     @Override
+    @Transactional
     public Dishes deleteById(Long id) throws DishesNotDeletedException {
         try {
             Dishes deletedDishes = findById(id);

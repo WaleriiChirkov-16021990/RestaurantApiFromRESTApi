@@ -3,13 +3,12 @@ package com.chirkov.restApiRestaurantBussines.dto;
 import com.chirkov.restApiRestaurantBussines.models.Order;
 import com.chirkov.restApiRestaurantBussines.models.Person;
 import com.chirkov.restApiRestaurantBussines.models.StatusFromOrder;
-import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.*;
 
 @Getter
 @Setter

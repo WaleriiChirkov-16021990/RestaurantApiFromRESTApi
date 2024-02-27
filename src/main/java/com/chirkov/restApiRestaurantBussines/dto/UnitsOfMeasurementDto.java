@@ -3,13 +3,16 @@ package com.chirkov.restApiRestaurantBussines.dto;
 import com.chirkov.restApiRestaurantBussines.models.EnumUnitsOfMeasurement;
 import com.chirkov.restApiRestaurantBussines.models.UnitsOfMeasurement;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.UnitsOfMeasurementNotFoundException;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
 import java.util.Arrays;
 
 @Data

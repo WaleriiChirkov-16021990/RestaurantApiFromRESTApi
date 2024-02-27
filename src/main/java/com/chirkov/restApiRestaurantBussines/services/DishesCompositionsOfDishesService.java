@@ -70,6 +70,7 @@ public class DishesCompositionsOfDishesService implements DishesCompositionsOfDi
      * @param id
      * @return
      */
+    @Transactional
     @Override
     public DishesCompositionsOfDishes deleteById(Long id) {
         // todo: remove
@@ -81,6 +82,7 @@ public class DishesCompositionsOfDishesService implements DishesCompositionsOfDi
      * @return
      */
     @Override
+    @Transactional
     public DishesCompositionsOfDishes save(DishesCompositionsOfDishes discount) {
         return repository.save(discount);
     }

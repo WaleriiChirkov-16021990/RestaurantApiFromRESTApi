@@ -6,7 +6,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Range;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 

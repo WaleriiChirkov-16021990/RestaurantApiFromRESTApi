@@ -37,6 +37,7 @@ public class StateFromTablesService implements StateFromTablesServiceByRepositor
      * @return
      */
     @Override
+    @Transactional
     public StateFromTable deleteById(Long id) {
         StateFromTable state = findById(id);
         try {

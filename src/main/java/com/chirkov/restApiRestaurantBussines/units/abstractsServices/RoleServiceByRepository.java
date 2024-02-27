@@ -1,6 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.units.abstractsServices;
 
-import javax.management.relation.RoleNotFoundException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotFoundException;
+
 import java.util.List;
 
 public interface RoleServiceByRepository<M> {

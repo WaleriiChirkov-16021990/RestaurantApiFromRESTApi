@@ -7,17 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
-import static javax.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Table(name = "Person", schema = "public")
@@ -74,12 +72,12 @@ public class Person implements Serializable {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<FoodReview> reviewList;
 
+
     @ManyToMany(fetch = EAGER)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinTable(name = "person_role",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    @JoinColumn(name = "person_role", referencedColumnName = "role_id")
     private List<Role> role;
 
     @ManyToOne(fetch = EAGER)
