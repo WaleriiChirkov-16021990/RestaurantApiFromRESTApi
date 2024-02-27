@@ -8,11 +8,12 @@ import com.chirkov.restApiRestaurantBussines.services.UnitsOfMeasurementService;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.IngredientsServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.UnitsOfMeasurementServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.CompositionsOfDishesNotCreatedException;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+//import javax.validation.constraints.*;
 
 @NoArgsConstructor
 @AllArgsConstructor

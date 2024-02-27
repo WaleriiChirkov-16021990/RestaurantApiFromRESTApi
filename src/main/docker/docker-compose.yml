@@ -23,6 +23,8 @@ services:
       - SPRING_HIBERNATE_SHOW_SQL=true
       - SPRING_HIBERNATE_FORMAT_SQL=true
       - SPRING_JACKSON_SERIALIZATION_FAIL_ON_EMPTY_BEANS=false
+      - TOKEN_SECRET=53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
+
 
   db:
     container_name: db
@@ -33,6 +35,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+
 #    volumes:
 #      - ./data/postgres:/docker-entrypoint-initdb.d
 #      - ./data/postgres:/var/lib/postgresql/data

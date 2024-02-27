@@ -4,11 +4,12 @@ import com.chirkov.restApiRestaurantBussines.models.ReserveTable;
 import com.chirkov.restApiRestaurantBussines.models.StateFromTable;
 import com.chirkov.restApiRestaurantBussines.services.StateFromTablesService;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.StateFromTablesServiceByRepository;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

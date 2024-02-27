@@ -7,10 +7,11 @@ import com.chirkov.restApiRestaurantBussines.services.PeopleService;
 import com.chirkov.restApiRestaurantBussines.services.ReserveTableService;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServiceByRepository;
 import com.chirkov.restApiRestaurantBussines.units.abstractsServices.ReserveTableServiceByRepository;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.*;
+//import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Getter

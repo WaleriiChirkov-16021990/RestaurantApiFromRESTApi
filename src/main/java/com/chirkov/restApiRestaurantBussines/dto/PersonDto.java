@@ -1,14 +1,15 @@
 package com.chirkov.restApiRestaurantBussines.dto;
 
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.validation.constraints.*;
-import java.time.LocalDateTime;
-import java.time.Year;
-import java.util.Date;
-import java.util.Objects;
+//
+//import javax.persistence.Column;
+//import javax.validation.constraints.*;
+//import java.time.LocalDateTime;
+//import java.time.Year;
+//import java.util.Date;
+//import java.util.Objects;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class PersonDto {
     private String lastName;
 
     @Min(value = 1900, message = "Year of birth > 1900")
-    @Max(value = 2024, message = "PersonDto/Year of birth < 2020")
+    @Max(value = 2024, message = "PersonDto/Year of birth < 2024")
     @NotNull(message = "Year of birth DTO is not null")
     private int yearOfBirth;
 
@@ -33,6 +34,7 @@ public class PersonDto {
 
     @NotNull(message = "Email DTO is not null")
     @NotEmpty(message = "Email DTO is not empty")
+    @Size(max = 100, message = " characters email must not exceed 100 ")
     @Email(message = "Email should be valid")
     private String email;
 
@@ -42,6 +44,6 @@ public class PersonDto {
     private String username;
 
     @NotNull(message = "Password DTO is not null")
-    @Size(min = 4, message = "Password contains min 4 symbol")
+    @Size(min = 4, max = 150,message = "Password contains min 4 symbol characters and max 150 symbol characters")
     private String password;
 }

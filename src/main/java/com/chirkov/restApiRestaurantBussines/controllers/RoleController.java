@@ -7,6 +7,7 @@ import com.chirkov.restApiRestaurantBussines.units.abstractsServices.RoleService
 import com.chirkov.restApiRestaurantBussines.units.errorResponses.RoleErrorResponse;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotDeletedException;
+import com.chirkov.restApiRestaurantBussines.units.exceptions.RoleNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.validators.RoleValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.RoleNotFoundException;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,13 +39,13 @@ public class RoleController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('USER') OR hasAuthority('ADMIN')")
-    public Role getRoleByName(@PathVariable("id") Long id) throws RoleNotFoundException {
+    public Role getRoleByName(@PathVariable("id") Long id) throws RoleNotFoundException{
         return roleService.findById(id);
     }
 
     @PreAuthorize("hasAuthority('USER') OR hasAuthority('ADMIN')")
     @GetMapping("/name/{name}")
-    public Role getRoleByName(@PathVariable("name") String name) throws RoleNotFoundException {
+    public Role getRoleByName(@PathVariable("name") String name) throws RoleNotFoundException{
         return roleService.findByName(name);
     }
 
@@ -60,7 +60,7 @@ public class RoleController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<HttpStatus> addRole(@RequestBody @Valid Role role, BindingResult bindingResult) throws RoleNotCreatedException {
 //        this.roleValidator.validate(role, bindingResult);
         // TODO Auto-generated method stub

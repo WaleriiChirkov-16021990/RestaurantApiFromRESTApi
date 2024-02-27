@@ -10,11 +10,12 @@ import com.chirkov.restApiRestaurantBussines.units.abstractsServices.PeopleServi
 import com.chirkov.restApiRestaurantBussines.units.exceptions.DishesNotFoundException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.FoodReviewNotCreatedException;
 import com.chirkov.restApiRestaurantBussines.units.exceptions.PersonNotFoundException;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+//import javax.validation.constraints.*;
 
 @Data
 @NoArgsConstructor
