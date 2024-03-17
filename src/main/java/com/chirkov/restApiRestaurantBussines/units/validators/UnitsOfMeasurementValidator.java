@@ -12,7 +12,6 @@ import org.springframework.validation.Validator;
 @Component
 public class UnitsOfMeasurementValidator implements Validator {
     private final UnitsOfMeasurementService service;
-
     @Autowired
     public UnitsOfMeasurementValidator(UnitsOfMeasurementService service) {
         this.service = service;
@@ -39,6 +38,5 @@ public class UnitsOfMeasurementValidator implements Validator {
             // TODO придумать более подходящую валидацию для единиц измерения
             // come up with a validation for a UnitsOfMeasurement
         }
-
     }
 }

@@ -1,5 +1,6 @@
 package com.chirkov.restApiRestaurantBussines.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,13 +40,14 @@ public class StateFromTable implements Serializable {
         this.value = value;
     }
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "stateFromTable")
+    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<ReserveTable> reserveTable;
+
+
     public StateFromTable() {
     }
-
-    //
-//    @OneToMany(mappedBy = "stateFromTable")
-//    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    private List<ReserveTable> reserveTable;
     @Override
     public String toString() {
         return "StateFromTable{" +

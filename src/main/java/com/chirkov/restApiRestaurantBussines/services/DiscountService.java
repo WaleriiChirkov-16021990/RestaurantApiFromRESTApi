@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Service
 @Transactional(
-//        readOnly = true,
+        readOnly = true,
         propagation = Propagation.REQUIRES_NEW,
         rollbackFor = {DiscountNotCreatedException.class, DishesNotDeletedException.class})
 

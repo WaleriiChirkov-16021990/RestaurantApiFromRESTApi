@@ -62,7 +62,7 @@ public class RoleController {
     @PostMapping
 //    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<HttpStatus> addRole(@RequestBody @Valid Role role, BindingResult bindingResult) throws RoleNotCreatedException {
-//        this.roleValidator.validate(role, bindingResult);
+        this.roleValidator.validate(role, bindingResult);
         // TODO Auto-generated method stub
         if (bindingResult.hasErrors()) {
             throw new RoleNotCreatedException(AddErrorMessageFromMyException

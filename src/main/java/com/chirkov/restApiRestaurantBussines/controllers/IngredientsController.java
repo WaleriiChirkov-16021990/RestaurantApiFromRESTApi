@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientsController {
-
     private final IngredientsServiceByRepository<Ingredients> service;
     private final IngredientsValidator validator;
 

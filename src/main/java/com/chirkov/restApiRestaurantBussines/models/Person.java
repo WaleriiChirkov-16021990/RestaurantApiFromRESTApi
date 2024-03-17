@@ -10,12 +10,15 @@ import org.hibernate.annotations.Cascade;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "Person", schema = "public")
@@ -58,6 +61,7 @@ public class Person implements Serializable {
     @Email(message = "Email should be valid")
     private String email;
 
+
     @Column(name = "person_username")
     @NotNull(message = "Username should be not empty")
     private String username;
@@ -72,8 +76,8 @@ public class Person implements Serializable {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<FoodReview> reviewList;
 
-
-    @ManyToMany(fetch = EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinTable(name = "person_role",
             joinColumns = @JoinColumn(name = "person_id"),
@@ -87,7 +91,6 @@ public class Person implements Serializable {
     @JsonBackReference
     @OneToMany(mappedBy = "owner")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<RestaurantReviews> restaurantReviews;
 
     @JsonBackReference
@@ -128,37 +131,5 @@ public class Person implements Serializable {
         this.username = username;
         this.password = password;
     }
-//
-//    @Override
-//    public String toString() {
-//        return "Person{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", yearOfBirth=" + yearOfBirth +
-//                ", phoneNumber='" + phoneNumber + '\'' +
-//                ", email='" + email + '\'' +
-//                ", username='" + username + '\'' +
-//                ", password='" + password + '\'' +
-//                '}';
-//    }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof Person person)) return false;
-//        return getId() == person.getId()
-//                && getYearOfBirth() == person.getYearOfBirth()
-//                && Objects.equals(getName(), person.getName())
-//                && Objects.equals(getLastName(), person.getLastName())
-//                && Objects.equals(getPhoneNumber(), person.getPhoneNumber())
-//                && Objects.equals(getEmail(), person.getEmail())
-//                && Objects.equals(getUsername(), person.getUsername())
-//                && Objects.equals(getPassword(), person.getPassword());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getId(), getName(), getLastName(), getYearOfBirth(), getPhoneNumber(), getEmail(), getUsername(), getPassword());
-//    }
+
 }

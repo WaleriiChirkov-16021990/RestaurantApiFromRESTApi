@@ -21,7 +21,6 @@ import java.util.Optional;
         rollbackFor = {DishesNotCreatedException.class, DishesNotDeletedException.class})
 public class DishesService implements DishesServiceByRepository<Dishes> {
     private final DishesRepository repository;
-
     @Autowired
     public DishesService(@Qualifier("dishesRepository") DishesRepository repository) {
         this.repository = repository;

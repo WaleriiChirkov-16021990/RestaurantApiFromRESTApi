@@ -1,6 +1,7 @@
 package com.chirkov.restApiRestaurantBussines.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 //
@@ -10,9 +11,7 @@ import lombok.Setter;
 //import java.time.Year;
 //import java.util.Date;
 //import java.util.Objects;
-
-@Getter
-@Setter
+@Data
 public class PersonDto {
 
     @NotNull(message = "Name DTO is not null")

@@ -77,7 +77,7 @@ public class UnitsOfMeasurementService implements UnitsOfMeasurementServiceByRep
                                 "UnitsOfMeasurement could not be found for name '" + name + "'."));
     }
 
-    public EnumUnitsOfMeasurement findEnumUnitsOfMeasurementByName(String name) {
+    public UnitsOfMeasurement findEnumUnitsOfMeasurementByName(String name) {
         return repositories.getEnumByName(name).orElseThrow(() ->
                 new UnitsOfMeasurementNotFoundException(
                         "Enumerated UnitsOfMeasurement could not be found for name '" + name + "'."));

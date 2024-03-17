@@ -13,5 +13,4 @@ public interface DiscountsRepository extends JpaRepository<Discount,Long> {
     Optional<Discount> findDiscountById(Long id);
     Optional<Discount> findDiscountByName(String name);
     Optional<Discount> findDiscountBySale(@NotNull DiscountEnum value);
-
 }

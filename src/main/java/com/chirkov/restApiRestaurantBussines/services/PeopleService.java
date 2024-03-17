@@ -71,12 +71,8 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
     }
 
     private void enrichPersonAdmin(Person person) throws RoleNotFoundException {
-//        List<Role> roles = new ArrayList<>();
         Role admin = this.roleService.findByName("ADMIN");
         Role user = this.roleService.findByName("USER");
-//        roles.add();
-//        roles.add();
-//        roles.add(this.roleService.findById(2L));
         person.setRole(List.of(admin, user));
         person.setDiscount(this.discountService.findById(5L));
         person.setCreatedAt(LocalDateTime.now());
@@ -197,8 +193,6 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
      * @return пользователь
      */
     public UserDetailsService userDetailsService() {
-//        return new PersonDetails(this::getByUsername);
-//
         return username -> {
             return new PersonDetails(getByUsername(username));
         };
@@ -210,9 +204,8 @@ public class PeopleService implements PeopleServiceByRepository<Person> {
      * @return текущий пользователь
      */
     public PersonDetails getCurrentUser() {
-        // Получение имени пользователя из контекста Spring Security
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return new PersonDetails(getByUsername(username)); // getByUsername(username);
+        return new PersonDetails(getByUsername(username));
     }
 
 }

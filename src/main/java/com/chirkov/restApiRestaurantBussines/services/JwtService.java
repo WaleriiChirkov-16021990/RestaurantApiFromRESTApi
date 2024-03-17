@@ -41,7 +41,6 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
         if (userDetails instanceof PersonDetails customUserDetails) {
             claims.put("id", customUserDetails.getPerson().getId());
-//            claims.put("id", customUserDetails.getId());
             claims.put("email", customUserDetails.getPerson().getEmail());
             claims.put("role", customUserDetails.getAuthorities().toString());
         }
@@ -123,7 +122,6 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
     /**
      * Получение ключа для подписи токена
      *

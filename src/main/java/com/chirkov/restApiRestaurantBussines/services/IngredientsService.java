@@ -20,7 +20,6 @@ import java.util.Optional;
         rollbackFor = {IngredientsNotCreatedException.class, IngredientsNotDeletedException.class})
 public class IngredientsService implements IngredientsServiceByRepository<Ingredients> {
     private final IngredientsRepository repository;
-
     @Autowired
     public IngredientsService(IngredientsRepository repository) {
         this.repository = repository;

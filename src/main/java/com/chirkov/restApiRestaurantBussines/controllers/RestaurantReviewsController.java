@@ -31,7 +31,9 @@ public class RestaurantReviewsController {
     private final PeopleServiceByRepository<Person> peopleService;
 
     @Autowired
-    public RestaurantReviewsController(RestaurantReviewsServiceByRepository<RestaurantReviews> service, RestaurantReviewsValidator validator, PeopleServiceByRepository<Person> peopleService) {
+    public RestaurantReviewsController(RestaurantReviewsServiceByRepository<RestaurantReviews> service,
+                                       RestaurantReviewsValidator validator,
+                                       PeopleServiceByRepository<Person> peopleService) {
         this.service = service;
         this.validator = validator;
         this.peopleService = peopleService;
@@ -58,7 +60,8 @@ public class RestaurantReviewsController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> addRestaurantReview(@RequestBody @Valid RestaurantReviewsDto reviewDto, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> addRestaurantReview(@RequestBody @Valid RestaurantReviewsDto reviewDto,
+                                                          BindingResult bindingResult) {
         RestaurantReviews review = reviewDto.mapReview(this.peopleService);
         this.validator.validate(review, bindingResult);
         if (bindingResult.hasErrors()) {
