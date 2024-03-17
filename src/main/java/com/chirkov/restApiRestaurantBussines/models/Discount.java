@@ -37,8 +37,6 @@ public class Discount implements Serializable {
 
     @JsonBackReference
     @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-//    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private List<Person> personList;
 
     @Override
@@ -52,4 +50,6 @@ public class Discount implements Serializable {
     public int hashCode() {
         return Objects.hash(getName(), getSale());
     }
+    //    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+//    @Cascade({org.hibernate.annotations.CascadeType.ALL})
 }

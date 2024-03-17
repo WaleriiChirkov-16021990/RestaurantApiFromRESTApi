@@ -58,7 +58,5 @@ public class CompositionsOfDishesDto {
         } catch (Exception e) {
             throw new CompositionsOfDishesNotCreatedException("Could not create composition? Dto\n" + e.getMessage(), e);
         }
-
-
     }
 }

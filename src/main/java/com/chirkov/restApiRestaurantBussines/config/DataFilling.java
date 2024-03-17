@@ -130,8 +130,8 @@ public class DataFilling {
 
             unit = new UnitsOfMeasurement();
             unit.setName("PIECES");
-            unit.setUnitOfMeasurement(EnumUnitsOfMeasurement.PIECES);
-            unit.setCommentary("1 piece = 1 piece");
+            unit.setUnitOfMeasurement(EnumUnitsOfMeasurement.OUNCE);
+            unit.setCommentary("1 ounce = 29 grammes");
             ofMeasurementService.save(unit);
 
             unit = new UnitsOfMeasurement();

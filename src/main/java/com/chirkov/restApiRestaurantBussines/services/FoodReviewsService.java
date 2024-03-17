@@ -24,7 +24,6 @@ import java.util.Optional;
         rollbackFor = {FoodReviewNotCreatedException.class, FoodReviewNotDeletedException.class})
 public class FoodReviewsService implements FoodReviewsServiceByRepository<FoodReview> {
     private final FoodReviewRepository foodReviewRepository;
-
     @Autowired
     public FoodReviewsService(FoodReviewRepository foodReviewRepository) {
         this.foodReviewRepository = foodReviewRepository;

@@ -12,5 +12,4 @@ import java.util.Optional;
 public interface OrderElementRepository extends JpaRepository<OrderElements,Long> {
     Optional<List<OrderElements>> findByOrder(Order order);
     Optional<OrderElements> findOrderElementsById(long id);
-
 }

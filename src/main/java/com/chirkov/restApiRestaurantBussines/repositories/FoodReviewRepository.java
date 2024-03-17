@@ -21,5 +21,4 @@ public interface FoodReviewRepository extends JpaRepository<FoodReview, Long> {
     Optional<List<FoodReview>> getFoodReviewsByGrade(int grade);
 
     Optional<List<FoodReview>> getFoodReviewsByCommentStartsWith(String start);
-
 }

@@ -78,8 +78,7 @@ public class TableReservationController {
         );
         return new ResponseEntity<>(stateFromTable, HttpStatus.NOT_FOUND);
     }
-
-
+    
     @ExceptionHandler({TableReservationNotCreatedException.class, TableReservationNotDeletedException.class})
     private ResponseEntity<TableReservationErrorResponse> handlerException(Exception exception) {
         TableReservationErrorResponse stateFromTable = new TableReservationErrorResponse(

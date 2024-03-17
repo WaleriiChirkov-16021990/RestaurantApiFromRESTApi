@@ -34,7 +34,7 @@ public class PeopleController {
         this.peopleService = peopleService;
         this.personDtoValidator = personDtoValidator;
     }
-//
+
 //    @GetMapping
 //    public List<PersonDto> getPeople() {
 //        return peopleService.findAll().stream().map(this::convertToPersonDto).collect(Collectors.toList());
@@ -140,6 +140,4 @@ public class PeopleController {
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
-
 }

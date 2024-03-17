@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AddErrorMessageFromMyException {
-
     public static String getErrorMessage(BindingResult bindingResult) {
 
         AtomicReference<StringBuilder> errorMessage = new AtomicReference<>(new StringBuilder());

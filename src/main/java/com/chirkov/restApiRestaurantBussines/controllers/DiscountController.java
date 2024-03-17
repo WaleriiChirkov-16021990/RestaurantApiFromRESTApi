@@ -24,7 +24,8 @@ public class DiscountController {
     private final DiscountValidator discountValidator;
 
     @Autowired
-    public DiscountController(DiscountServiceByRepository<Discount> discountService, DiscountValidator discountValidator) {
+    public DiscountController(DiscountServiceByRepository<Discount> discountService,
+                              DiscountValidator discountValidator) {
         this.discountService = discountService;
         this.discountValidator = discountValidator;
     }
@@ -35,7 +36,7 @@ public class DiscountController {
     }
 
     @GetMapping("/{id}")
-    public Discount getDiscount(@PathVariable("id") Long id) throws DiscountNotFoundException {
+    public Discount getDiscount( @PathVariable("id") Long id) throws DiscountNotFoundException {
         return this.discountService.findById(id);
     }
 

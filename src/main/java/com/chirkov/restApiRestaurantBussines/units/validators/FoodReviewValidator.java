@@ -36,6 +36,5 @@ public class FoodReviewValidator implements Validator {
 //            // TODO придумать валидацию для отзыва о еде
                 // come up with a validation for a food review
 //        }
-
     }
 }

@@ -19,7 +19,4 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findRoleByName(String roleName);
 
     Optional<Role> findRoleByRoleValue(@NotNull RoleEnum roleValue);
-
-
-
 }

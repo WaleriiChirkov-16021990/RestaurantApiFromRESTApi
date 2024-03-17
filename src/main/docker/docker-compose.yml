@@ -4,7 +4,6 @@ services:
   app:
     container_name: app-spring-boot
     image: rest-api-restaurant-bussines:latest
-    #        image: 00313/docker-spring-boot-postgres:latest
     build:
       context: .
     ports:
@@ -24,7 +23,6 @@ services:
       - SPRING_HIBERNATE_SHOW_SQL=true
 #      - SPRING_HIBERNATE_FORMAT_SQL=true
       - SPRING_JACKSON_SERIALIZATION_FAIL_ON_EMPTY_BEANS=false
-#      - TOKEN_SECRET=53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
       - TOKEN.SIGNING.KEY=53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
 
 

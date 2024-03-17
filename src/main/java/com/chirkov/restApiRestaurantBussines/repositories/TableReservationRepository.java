@@ -23,5 +23,4 @@ public interface TableReservationRepository extends JpaRepository<TableReservati
     List<TableReservation> getTableReservationByAuthorThisRecords(Person owner);
 
     Optional<TableReservation> getTableReservationById(Long id);
-
 }

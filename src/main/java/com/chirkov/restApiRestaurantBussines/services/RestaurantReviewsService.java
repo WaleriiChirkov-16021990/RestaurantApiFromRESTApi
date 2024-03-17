@@ -34,7 +34,7 @@ public class RestaurantReviewsService implements RestaurantReviewsServiceByRepos
     }
 
     public Optional<RestaurantReviews> findById(int id) {
-        return this.repository.findById(id);
+        return this.repository.findById((long) id);
     }
 
     /**

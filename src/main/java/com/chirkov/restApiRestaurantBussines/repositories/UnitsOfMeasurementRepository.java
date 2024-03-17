@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface UnitsOfMeasurementRepository extends JpaRepository<UnitsOfMeasurement,Long> {
     Optional<Long> getIdByName(String name);
-    Optional<EnumUnitsOfMeasurement> getEnumByName(String name);
+    Optional<UnitsOfMeasurement> getEnumByName(String name);
     Optional<UnitsOfMeasurement> getByName(String name);
 
     Optional<UnitsOfMeasurement> getByUnitOfMeasurement(EnumUnitsOfMeasurement unitOfMeasurement);

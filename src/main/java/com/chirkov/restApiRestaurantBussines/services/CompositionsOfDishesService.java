@@ -23,7 +23,6 @@ import java.util.Optional;
 @Qualifier
 public class CompositionsOfDishesService implements CompositionsOfDishesServiceByRepository<CompositionsOfDishes> {
     private final CompositionsOfDishesRepository repository;
-
     @Autowired
     public CompositionsOfDishesService(CompositionsOfDishesRepository repository) {
         this.repository = repository;

@@ -20,12 +20,10 @@ import java.util.Arrays;
 @AllArgsConstructor
 public class UnitsOfMeasurementDto {
 
-
     @NotNull(message = "UnitsOfMeasurementDto/_name must not be null")
     @NotEmpty(message = "UnitsOfMeasurementDto/_name must not be empty")
     @Size(max = 100, message = "UnitsOfMeasurementDto/_name must not exceed 100.")
     private String name;
-
 
     @NotNull(message = "UnitsOfMeasurementDto/_unitOfMeasurement must not be null")
     @NotEmpty(message = "UnitsOfMeasurementDto/_unitOfMeasurement must not be empty")

@@ -21,61 +21,61 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
 
-@RestController
-@RequestMapping("/orders")
-@Getter
-public class OrderController {
-    private final OrderServiceByRepository<Order> orderService;
-    private final OrderValidator orderValidator;
-    private final PeopleServiceByRepository<Person> peopleService;
+    @RestController
+    @RequestMapping("/orders")
+    @Getter
+    public class OrderController {
+        private final OrderServiceByRepository<Order> orderService;
+        private final OrderValidator orderValidator;
+        private final PeopleServiceByRepository<Person> peopleService;
 
-    @Autowired
-    public OrderController(OrderServiceByRepository<Order> orderService, OrderValidator orderValidator, PeopleServiceByRepository<Person> peopleService) {
-        this.orderService = orderService;
-        this.orderValidator = orderValidator;
-        this.peopleService = peopleService;
-    }
-
-    @GetMapping
-    public List<Order> findAllOrders() {
-        return orderService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Order findById(@PathVariable("id") Long id) throws OrderNotFoundException {
-        return orderService.findById(id);
-    }
-
-    @PostMapping
-    public ResponseEntity<HttpStatus> save(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult) throws OrderNotCreatedException {
-        Order order = orderDto.mappingbyOrder(this.peopleService);
-        orderValidator.validate(order, bindingResult);
-        if (bindingResult.hasErrors()) {
-            throw new OrderNotCreatedException(
-                    AddErrorMessageFromMyException.getErrorMessage(bindingResult));
+        @Autowired
+        public OrderController(OrderServiceByRepository<Order> orderService, OrderValidator orderValidator, PeopleServiceByRepository<Person> peopleService) {
+            this.orderService = orderService;
+            this.orderValidator = orderValidator;
+            this.peopleService = peopleService;
         }
-        this.orderService.save(order);
-        return ResponseEntity.ok(HttpStatus.CREATED);
-    }
 
-    @ExceptionHandler
-    public ResponseEntity<OrderErrorResponse> handleOrder(OrderNotFoundException foundException) {
-        OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
-                foundException.getMessage(),
-                System.currentTimeMillis(),
-                foundException.getClass().getSimpleName()
-//                ); TODO find right info for Exception
-        );
-        return new ResponseEntity<>(orderErrorResponse, HttpStatus.NOT_FOUND);
-    }
+        @GetMapping
+        public List<Order> findAllOrders() {
+            return orderService.findAll();
+        }
 
-    @ExceptionHandler({OrderNotDeletedException.class, OrderNotCreatedException.class})
-    public ResponseEntity<OrderErrorResponse> handleOrder(Exception foundException) {
-        OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
-                foundException.getMessage(),
-                System.currentTimeMillis(),
-                foundException.getClass().getSimpleName());
-//        TODO find right info for Exception
-        return new ResponseEntity<>(orderErrorResponse, HttpStatus.BAD_REQUEST);
+        @GetMapping("/{id}")
+        public Order findById(@PathVariable("id") Long id) throws OrderNotFoundException {
+            return orderService.findById(id);
+        }
+
+        @PostMapping
+        public ResponseEntity<HttpStatus> save(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult) throws OrderNotCreatedException {
+            Order order = orderDto.mappingbyOrder(this.peopleService);
+            orderValidator.validate(order, bindingResult);
+            if (bindingResult.hasErrors()) {
+                throw new OrderNotCreatedException(
+                        AddErrorMessageFromMyException.getErrorMessage(bindingResult));
+            }
+            this.orderService.save(order);
+            return ResponseEntity.ok(HttpStatus.CREATED);
+        }
+
+        @ExceptionHandler
+        public ResponseEntity<OrderErrorResponse> handleOrder(OrderNotFoundException foundException) {
+            OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
+                    foundException.getMessage(),
+                    System.currentTimeMillis(),
+                    foundException.getClass().getSimpleName()
+    //                ); TODO find right info for Exception
+            );
+            return new ResponseEntity<>(orderErrorResponse, HttpStatus.NOT_FOUND);
+        }
+
+        @ExceptionHandler({OrderNotDeletedException.class, OrderNotCreatedException.class})
+        public ResponseEntity<OrderErrorResponse> handleOrder(Exception foundException) {
+            OrderErrorResponse orderErrorResponse = new OrderErrorResponse(
+                    foundException.getMessage(),
+                    System.currentTimeMillis(),
+                    foundException.getClass().getSimpleName());
+    //        TODO find right info for Exception
+            return new ResponseEntity<>(orderErrorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
-}

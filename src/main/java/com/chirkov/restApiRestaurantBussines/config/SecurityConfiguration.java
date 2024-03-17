@@ -23,12 +23,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final PersonDetailsService userService;
 
@@ -51,12 +51,21 @@ public class SecurityConfiguration {
                         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/endpoint", "/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
+                // Устанавливаю стратегию управления сессиями Http, теперь каждый запрос рассматривается независимо
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+                // добавляю провайдер аутентификации в конфигурацию с предварительно настройкой в методе
                 .authenticationProvider(authenticationProvider())
+                // добавляю фильтр для аутентификации и проверки ролей при каждом запросе по конечным точкам до фильтра
+                // для аутентификации и проверки ролей по username и password. Этот фильтр должен быть последним в цепочке
+                // для обработки JWT токенов ДО НЕГО.
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
+    /**
+     * A method that creates and returns a new BCryptPasswordEncoder instance.
+     *
+     * @return         	the BCryptPasswordEncoder instance
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -69,7 +78,6 @@ public class SecurityConfiguration {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
             throws Exception {

@@ -19,7 +19,6 @@ import java.util.Optional;
 @Transactional(readOnly = true,
         propagation = Propagation.REQUIRED,
         rollbackFor = {OrderElementNotDeletedException.class, OrderElementNotCreatedException.class})
-// TODO Auto
 public class OrderElementsService implements OrderElementsServiceByRepository<OrderElements> {
     private final OrderElementRepository repository;
 
