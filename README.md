@@ -1,21 +1,41 @@
-1. Необходим Docker
+1. Необходим [Docker](https://www.docker.com/products/docker-desktop/ "Docker Desktop")
 2. Собираем Jar-file этого проекта удобным для вас способом, например, 
-открыв консоль в корне проекта выполните команду [./mvnw clean package -DskipTests] 
+открыв консоль в корне проекта выполните команду 
+```shell
+./mvnw clean package -DskipTests
+```
 и копируем его из папки ./target где нам будет удобно с ним работать.
 3. Используя этот jar-file создаем Image of the Docker командой из папки, 
-куда переместили jar-file:[docker build -t rest-api-restaurant-bussines .]. Пример DockerFile:
-"""
-   FROM openjdk:17-oracle
-   ARG JAR_FILE=*.jar
-   WORKDIR /app
-   COPY ${JAR_FILE} app.jar
-   EXPOSE 8080
-   #CMD ["java", "-jar", "app.jar"]
-   ENTRYPOINT ["java", "-jar", "app.jar"]
+куда переместили jar-file, предварительно создав в этой папке Dockerfile.
 
-"""
+[//]: # (###     Пример DockerFile находится в проекте по пути)
+
+[//]: # (      src/main/docker)
+
+####  Пример DockerFile
+
+```dockerfile
+FROM openjdk:17-oracle
+LABEL authors="wchirkov"
+LABEL maintainer="bukin64@bk.ru"
+LABEL version="0.0.2"
+LABEL description="Docker image for RestApiRestaurantBussines"
+LABEL name="rest-api-restaurant-bussines"
+LABEL org.opencontainers.image.source="https://github.com/WaleriiChirkov-16021990/RestaurantApiFromRESTApi.git"
+ARG JAR_FILE=*.jar
+WORKDIR /app
+COPY ${JAR_FILE} app.jar
+EXPOSE 8080
+#CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+Выполняемая команда:
+```shell
+docker build -t rest-api-restaurant-bussines .
+```
+
 4. Теперь опишем файл docker-compose.yml
-[
+```yaml
    version: '3.9'
 
 services:
@@ -58,10 +78,20 @@ volumes:
 #      - ./data/postgres:/docker-entrypoint-initdb.d
 - ./data/postgres:/var/lib/postgresql/data
 
-]
+```
 
-5. Запустите сборку и старт контейнеров командой из консоли [docker-compose up]
+5. Запустите сборку и старт контейнеров командой из консоли 
+```bash
+docker-compose up 
+```
 6. Теперь, если вы все это развернули на локальной машине - ваше приложение отвечает на localhost:8081
 7. С помощью Docker приложение можно развернуть где угодно. Для работы приложения всегда поднимается 2 контейнера,
-1 - база данных, 2- приложение, которое обращается к этой базе данных по открытому порту 5432. 
+- база данных
+
+- приложение, которое обращается к этой базе данных по открытому порту 5432. 
+
 Можно дополнительно поднимать контейнер PGAdmin и следить за состоянием базы данных, администрировать ее.
+В проекте есть папка где есть все необходимые файлы :
+```shell
+cd src/main/docker
+```
